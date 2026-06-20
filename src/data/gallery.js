@@ -5,24 +5,24 @@ export const galleryAlbums = [
     "title": "E Commerce UI",
     "slug": "e-commerce-ui",
     "folderPath": "./public/gallery/E-commerce UI",
-    "coverImage": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_20_11 PM.png",
+    "coverImage": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_20_11 PM.webp",
     "images": [
-      "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_20_11 PM.png",
-      "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_29_10 PM.png",
-      "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_35_57 PM.png",
-      "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_57_59 PM.png",
-      "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_07_30 PM.png",
-      "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_10_25 PM.png",
-      "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_23_03 PM.png",
-      "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_29_01 PM.png",
-      "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_31_46 PM.png",
-      "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_40_24 PM.png"
+      "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_20_11 PM.webp",
+      "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_29_10 PM.webp",
+      "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_35_57 PM.webp",
+      "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_57_59 PM.webp",
+      "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_07_30 PM.webp",
+      "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_10_25 PM.webp",
+      "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_23_03 PM.webp",
+      "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_29_01 PM.webp",
+      "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_31_46 PM.webp",
+      "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_40_24 PM.webp"
     ],
     "imageEntries": [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-03-20-11-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_20_11 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_20_11 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 03_20_11 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 03 20 11 PM",
         "alt": "E Commerce UI media 1",
@@ -33,7 +33,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-03-29-10-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_29_10 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_29_10 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 03_29_10 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 03 29 10 PM",
         "alt": "E Commerce UI media 2",
@@ -44,7 +44,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-03-35-57-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_35_57 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_35_57 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 03_35_57 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 03 35 57 PM",
         "alt": "E Commerce UI media 3",
@@ -55,7 +55,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-03-57-59-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_57_59 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_57_59 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 03_57_59 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 03 57 59 PM",
         "alt": "E Commerce UI media 4",
@@ -66,7 +66,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-04-07-30-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_07_30 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_07_30 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_07_30 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 07 30 PM",
         "alt": "E Commerce UI media 5",
@@ -77,7 +77,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-04-10-25-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_10_25 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_10_25 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_10_25 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 10 25 PM",
         "alt": "E Commerce UI media 6",
@@ -88,7 +88,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-04-23-03-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_23_03 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_23_03 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_23_03 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 23 03 PM",
         "alt": "E Commerce UI media 7",
@@ -99,7 +99,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-04-29-01-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_29_01 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_29_01 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_29_01 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 29 01 PM",
         "alt": "E Commerce UI media 8",
@@ -110,7 +110,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-04-31-46-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_31_46 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_31_46 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_31_46 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 31 46 PM",
         "alt": "E Commerce UI media 9",
@@ -121,7 +121,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-04-40-24-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_40_24 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_40_24 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_40_24 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 40 24 PM",
         "alt": "E Commerce UI media 10",
@@ -134,7 +134,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-03-20-11-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_20_11 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_20_11 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 03_20_11 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 03 20 11 PM",
         "alt": "E Commerce UI media 1",
@@ -145,7 +145,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-03-29-10-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_29_10 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_29_10 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 03_29_10 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 03 29 10 PM",
         "alt": "E Commerce UI media 2",
@@ -156,7 +156,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-03-35-57-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_35_57 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_35_57 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 03_35_57 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 03 35 57 PM",
         "alt": "E Commerce UI media 3",
@@ -167,7 +167,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-03-57-59-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_57_59 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 03_57_59 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 03_57_59 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 03 57 59 PM",
         "alt": "E Commerce UI media 4",
@@ -178,7 +178,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-04-07-30-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_07_30 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_07_30 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_07_30 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 07 30 PM",
         "alt": "E Commerce UI media 5",
@@ -189,7 +189,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-04-10-25-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_10_25 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_10_25 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_10_25 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 10 25 PM",
         "alt": "E Commerce UI media 6",
@@ -200,7 +200,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-04-23-03-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_23_03 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_23_03 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_23_03 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 23 03 PM",
         "alt": "E Commerce UI media 7",
@@ -211,7 +211,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-04-29-01-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_29_01 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_29_01 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_29_01 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 29 01 PM",
         "alt": "E Commerce UI media 8",
@@ -222,7 +222,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-04-31-46-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_31_46 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_31_46 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_31_46 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 31 46 PM",
         "alt": "E Commerce UI media 9",
@@ -233,7 +233,7 @@ export const galleryAlbums = [
       {
         "id": "e-commerce-ui-chatgpt-image-jun-18-2026-04-40-24-pm",
         "type": "image",
-        "src": "./public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_40_24 PM.png",
+        "src": "public/gallery/E-commerce UI/ChatGPT Image Jun 18, 2026, 04_40_24 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_40_24 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 40 24 PM",
         "alt": "E Commerce UI media 10",
@@ -248,27 +248,27 @@ export const galleryAlbums = [
     "title": "Landing Pages & Web UI",
     "slug": "landing-pages-web-ui",
     "folderPath": "./public/gallery/Landing Pages & Web UI",
-    "coverImage": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 01_34_35 PM.png",
+    "coverImage": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 01_34_35 PM.webp",
     "images": [
-      "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 01_34_35 PM.png",
-      "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_00_02 PM.png",
-      "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_17_08 PM.png",
-      "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_33_42 PM.png",
-      "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 03_16_53 PM.png",
-      "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 04_37_21 PM.png",
-      "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_08_37 AM.png",
-      "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_11_33 AM.png",
-      "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_13_33 AM.png",
-      "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_31_51 AM.png",
-      "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_45_12 AM.png",
-      "./public/gallery/Landing Pages & Web UI/Slide 16_9 - 15.png",
-      "./public/gallery/Landing Pages & Web UI/Slide 16_9 - 22.png"
+      "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 01_34_35 PM.webp",
+      "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_00_02 PM.webp",
+      "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_17_08 PM.webp",
+      "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_33_42 PM.webp",
+      "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 03_16_53 PM.webp",
+      "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 04_37_21 PM.webp",
+      "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_08_37 AM.webp",
+      "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_11_33 AM.webp",
+      "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_13_33 AM.webp",
+      "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_31_51 AM.webp",
+      "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_45_12 AM.webp",
+      "public/gallery/Landing Pages & Web UI/Slide 16_9 - 15.webp",
+      "public/gallery/Landing Pages & Web UI/Slide 16_9 - 22.webp"
     ],
     "imageEntries": [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-01-34-35-pm",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 01_34_35 PM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 01_34_35 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 01_34_35 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 01 34 35 PM",
         "alt": "Landing Pages & Web UI media 1",
@@ -279,7 +279,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-02-00-02-pm",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_00_02 PM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_00_02 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 02_00_02 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 02 00 02 PM",
         "alt": "Landing Pages & Web UI media 2",
@@ -290,7 +290,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-02-17-08-pm",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_17_08 PM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_17_08 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 02_17_08 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 02 17 08 PM",
         "alt": "Landing Pages & Web UI media 3",
@@ -301,7 +301,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-02-33-42-pm",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_33_42 PM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_33_42 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 02_33_42 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 02 33 42 PM",
         "alt": "Landing Pages & Web UI media 4",
@@ -312,7 +312,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-03-16-53-pm",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 03_16_53 PM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 03_16_53 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 03_16_53 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 03 16 53 PM",
         "alt": "Landing Pages & Web UI media 5",
@@ -323,7 +323,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-04-37-21-pm",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 04_37_21 PM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 04_37_21 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_37_21 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 37 21 PM",
         "alt": "Landing Pages & Web UI media 6",
@@ -334,7 +334,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-11-08-37-am",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_08_37 AM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_08_37 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 11_08_37 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 11 08 37 AM",
         "alt": "Landing Pages & Web UI media 7",
@@ -345,7 +345,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-11-11-33-am",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_11_33 AM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_11_33 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 11_11_33 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 11 11 33 AM",
         "alt": "Landing Pages & Web UI media 8",
@@ -356,7 +356,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-11-13-33-am",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_13_33 AM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_13_33 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 11_13_33 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 11 13 33 AM",
         "alt": "Landing Pages & Web UI media 9",
@@ -367,7 +367,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-11-31-51-am",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_31_51 AM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_31_51 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 11_31_51 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 11 31 51 AM",
         "alt": "Landing Pages & Web UI media 10",
@@ -378,7 +378,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-11-45-12-am",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_45_12 AM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_45_12 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 11_45_12 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 11 45 12 AM",
         "alt": "Landing Pages & Web UI media 11",
@@ -389,7 +389,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-slide-16-9-15",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/Slide 16_9 - 15.png",
+        "src": "public/gallery/Landing Pages & Web UI/Slide 16_9 - 15.webp",
         "fileName": "Slide 16_9 - 15.png",
         "title": "Slide 16 9 15",
         "alt": "Landing Pages & Web UI media 14",
@@ -400,7 +400,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-slide-16-9-22",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/Slide 16_9 - 22.png",
+        "src": "public/gallery/Landing Pages & Web UI/Slide 16_9 - 22.webp",
         "fileName": "Slide 16_9 - 22.png",
         "title": "Slide 16 9 22",
         "alt": "Landing Pages & Web UI media 15",
@@ -413,7 +413,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-01-34-35-pm",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 01_34_35 PM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 01_34_35 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 01_34_35 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 01 34 35 PM",
         "alt": "Landing Pages & Web UI media 1",
@@ -424,7 +424,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-02-00-02-pm",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_00_02 PM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_00_02 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 02_00_02 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 02 00 02 PM",
         "alt": "Landing Pages & Web UI media 2",
@@ -435,7 +435,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-02-17-08-pm",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_17_08 PM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_17_08 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 02_17_08 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 02 17 08 PM",
         "alt": "Landing Pages & Web UI media 3",
@@ -446,7 +446,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-02-33-42-pm",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_33_42 PM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 02_33_42 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 02_33_42 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 02 33 42 PM",
         "alt": "Landing Pages & Web UI media 4",
@@ -457,7 +457,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-03-16-53-pm",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 03_16_53 PM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 03_16_53 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 03_16_53 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 03 16 53 PM",
         "alt": "Landing Pages & Web UI media 5",
@@ -468,7 +468,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-04-37-21-pm",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 04_37_21 PM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 04_37_21 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_37_21 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 37 21 PM",
         "alt": "Landing Pages & Web UI media 6",
@@ -479,7 +479,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-11-08-37-am",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_08_37 AM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_08_37 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 11_08_37 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 11 08 37 AM",
         "alt": "Landing Pages & Web UI media 7",
@@ -490,7 +490,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-11-11-33-am",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_11_33 AM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_11_33 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 11_11_33 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 11 11 33 AM",
         "alt": "Landing Pages & Web UI media 8",
@@ -501,7 +501,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-11-13-33-am",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_13_33 AM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_13_33 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 11_13_33 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 11 13 33 AM",
         "alt": "Landing Pages & Web UI media 9",
@@ -512,7 +512,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-11-31-51-am",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_31_51 AM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_31_51 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 11_31_51 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 11 31 51 AM",
         "alt": "Landing Pages & Web UI media 10",
@@ -523,7 +523,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-chatgpt-image-jun-18-2026-11-45-12-am",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_45_12 AM.png",
+        "src": "public/gallery/Landing Pages & Web UI/ChatGPT Image Jun 18, 2026, 11_45_12 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 11_45_12 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 11 45 12 AM",
         "alt": "Landing Pages & Web UI media 11",
@@ -556,7 +556,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-slide-16-9-15",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/Slide 16_9 - 15.png",
+        "src": "public/gallery/Landing Pages & Web UI/Slide 16_9 - 15.webp",
         "fileName": "Slide 16_9 - 15.png",
         "title": "Slide 16 9 15",
         "alt": "Landing Pages & Web UI media 14",
@@ -567,7 +567,7 @@ export const galleryAlbums = [
       {
         "id": "landing-pages-web-ui-slide-16-9-22",
         "type": "image",
-        "src": "./public/gallery/Landing Pages & Web UI/Slide 16_9 - 22.png",
+        "src": "public/gallery/Landing Pages & Web UI/Slide 16_9 - 22.webp",
         "fileName": "Slide 16_9 - 22.png",
         "title": "Slide 16 9 22",
         "alt": "Landing Pages & Web UI media 15",
@@ -582,26 +582,26 @@ export const galleryAlbums = [
     "title": "Mobile App UI",
     "slug": "mobile-app-ui",
     "folderPath": "./public/gallery/Mobile App UI",
-    "coverImage": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 02_04_36 PM.png",
+    "coverImage": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 02_04_36 PM.webp",
     "images": [
-      "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 02_04_36 PM.png",
-      "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 02_13_38 PM.png",
-      "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 09_58_30 AM.png",
-      "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_12_45 AM.png",
-      "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_17_16 AM.png",
-      "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_36_39 AM.png",
-      "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_41_25 AM.png",
-      "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_46_20 AM.png",
-      "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_49_23 AM.png",
-      "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_51_07 AM.png",
-      "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_59_29 AM.png",
-      "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 11_25_55 AM.png"
+      "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 02_04_36 PM.webp",
+      "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 02_13_38 PM.webp",
+      "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 09_58_30 AM.webp",
+      "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_12_45 AM.webp",
+      "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_17_16 AM.webp",
+      "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_36_39 AM.webp",
+      "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_41_25 AM.webp",
+      "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_46_20 AM.webp",
+      "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_49_23 AM.webp",
+      "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_51_07 AM.webp",
+      "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_59_29 AM.webp",
+      "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 11_25_55 AM.webp"
     ],
     "imageEntries": [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-02-04-36-pm",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 02_04_36 PM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 02_04_36 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 02_04_36 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 02 04 36 PM",
         "alt": "Mobile App UI media 1",
@@ -612,7 +612,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-02-13-38-pm",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 02_13_38 PM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 02_13_38 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 02_13_38 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 02 13 38 PM",
         "alt": "Mobile App UI media 2",
@@ -623,7 +623,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-09-58-30-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 09_58_30 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 09_58_30 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 09_58_30 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 09 58 30 AM",
         "alt": "Mobile App UI media 3",
@@ -634,7 +634,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-12-45-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_12_45 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_12_45 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_12_45 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 12 45 AM",
         "alt": "Mobile App UI media 4",
@@ -645,7 +645,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-17-16-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_17_16 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_17_16 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_17_16 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 17 16 AM",
         "alt": "Mobile App UI media 5",
@@ -656,7 +656,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-36-39-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_36_39 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_36_39 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_36_39 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 36 39 AM",
         "alt": "Mobile App UI media 6",
@@ -667,7 +667,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-41-25-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_41_25 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_41_25 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_41_25 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 41 25 AM",
         "alt": "Mobile App UI media 7",
@@ -678,7 +678,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-46-20-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_46_20 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_46_20 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_46_20 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 46 20 AM",
         "alt": "Mobile App UI media 8",
@@ -689,7 +689,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-49-23-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_49_23 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_49_23 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_49_23 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 49 23 AM",
         "alt": "Mobile App UI media 9",
@@ -700,7 +700,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-51-07-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_51_07 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_51_07 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_51_07 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 51 07 AM",
         "alt": "Mobile App UI media 10",
@@ -711,7 +711,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-59-29-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_59_29 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_59_29 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_59_29 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 59 29 AM",
         "alt": "Mobile App UI media 11",
@@ -722,7 +722,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-11-25-55-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 11_25_55 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 11_25_55 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 11_25_55 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 11 25 55 AM",
         "alt": "Mobile App UI media 12",
@@ -735,7 +735,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-02-04-36-pm",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 02_04_36 PM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 02_04_36 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 02_04_36 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 02 04 36 PM",
         "alt": "Mobile App UI media 1",
@@ -746,7 +746,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-02-13-38-pm",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 02_13_38 PM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 02_13_38 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 02_13_38 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 02 13 38 PM",
         "alt": "Mobile App UI media 2",
@@ -757,7 +757,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-09-58-30-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 09_58_30 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 09_58_30 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 09_58_30 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 09 58 30 AM",
         "alt": "Mobile App UI media 3",
@@ -768,7 +768,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-12-45-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_12_45 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_12_45 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_12_45 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 12 45 AM",
         "alt": "Mobile App UI media 4",
@@ -779,7 +779,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-17-16-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_17_16 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_17_16 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_17_16 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 17 16 AM",
         "alt": "Mobile App UI media 5",
@@ -790,7 +790,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-36-39-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_36_39 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_36_39 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_36_39 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 36 39 AM",
         "alt": "Mobile App UI media 6",
@@ -801,7 +801,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-41-25-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_41_25 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_41_25 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_41_25 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 41 25 AM",
         "alt": "Mobile App UI media 7",
@@ -812,7 +812,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-46-20-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_46_20 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_46_20 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_46_20 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 46 20 AM",
         "alt": "Mobile App UI media 8",
@@ -823,7 +823,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-49-23-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_49_23 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_49_23 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_49_23 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 49 23 AM",
         "alt": "Mobile App UI media 9",
@@ -834,7 +834,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-51-07-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_51_07 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_51_07 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_51_07 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 51 07 AM",
         "alt": "Mobile App UI media 10",
@@ -845,7 +845,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-10-59-29-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_59_29 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 10_59_29 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 10_59_29 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 10 59 29 AM",
         "alt": "Mobile App UI media 11",
@@ -856,7 +856,7 @@ export const galleryAlbums = [
       {
         "id": "mobile-app-ui-chatgpt-image-jun-18-2026-11-25-55-am",
         "type": "image",
-        "src": "./public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 11_25_55 AM.png",
+        "src": "public/gallery/Mobile App UI/ChatGPT Image Jun 18, 2026, 11_25_55 AM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 11_25_55 AM.png",
         "title": "ChatGPT Image Jun 18, 2026, 11 25 55 AM",
         "alt": "Mobile App UI media 12",
@@ -871,19 +871,19 @@ export const galleryAlbums = [
     "title": "SaaS & B2B Product",
     "slug": "saas-b2b-product",
     "folderPath": "./public/gallery/SaaS & B2B Product",
-    "coverImage": "./public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_46_44 PM.png",
+    "coverImage": "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_46_44 PM.webp",
     "images": [
-      "./public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_46_44 PM.png",
-      "./public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_48_50 PM.png",
-      "./public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_51_12 PM.png",
-      "./public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 06_08_39 PM.png",
+      "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_46_44 PM.webp",
+      "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_48_50 PM.webp",
+      "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_51_12 PM.webp",
+      "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 06_08_39 PM.webp",
       "./public/gallery/SaaS & B2B Product/Frame 2120331044.png"
     ],
     "imageEntries": [
       {
         "id": "saas-b2b-product-chatgpt-image-jun-18-2026-04-46-44-pm",
         "type": "image",
-        "src": "./public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_46_44 PM.png",
+        "src": "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_46_44 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_46_44 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 46 44 PM",
         "alt": "SaaS & B2B Product media 1",
@@ -894,7 +894,7 @@ export const galleryAlbums = [
       {
         "id": "saas-b2b-product-chatgpt-image-jun-18-2026-04-48-50-pm",
         "type": "image",
-        "src": "./public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_48_50 PM.png",
+        "src": "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_48_50 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_48_50 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 48 50 PM",
         "alt": "SaaS & B2B Product media 2",
@@ -905,7 +905,7 @@ export const galleryAlbums = [
       {
         "id": "saas-b2b-product-chatgpt-image-jun-18-2026-04-51-12-pm",
         "type": "image",
-        "src": "./public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_51_12 PM.png",
+        "src": "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_51_12 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_51_12 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 51 12 PM",
         "alt": "SaaS & B2B Product media 3",
@@ -916,7 +916,7 @@ export const galleryAlbums = [
       {
         "id": "saas-b2b-product-chatgpt-image-jun-18-2026-06-08-39-pm",
         "type": "image",
-        "src": "./public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 06_08_39 PM.png",
+        "src": "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 06_08_39 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 06_08_39 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 06 08 39 PM",
         "alt": "SaaS & B2B Product media 4",
@@ -940,7 +940,7 @@ export const galleryAlbums = [
       {
         "id": "saas-b2b-product-chatgpt-image-jun-18-2026-04-46-44-pm",
         "type": "image",
-        "src": "./public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_46_44 PM.png",
+        "src": "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_46_44 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_46_44 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 46 44 PM",
         "alt": "SaaS & B2B Product media 1",
@@ -951,7 +951,7 @@ export const galleryAlbums = [
       {
         "id": "saas-b2b-product-chatgpt-image-jun-18-2026-04-48-50-pm",
         "type": "image",
-        "src": "./public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_48_50 PM.png",
+        "src": "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_48_50 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_48_50 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 48 50 PM",
         "alt": "SaaS & B2B Product media 2",
@@ -962,7 +962,7 @@ export const galleryAlbums = [
       {
         "id": "saas-b2b-product-chatgpt-image-jun-18-2026-04-51-12-pm",
         "type": "image",
-        "src": "./public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_51_12 PM.png",
+        "src": "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_51_12 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 04_51_12 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 04 51 12 PM",
         "alt": "SaaS & B2B Product media 3",
@@ -973,7 +973,7 @@ export const galleryAlbums = [
       {
         "id": "saas-b2b-product-chatgpt-image-jun-18-2026-06-08-39-pm",
         "type": "image",
-        "src": "./public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 06_08_39 PM.png",
+        "src": "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 06_08_39 PM.webp",
         "fileName": "ChatGPT Image Jun 18, 2026, 06_08_39 PM.png",
         "title": "ChatGPT Image Jun 18, 2026, 06 08 39 PM",
         "alt": "SaaS & B2B Product media 4",
