@@ -2325,6 +2325,7 @@ body[data-page="home"] .case-title-block h2 {
 }
 
 .gallery-scroll-layer {
+  border-radius: inherit;
   display: block;
   height: 100%;
   transform: translate3d(var(--scroll-x, 0px), var(--scroll-y, 0px), 0) rotate(var(--scroll-r, 0deg));
@@ -2369,6 +2370,7 @@ body[data-page="home"] .case-title-block h2 {
 
 .gallery-image-layer img,
 .gallery-image-layer video {
+  border-radius: 24px;
   display: block;
   height: 100%;
   object-fit: cover;
@@ -4232,7 +4234,20 @@ body[data-page="home"] .case-title-block h2 {
 
 @media (max-width: 1180px) {
   .gallery-album-title-row .gallery-album-title {
+    max-width: 100%;
     text-align: center;
+    width: 100%;
+  }
+
+  .gallery-album-title-row {
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .gallery-album-title-row .gallery-back-button {
+    align-self: center;
+    margin-top: 0;
+    order: 2;
   }
 }
 
