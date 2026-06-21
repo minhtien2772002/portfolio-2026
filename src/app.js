@@ -93,7 +93,7 @@ const approachCards = [
   ["Discover", "Understand users, business needs, and the real problem before defining a solution.", assets.approachDiscover],
   ["Define", "Turn insights into a clear product direction, focused priorities, and an achievable scope.", assets.approachDefine],
   ["Deliver", "Align people, decisions, and execution to move the product from concept to reality.", assets.approachDeliver],
-  ["Validate", "Evaluate outcomes, test assumptions, and continuously improve the product through evidence.", assets.approachValidate],
+  ["Validate", "Test assumptions, measure outcomes, and improve the product through evidence.", assets.approachValidate],
 ];
 
 const workItems = [
@@ -959,7 +959,7 @@ function footerMarkup() {
       <canvas class="footer-grid" aria-hidden="true"></canvas>
       <div class="footer-content">
         <h2 class="footer-title" aria-label="Let’s build better products together.">
-          <span class="footer-line"><span>Let’s&nbsp;</span><span class="typewriter-visual" aria-hidden="true" data-typewriter="footer" data-reserve="simplify"><span class="typewriter-word"></span><span class="typewriter-cursor">|</span></span></span>
+          <span class="footer-line"><span>Let’s&nbsp;</span><span class="typewriter-visual" aria-hidden="true" data-typewriter="footer" data-reserve="design"><span class="typewriter-word"><span class="typewriter-text"></span><span class="typewriter-cursor">|</span></span></span></span>
           <span class="footer-muted">better products together.</span>
         </h2>
         <div class="footer-contact">
@@ -989,7 +989,7 @@ function profileIntroSection({ id = "about", reveal = true, showAboutButton = tr
           <div class="profile-shape layer" data-layer="profile-shape"><img src="${assets.profileShape}" alt=""></div>
           <div class="experience-badge glass-light layer" data-layer="profile-badge">Have lots of ideas in mind</div>
         </div>
-        <figcaption class="profile-caption"><strong>Nguyen Minh Tien</strong><span>Middle Product Designer</span></figcaption>
+        <figcaption class="profile-caption"><strong>Nguyen Minh Tien</strong><span>Product Designer</span></figcaption>
       </figure>
       <div class="about-copy">
         <h2 id="${id}-title"><span>Hello there,</span><span>How u’ doing?</span></h2>
@@ -1081,6 +1081,7 @@ function caseSection() {
       </div>
       ${caseCard(studyCaseCards[1], "small")}
       ${caseCard(studyCaseCards[2], "wide")}
+      <a class="button button-secondary case-mobile-button" href="#/study-cases">See all ${icon()}</a>
     </section>
   `;
 }
@@ -1159,7 +1160,7 @@ function renderGalleryAlbumPage(slug) {
         <section class="gallery-album-hero">
           <div class="gallery-album-title-row">
             <a class="button button-secondary gallery-back-button" href="#/gallery">${icon("arrow-left")} All Works</a>
-            <h1>Gallery</h1>
+            <h1 class="gallery-album-title">Gallery</h1>
           </div>
         </section>
         <section class="gallery-album-body"><p class="gallery-empty">No gallery album data found.</p></section>
@@ -1172,7 +1173,7 @@ function renderGalleryAlbumPage(slug) {
       <section class="gallery-album-hero" aria-labelledby="gallery-album-title">
         <div class="gallery-album-title-row">
           <a class="button button-secondary gallery-back-button" href="#/gallery">${icon("arrow-left")} All Works</a>
-          <h1 id="gallery-album-title">${album.title}</h1>
+          <h1 class="gallery-album-title" id="gallery-album-title">${album.title}</h1>
         </div>
       </section>
       <section class="gallery-album-body" aria-label="${album.title} media">
@@ -1346,7 +1347,7 @@ function renderHomePage() {
         <p class="hero-label">Hello, I’m</p>
         <h1 id="hero-title" class="hero-title" aria-label="Nguyen Minh Tien, Product Designer">
           <span class="typewriter-visual" aria-hidden="true" data-typewriter="hero" data-reserve="Nguyen Minh Tien">
-            <span class="typewriter-word"></span><span class="typewriter-cursor">|</span>
+            <span class="typewriter-word"><span class="typewriter-text"></span><span class="typewriter-cursor">|</span></span>
           </span>
         </h1>
       </section>
@@ -1687,7 +1688,7 @@ function initMenu() {
 
 function typewriter(element, options) {
   if (!element) return;
-  const word = element.querySelector(".typewriter-word");
+  const word = element.querySelector(".typewriter-text");
   const cursor = element.querySelector(".typewriter-cursor");
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (element.dataset.typewriter !== "hero") {
@@ -1741,6 +1742,11 @@ function typewriter(element, options) {
   };
   document.addEventListener("visibilitychange", onVisibilityChange);
   schedule(options.initialDelay || 0);
+  addCleanup(() => {
+    paused = true;
+    window.clearTimeout(timer);
+    document.removeEventListener("visibilitychange", onVisibilityChange);
+  });
 }
 
 function initTypewriters() {
@@ -1752,23 +1758,15 @@ function initTypewriters() {
     pauseDuration: 350,
     jitter: 15,
   });
-  const footerTypewriter = document.querySelector('[data-typewriter="footer"]');
-  if (footerTypewriter && window.matchMedia("(max-width: 1180px)").matches) {
-    const word = footerTypewriter.querySelector(".typewriter-word");
-    const cursor = footerTypewriter.querySelector(".typewriter-cursor");
-    if (word) word.textContent = "build";
-    if (cursor) cursor.hidden = true;
-  } else {
-    typewriter(footerTypewriter, {
-    words: ["build", "design", "refine", "improve", "simplify"],
-    typingSpeed: 95,
-    deletingSpeed: 50,
-    holdDuration: 1500,
-    pauseDuration: 250,
+  typewriter(document.querySelector('[data-typewriter="footer"]'), {
+    words: ["build", "design", "shape", "craft", "launch", "scale"],
+    typingSpeed: 82,
+    deletingSpeed: 46,
+    holdDuration: 1200,
+    pauseDuration: 220,
     initialDelay: 300,
     jitter: 10,
   });
-  }
 }
 
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
@@ -1909,7 +1907,8 @@ function initParallax(section, specs) {
     const rect = source.getBoundingClientRect();
     const target = clamp((window.innerHeight - rect.top) / (window.innerHeight + rect.height));
     current += (target - current) * 0.18;
-    const small = window.innerWidth < 768 ? 0.55 : window.innerWidth < 1024 ? 0.7 : 1;
+    const profileMobile = section.matches('[data-parallax="profile"]') && window.innerWidth <= 720;
+    const small = profileMobile ? 1 : window.innerWidth < 768 ? 0.55 : window.innerWidth < 1024 ? 0.7 : 1;
     specs.forEach((spec) => {
       const node = section.querySelector(`[data-layer="${spec.name}"]`);
       if (!node) return;
@@ -2434,6 +2433,16 @@ function initSkillPhysics() {
   const sync = () => {
     entries.forEach(({ badge, body, width, height }) => {
       clampBodyMotion(body);
+      if (mobileSkills() && window.Matter) {
+        const halfExtentX = Math.abs(Math.cos(body.angle)) * width / 2 + Math.abs(Math.sin(body.angle)) * height / 2;
+        const minCenterX = halfExtentX;
+        const maxCenterX = Math.max(stage.clientWidth - halfExtentX, minCenterX);
+        const nextX = clamp(body.position.x, minCenterX, maxCenterX);
+        if (nextX !== body.position.x) {
+          window.Matter.Body.setPosition(body, { x: nextX, y: body.position.y });
+          window.Matter.Body.setVelocity(body, { x: body.velocity.x * -0.2, y: body.velocity.y });
+        }
+      }
       badge.style.opacity = "1";
       badge.style.transform = `translate3d(${body.position.x - width / 2}px, ${body.position.y - height / 2}px, 0) rotate(${body.angle}rad)`;
     });
@@ -2490,7 +2499,7 @@ function initSkillPhysics() {
     const width = Math.max(stage.clientWidth, 1);
     const height = Math.max(stage.clientHeight, 1);
     const thickness = Math.max(80, width * 0.08);
-    const safePadding = clamp(width * 0.035, window.innerWidth < 720 ? 18 : 28, window.innerWidth < 720 ? 32 : 56);
+    const safePadding = clamp(width * 0.035, window.innerWidth <= 720 ? 28 : 28, window.innerWidth <= 720 ? 36 : 56);
     const minX = safePadding;
     const maxX = Math.max(width - safePadding, minX + 1);
     const floorY = height + thickness / 2 - 12;
@@ -2625,7 +2634,7 @@ function initSkillPhysics() {
 
   const start = async () => {
     if (started || disposed) return;
-    if (reducedMotion.matches || mobileSkills()) {
+    if (reducedMotion.matches) {
       resetBadges(mobileSkills() ? "mobile" : "reduced");
       return;
     }
@@ -2656,8 +2665,8 @@ function initSkillPhysics() {
   observer.observe(stage);
 
   resizeObserver = new ResizeObserver(() => {
-    if (mobileSkills()) {
-      resetBadges("mobile");
+    if (reducedMotion.matches) {
+      resetBadges(mobileSkills() ? "mobile" : "reduced");
       return;
     }
     if (!started || reducedMotion.matches || !engine) return;
@@ -2668,7 +2677,7 @@ function initSkillPhysics() {
   });
   resizeObserver.observe(stage);
 
-  resetBadges(mobileSkills() ? "mobile" : reducedMotion.matches ? "reduced" : "static");
+  resetBadges(reducedMotion.matches && mobileSkills() ? "mobile" : reducedMotion.matches ? "reduced" : "static");
 
   addCleanup(() => {
     disposed = true;
@@ -2708,11 +2717,10 @@ function initGallery() {
         { x: 0, y: 0 },
       ];
       const stageRect = section.getBoundingClientRect();
-      const stackCenterY = stageRect.top + stageRect.height / 2;
-      const splitDistance = Math.max(120, window.innerHeight * 0.22);
-      const target = reduce ? 1 : clamp((window.innerHeight * 0.5 - stackCenterY) / splitDistance);
+      const scrollDistance = Math.max(1, rect.height - window.innerHeight);
+      const target = reduce ? 1 : clamp(-rect.top / scrollDistance);
       current += (target - current) * 0.2;
-      const phase = reduce ? 1 : clamp(current / 0.86);
+      const phase = reduce ? 1 : clamp(current / 0.9);
       cards.forEach((card, index) => {
         const finalLeft = card.offsetLeft || 0;
         const finalTop = card.offsetTop || 0;
@@ -3327,19 +3335,12 @@ function initStudyCaseToc() {
     window.cancelAnimationFrame(tocScrollFrame);
     tocScrollFrame = window.requestAnimationFrame(() => {
       const maxScroll = Math.max(0, scrollArea.scrollWidth - scrollArea.clientWidth);
-      const target = link.offsetLeft - scrollArea.clientWidth / 2 + link.offsetWidth / 2;
-      const mobileTarget = (() => {
-        if (window.innerWidth > 720) return target;
-        const safeInset = 24;
-        const visibleStart = scrollArea.scrollLeft + safeInset;
-        const visibleEnd = scrollArea.scrollLeft + scrollArea.clientWidth - safeInset;
-        const itemStart = link.offsetLeft;
-        const itemEnd = itemStart + link.offsetWidth;
-        if (itemStart >= visibleStart && itemEnd <= visibleEnd) return scrollArea.scrollLeft;
-        return target;
-      })();
+      const scrollRect = scrollArea.getBoundingClientRect();
+      const linkRect = link.getBoundingClientRect();
+      const itemLeft = scrollArea.scrollLeft + linkRect.left - scrollRect.left;
+      const target = itemLeft - (scrollArea.clientWidth - linkRect.width) / 2;
       scrollArea.scrollTo({
-        left: clamp(mobileTarget, 0, maxScroll),
+        left: clamp(target, 0, maxScroll),
         behavior: prefersReducedMotion.matches ? "auto" : "smooth",
       });
     });
