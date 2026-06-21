@@ -392,8 +392,8 @@ export const galleryAlbums = [
         "src": "public/gallery/Landing Pages & Web UI/Slide 16_9 - 15.webp",
         "fileName": "Slide 16_9 - 15.png",
         "title": "Slide 16 9 15",
-        "alt": "Landing Pages & Web UI media 14",
-        "order": 13,
+        "alt": "Landing Pages & Web UI media 12",
+        "order": 11,
         "modifiedAt": "2026-06-20T06:28:15.413Z",
         "modifiedAtMs": 1781936895413
       },
@@ -403,8 +403,8 @@ export const galleryAlbums = [
         "src": "public/gallery/Landing Pages & Web UI/Slide 16_9 - 22.webp",
         "fileName": "Slide 16_9 - 22.png",
         "title": "Slide 16 9 22",
-        "alt": "Landing Pages & Web UI media 15",
-        "order": 14,
+        "alt": "Landing Pages & Web UI media 13",
+        "order": 12,
         "modifiedAt": "2026-06-20T06:28:15.417Z",
         "modifiedAtMs": 1781936895417
       }
@@ -532,35 +532,13 @@ export const galleryAlbums = [
         "modifiedAtMs": 1781757912294
       },
       {
-        "id": "landing-pages-web-ui-screen-recording-2026-06-18-at-11-37-59",
-        "type": "video",
-        "src": "public/gallery/Landing Pages & Web UI/Screen Recording 2026-06-18 at 11.37.59.mov",
-        "fileName": "Screen Recording 2026-06-18 at 11.37.59.mov",
-        "title": "Screen Recording 2026 06 18 at 11.37.59",
-        "alt": "Landing Pages & Web UI media 12",
-        "order": 11,
-        "modifiedAt": "2026-06-18T04:39:49.211Z",
-        "modifiedAtMs": 1781757589211
-      },
-      {
-        "id": "landing-pages-web-ui-screen-recording-2026-06-18-at-11-44-12",
-        "type": "video",
-        "src": "public/gallery/Landing Pages & Web UI/Screen Recording 2026-06-18 at 11.44.12.mov",
-        "fileName": "Screen Recording 2026-06-18 at 11.44.12.mov",
-        "title": "Screen Recording 2026 06 18 at 11.44.12",
-        "alt": "Landing Pages & Web UI media 13",
-        "order": 12,
-        "modifiedAt": "2026-06-18T04:45:06.264Z",
-        "modifiedAtMs": 1781757906264
-      },
-      {
         "id": "landing-pages-web-ui-slide-16-9-15",
         "type": "image",
         "src": "public/gallery/Landing Pages & Web UI/Slide 16_9 - 15.webp",
         "fileName": "Slide 16_9 - 15.png",
         "title": "Slide 16 9 15",
-        "alt": "Landing Pages & Web UI media 14",
-        "order": 13,
+        "alt": "Landing Pages & Web UI media 12",
+        "order": 11,
         "modifiedAt": "2026-06-20T06:28:15.413Z",
         "modifiedAtMs": 1781936895413
       },
@@ -570,8 +548,8 @@ export const galleryAlbums = [
         "src": "public/gallery/Landing Pages & Web UI/Slide 16_9 - 22.webp",
         "fileName": "Slide 16_9 - 22.png",
         "title": "Slide 16 9 22",
-        "alt": "Landing Pages & Web UI media 15",
-        "order": 14,
+        "alt": "Landing Pages & Web UI media 13",
+        "order": 12,
         "modifiedAt": "2026-06-20T06:28:15.417Z",
         "modifiedAtMs": 1781936895417
       }
