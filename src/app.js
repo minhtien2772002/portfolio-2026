@@ -6,7 +6,7 @@ const vendorAsset = (name) => `./public/vendor/${name}`;
 
 const assets = {
   menuIcon: asset("menu-icon.png"),
-  profile: asset("profile.png"),
+  profile: asset("profile.webp"),
   profileVector: asset("profile-vector.svg"),
   profileShape: asset("profile-shape.svg"),
   mottoTop: asset("motto-top.png"),
@@ -1108,16 +1108,29 @@ function gallerySection() {
   `;
 }
 
+function pageHeroBanner({ className = "", contentClass = "", id, label = "", title, buttonHref = "", buttonLabel = "All Works" }) {
+  return `
+    <section class="page-hero-banner ${className}" aria-labelledby="${id}">
+      <div class="page-hero-banner-content ${contentClass}">
+        ${label ? `<p class="page-hero-eyebrow">${label}</p>` : ""}
+        <h1 class="page-hero-title" id="${id}">${title}</h1>
+        ${buttonHref ? `<a class="button button-secondary page-hero-button gallery-back-button" href="${buttonHref}">${icon("arrow-left")} ${buttonLabel}</a>` : ""}
+      </div>
+    </section>
+  `;
+}
+
 function renderGalleryPage() {
   return `
     <main class="gallery-page">
-      <section class="gallery-folder-hero" aria-labelledby="gallery-page-title">
-        <div class="gallery-folder-title-row">
-          ${pattern()}
-          <h1 id="gallery-page-title">Design Gallery</h1>
-          <p>Selected UI explorations across web, mobile, and digital products.</p>
-        </div>
-      </section>
+      ${pageHeroBanner({
+        className: "gallery-folder-hero",
+        contentClass: "gallery-folder-title-row",
+        id: "gallery-page-title",
+        label: "Selected UI explorations",
+        title: "Design Gallery",
+        buttonHref: "#/study-cases",
+      })}
       <section class="gallery-folder-body" aria-label="Gallery albums">
         <div class="gallery-folder-grid" data-reveal>
           ${galleryAlbums.length
@@ -1157,12 +1170,13 @@ function renderGalleryAlbumPage(slug) {
   if (!album) {
     return `
       <main class="gallery-album-page">
-        <section class="gallery-album-hero">
-          <div class="gallery-album-title-row">
-            <a class="button button-secondary gallery-back-button" href="#/gallery">${icon("arrow-left")} All Works</a>
-            <h1 class="gallery-album-title">Gallery</h1>
-          </div>
-        </section>
+        ${pageHeroBanner({
+          className: "gallery-album-hero",
+          contentClass: "gallery-album-title-row",
+          id: "gallery-album-title",
+          title: "Gallery",
+          buttonHref: "#/gallery",
+        })}
         <section class="gallery-album-body"><p class="gallery-empty">No gallery album data found.</p></section>
       </main>
     `;
@@ -1170,12 +1184,13 @@ function renderGalleryAlbumPage(slug) {
   const media = galleryAlbumMedia(album);
   return `
     <main class="gallery-album-page" data-gallery-album="${album.slug}">
-      <section class="gallery-album-hero" aria-labelledby="gallery-album-title">
-        <div class="gallery-album-title-row">
-          <a class="button button-secondary gallery-back-button" href="#/gallery">${icon("arrow-left")} All Works</a>
-          <h1 class="gallery-album-title" id="gallery-album-title">${album.title}</h1>
-        </div>
-      </section>
+      ${pageHeroBanner({
+        className: "gallery-album-hero",
+        contentClass: "gallery-album-title-row",
+        id: "gallery-album-title",
+        title: album.title,
+        buttonHref: "#/gallery",
+      })}
       <section class="gallery-album-body" aria-label="${album.title} media">
         ${media.length ? galleryMasonry(album, media) : `<p class="gallery-empty">This album folder is empty.</p>`}
       </section>
@@ -1366,10 +1381,12 @@ function renderHomePage() {
 function renderAboutPage() {
   return `
     <main class="about-page">
-      <section class="about-page-hero" aria-labelledby="about-page-title">
-        <p class="about-kicker">Mostly abt how I work &amp;</p>
-        <h1 id="about-page-title">A little about me</h1>
-      </section>
+      ${pageHeroBanner({
+        className: "about-page-hero",
+        id: "about-page-title",
+        label: "Mostly about how I work &amp;",
+        title: "A little about me",
+      })}
       <div class="body-wrap about-body">
         ${profileIntroSection({ id: "about-profile", showAboutButton: false })}
         ${mottoSection()}
@@ -1384,7 +1401,12 @@ function renderAboutPage() {
 function renderStudyCaseListPage() {
   return `
     <main class="study-list-page">
-      ${studyHero({ label: "Selected work,", title: "Beyond the screens" })}
+      ${pageHeroBanner({
+        className: "study-hero study-list-hero",
+        id: "study-page-title",
+        label: "Selected work,",
+        title: "Beyond the screens",
+      })}
       <div class="study-body">
         <section class="study-list-grid" aria-label="Study cases" data-reveal>
           ${studyCaseCards.map((card) => studyListingCard(card)).join("")}
@@ -1806,6 +1828,8 @@ function initScrollBlurReveal() {
   const selectors = [
     ".hero-label",
     ".hero-title",
+    ".page-hero-eyebrow",
+    ".page-hero-button",
     ".about-page-hero .about-kicker",
     ".about-page-hero h1",
     ".about-page-intro",
@@ -2935,6 +2959,7 @@ function initGalleryLightbox() {
   let zoom = 1;
   let pan = { x: 0, y: 0 };
   let drag = null;
+  let swipe = null;
   let restoreFocus = null;
   let activeTrigger = null;
   let mediaLoading = false;
@@ -3205,25 +3230,42 @@ function initGalleryLightbox() {
   }, { passive: false });
 
   stage.addEventListener("pointerdown", (event) => {
-    if (!isImageActive() || zoom <= 1) return;
-    drag = { x: event.clientX, y: event.clientY, panX: pan.x, panY: pan.y };
+    if (!isImageActive()) return;
+    if (zoom <= 1) {
+      if (event.pointerType !== "touch" || transitionLocked) return;
+      swipe = { pointerId: event.pointerId, x: event.clientX, y: event.clientY };
+      stage.setPointerCapture(event.pointerId);
+      return;
+    }
+    drag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, panX: pan.x, panY: pan.y };
     stage.setPointerCapture(event.pointerId);
     stage.classList.add("is-dragging");
   });
   stage.addEventListener("pointermove", (event) => {
-    if (!drag) return;
+    if (!drag || drag.pointerId !== event.pointerId) return;
     pan = {
       x: drag.panX + event.clientX - drag.x,
       y: drag.panY + event.clientY - drag.y,
     };
     applyTransform();
   });
-  const stopDrag = () => {
+  const stopPointerInteraction = (event, cancelled = false) => {
+    if (swipe?.pointerId === event.pointerId) {
+      const start = swipe;
+      swipe = null;
+      if (!cancelled) {
+        const deltaX = event.clientX - start.x;
+        const deltaY = event.clientY - start.y;
+        const isHorizontalSwipe = Math.abs(deltaX) >= 52 && Math.abs(deltaX) > Math.abs(deltaY) * 1.25;
+        if (isHorizontalSwipe && deltaX < 0 && !nextButton.disabled) setMedia(index + 1);
+        if (isHorizontalSwipe && deltaX > 0 && !prevButton.disabled) setMedia(index - 1);
+      }
+    }
     drag = null;
     stage.classList.remove("is-dragging");
   };
-  stage.addEventListener("pointerup", stopDrag);
-  stage.addEventListener("pointercancel", stopDrag);
+  stage.addEventListener("pointerup", (event) => stopPointerInteraction(event));
+  stage.addEventListener("pointercancel", (event) => stopPointerInteraction(event, true));
 
   lightbox.addEventListener("keydown", (event) => {
     if (lightbox.dataset.open !== "true") return;
