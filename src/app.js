@@ -2047,11 +2047,12 @@ function initAppIcons() {
     current += (target - current) * 0.16;
     const mobileGrid = window.innerWidth <= 720;
     const small = mobileGrid ? 0.18 : window.innerWidth < 768 ? 0.45 : window.innerWidth < 1024 ? 0.65 : 1;
+    const mobileOffsetY = mix(8, -10, current);
     icons.forEach((icon, index) => {
       const [fromX, toX, fromY, toY, rot] = specs[index];
       const x = mobileGrid ? 0 : mix(fromX, toX, current) * small;
       const y = mobileGrid
-        ? mix(8, -10, current) + ((index % 3) - 1) * 2
+        ? mobileOffsetY
         : mix(fromY, toY, current) * small;
       const r = mobileGrid ? 0 : mix(-rot, rot, current) * small;
       icon.style.transform = mobileGrid
