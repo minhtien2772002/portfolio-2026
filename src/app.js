@@ -88,6 +88,22 @@ const siteLinks = {
 
 const externalLinkAttrs = `target="_blank" rel="noopener noreferrer"`;
 const matterScriptSrc = vendorAsset("matter.min.js");
+const pageTransitionConfig = {
+  panelCount: 7,
+  panelColor: "#050505",
+  panelDuration: 280,
+  panelStagger: 32,
+  panelEase: "cubic-bezier(0.76, 0, 0.24, 1)",
+  fadeDuration: 120,
+  initialPanelDuration: 420,
+  initialPanelStagger: 52,
+  helloLeadDuration: 340,
+  helloWordDelay: 160,
+  helloWordDuration: 980,
+  helloPauseDuration: 1100,
+  helloFadeDuration: 260,
+};
+const initialCurtainSessionKey = "portfolio.hasPlayedInitialCurtain";
 
 const approachCards = [
   ["Discover", "Understand users, business needs, and the real problem before defining a solution.", assets.approachDiscover],
@@ -911,20 +927,6 @@ const footerIconLink = ({ label, href, icon: src, className }) => `
     <img src="${src}" alt="">
   </a>
 `;
-
-function getRoute() {
-  const hash = window.location.hash || "#/";
-  const slugMatch = hash.match(/^#\/study-cases\/([^/?#]+)/);
-  if (slugMatch) return { page: "study-detail", slug: decodeURIComponent(slugMatch[1]) };
-  const gallerySlugMatch = hash.match(/^#\/gallery\/([^/?#]+)/);
-  if (gallerySlugMatch) return { page: "gallery-detail", slug: decodeURIComponent(gallerySlugMatch[1]) };
-  if (hash === "#study-cases" || hash.startsWith("#/study-cases")) return { page: "study-list" };
-  if (hash === "#about" || hash.startsWith("#/about")) return { page: "about" };
-  if (hash === "#works" || hash.startsWith("#/works")) return { page: "home", target: "works" };
-  if (hash === "#gallery" || hash === "#/gallery") return { page: "gallery-list" };
-  if (hash === "#contact" || hash.startsWith("#/contact")) return { page: "home", target: "contact" };
-  return { page: "home" };
-}
 
 function headerMarkup() {
   const route = getRoute();
@@ -1793,6 +1795,336 @@ function initTypewriters() {
 
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 const mix = (from, to, progress) => from + (to - from) * progress;
+
+function parseRoute(hash = window.location.hash || "#/") {
+  const currentHash = hash || "#/";
+  const slugMatch = currentHash.match(/^#\/study-cases\/([^/?#]+)/);
+  if (slugMatch) return { page: "study-detail", slug: decodeURIComponent(slugMatch[1]) };
+  const gallerySlugMatch = currentHash.match(/^#\/gallery\/([^/?#]+)/);
+  if (gallerySlugMatch) return { page: "gallery-detail", slug: decodeURIComponent(gallerySlugMatch[1]) };
+  if (currentHash === "#study-cases" || currentHash.startsWith("#/study-cases")) return { page: "study-list" };
+  if (currentHash === "#about" || currentHash.startsWith("#/about")) return { page: "about" };
+  if (currentHash === "#works" || currentHash.startsWith("#/works")) return { page: "home", target: "works" };
+  if (currentHash === "#gallery" || currentHash === "#/gallery") return { page: "gallery-list" };
+  if (currentHash === "#contact" || currentHash.startsWith("#/contact")) return { page: "home", target: "contact" };
+  return { page: "home" };
+}
+
+function getRoute() {
+  return parseRoute();
+}
+
+function getMajorRouteKey(hash = window.location.hash || "#/") {
+  const route = parseRoute(hash);
+  if (route.page === "study-detail" || route.page === "gallery-detail") return `${route.page}:${route.slug}`;
+  return route.page;
+}
+
+function isMajorHashRoute(hash = "") {
+  if (!hash.startsWith("#")) return false;
+  const knownHashRoute = hash === "#/"
+    || hash === "#about"
+    || hash === "#study-cases"
+    || hash === "#gallery"
+    || hash === "#contact"
+    || hash === "#works"
+    || hash.startsWith("#/about")
+    || hash.startsWith("#/study-cases")
+    || hash === "#/gallery"
+    || /^#\/gallery\/[^/?#]+/.test(hash)
+    || hash.startsWith("#/contact")
+    || hash.startsWith("#/works");
+  if (!knownHashRoute) return false;
+  const route = parseRoute(hash);
+  return ["home", "about", "study-list", "study-detail", "gallery-list", "gallery-detail"].includes(route.page);
+}
+
+function shouldUsePageTransition(fromHash, toHash) {
+  if (!isMajorHashRoute(toHash)) return false;
+  return getMajorRouteKey(fromHash || "#/") !== getMajorRouteKey(toHash || "#/");
+}
+
+const pageTransitionState = {
+  active: false,
+  phase: "idle",
+  initialized: false,
+  initialRevealStarted: false,
+  pendingReveal: false,
+  pendingHash: "",
+  revealFrame: 0,
+  root: null,
+  panels: [],
+};
+
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function hasPlayedInitialCurtain() {
+  try {
+    return window.sessionStorage.getItem(initialCurtainSessionKey) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function markInitialCurtainPlayed() {
+  try {
+    window.sessionStorage.setItem(initialCurtainSessionKey, "1");
+  } catch {}
+}
+
+function wait(duration) {
+  return new Promise((resolve) => window.setTimeout(resolve, duration));
+}
+
+function ensurePageTransitionRoot() {
+  if (pageTransitionState.root?.isConnected) return pageTransitionState.root;
+  let root = document.querySelector(".page-transition");
+  if (!root) {
+    root = document.createElement("div");
+    root.className = "page-transition";
+    root.setAttribute("aria-hidden", "true");
+    root.dataset.state = "idle";
+    root.innerHTML = Array.from({ length: pageTransitionConfig.panelCount }, () => `
+      <span class="page-transition-panel"></span>
+    `).join("");
+    document.body.append(root);
+  }
+  Array.from(root.querySelectorAll(".page-transition-panel")).forEach((panel, index) => {
+    panel.style.setProperty("--panel-index", index);
+    panel.style.setProperty("--panel-color", pageTransitionConfig.panelColor);
+  });
+  pageTransitionState.root = root;
+  pageTransitionState.panels = Array.from(root.querySelectorAll(".page-transition-panel"));
+  return root;
+}
+
+function setPageTransitionActive(active) {
+  const root = ensurePageTransitionRoot();
+  pageTransitionState.active = active;
+  root.dataset.state = active ? "active" : "idle";
+  root.setAttribute("aria-hidden", String(!active));
+  document.body.classList.toggle("is-page-transitioning", active);
+  const appRoot = document.querySelector("#root");
+  if (appRoot) {
+    appRoot.toggleAttribute("inert", active);
+    appRoot.setAttribute("aria-busy", String(active));
+  }
+}
+
+function cancelPageTransitionAnimations() {
+  pageTransitionState.panels.forEach((panel) => {
+    panel.getAnimations().forEach((animation) => animation.cancel());
+  });
+  pageTransitionState.root?.getAnimations().forEach((animation) => animation.cancel());
+}
+
+function resetPageTransitionPanels(scale = 0, origin = "top center") {
+  pageTransitionState.panels.forEach((panel) => {
+    panel.style.transformOrigin = origin;
+    panel.style.transform = `scaleY(${scale})`;
+    panel.style.opacity = "1";
+  });
+}
+
+async function animatePageTransitionCover() {
+  ensurePageTransitionRoot();
+  cancelPageTransitionAnimations();
+  setPageTransitionActive(true);
+  pageTransitionState.phase = "covering";
+  if (prefersReducedMotion()) {
+    pageTransitionState.root.style.background = pageTransitionConfig.panelColor;
+    await pageTransitionState.root.animate(
+      [{ opacity: 0 }, { opacity: 1 }],
+      { duration: pageTransitionConfig.fadeDuration, easing: "ease-out", fill: "forwards" },
+    ).finished.catch(() => {});
+    resetPageTransitionPanels(1, "top center");
+    return;
+  }
+
+  pageTransitionState.root.style.background = "transparent";
+  resetPageTransitionPanels(0, "top center");
+  await Promise.allSettled(pageTransitionState.panels.map((panel, index) => panel.animate(
+    [
+      { transform: "scaleY(0)", transformOrigin: "top center" },
+      { transform: "scaleY(1)", transformOrigin: "top center" },
+    ],
+    {
+      duration: pageTransitionConfig.panelDuration,
+      delay: index * pageTransitionConfig.panelStagger,
+      easing: pageTransitionConfig.panelEase,
+      fill: "forwards",
+    },
+  ).finished));
+  pageTransitionState.root.style.background = pageTransitionConfig.panelColor;
+}
+
+async function animatePageTransitionReveal({
+  panelDuration = pageTransitionConfig.panelDuration,
+  panelStagger = pageTransitionConfig.panelStagger,
+} = {}) {
+  ensurePageTransitionRoot();
+  window.cancelAnimationFrame(pageTransitionState.revealFrame);
+  pageTransitionState.phase = "revealing";
+  if (prefersReducedMotion()) {
+    await pageTransitionState.root.animate(
+      [{ opacity: 1 }, { opacity: 0 }],
+      { duration: pageTransitionConfig.fadeDuration, easing: "ease-in", fill: "forwards" },
+    ).finished.catch(() => {});
+    pageTransitionState.root.style.background = "transparent";
+    setPageTransitionActive(false);
+    resetPageTransitionPanels(0, "top center");
+    pageTransitionState.pendingReveal = false;
+    pageTransitionState.pendingHash = "";
+    pageTransitionState.phase = "idle";
+    return;
+  }
+
+  pageTransitionState.root.style.background = "transparent";
+  resetPageTransitionPanels(1, "bottom center");
+  await Promise.allSettled(pageTransitionState.panels.map((panel, index) => panel.animate(
+    [
+      { transform: "scaleY(1)", transformOrigin: "bottom center" },
+      { transform: "scaleY(0)", transformOrigin: "bottom center" },
+    ],
+    {
+      duration: panelDuration,
+      delay: index * panelStagger,
+      easing: pageTransitionConfig.panelEase,
+      fill: "forwards",
+    },
+  ).finished));
+  setPageTransitionActive(false);
+  resetPageTransitionPanels(0, "top center");
+  pageTransitionState.pendingReveal = false;
+  pageTransitionState.pendingHash = "";
+  pageTransitionState.phase = "idle";
+}
+
+async function animateInitialHello() {
+  const intro = pageTransitionState.root?.querySelector(".page-transition-intro");
+  const leadPath = intro?.querySelector('[data-hello-path="lead"]');
+  const wordPath = intro?.querySelector('[data-hello-path="word"]');
+  if (!intro || !leadPath || !wordPath) return;
+
+  intro.hidden = false;
+  intro.style.opacity = "1";
+  const drawPath = (path, duration, delay = 0) => path.animate(
+    [
+      { opacity: 0, strokeDashoffset: 1 },
+      { opacity: 1, strokeDashoffset: 0 },
+    ],
+    {
+      delay,
+      duration,
+      easing: "cubic-bezier(0.42, 0, 0.58, 1)",
+      fill: "forwards",
+    },
+  ).finished.catch(() => {});
+
+  await Promise.all([
+    drawPath(leadPath, pageTransitionConfig.helloLeadDuration),
+    drawPath(wordPath, pageTransitionConfig.helloWordDuration, pageTransitionConfig.helloWordDelay),
+  ]);
+  await wait(pageTransitionConfig.helloPauseDuration);
+  await intro.animate(
+    [{ opacity: 1 }, { opacity: 0 }],
+    {
+      duration: pageTransitionConfig.helloFadeDuration,
+      easing: "ease-out",
+      fill: "forwards",
+    },
+  ).finished.catch(() => {});
+  intro.hidden = true;
+}
+
+async function playInitialPageTransition() {
+  if (pageTransitionState.initialRevealStarted || pageTransitionState.phase !== "idle") return;
+  pageTransitionState.initialRevealStarted = true;
+  const root = ensurePageTransitionRoot();
+  const intro = root.querySelector(".page-transition-intro");
+
+  if (hasPlayedInitialCurtain()) {
+    if (intro) intro.hidden = true;
+    root.removeAttribute("data-initial");
+    root.style.background = "transparent";
+    resetPageTransitionPanels(0, "top center");
+    setPageTransitionActive(false);
+    return;
+  }
+
+  markInitialCurtainPlayed();
+  pageTransitionState.phase = "initial-intro";
+  setPageTransitionActive(true);
+  root.style.background = pageTransitionConfig.panelColor;
+  resetPageTransitionPanels(1, "bottom center");
+  if (prefersReducedMotion()) {
+    if (intro) intro.hidden = true;
+  } else {
+    await animateInitialHello();
+  }
+  root.removeAttribute("data-initial");
+  pageTransitionState.revealFrame = window.requestAnimationFrame(() => {
+    void animatePageTransitionReveal({
+      panelDuration: pageTransitionConfig.initialPanelDuration,
+      panelStagger: pageTransitionConfig.initialPanelStagger,
+    });
+  });
+}
+
+async function navigateWithPageTransition(nextHash) {
+  const currentHash = window.location.hash || "#/";
+  if (pageTransitionState.phase !== "idle" || !nextHash || nextHash === currentHash) return;
+  if (!shouldUsePageTransition(currentHash, nextHash)) {
+    window.location.hash = nextHash;
+    return;
+  }
+
+  pageTransitionState.pendingHash = nextHash;
+  pageTransitionState.pendingReveal = true;
+  document.body.classList.remove("is-mobile-menu-open");
+  await animatePageTransitionCover();
+  pageTransitionState.phase = "awaiting-route";
+  if (window.location.hash !== nextHash) {
+    window.location.hash = nextHash;
+    return;
+  }
+  boot();
+  pageTransitionState.phase = "revealing";
+  pageTransitionState.revealFrame = window.requestAnimationFrame(() => {
+    void animatePageTransitionReveal();
+  });
+}
+
+function initPageTransitions() {
+  if (pageTransitionState.initialized) return;
+  pageTransitionState.initialized = true;
+  ensurePageTransitionRoot();
+  document.addEventListener("click", (event) => {
+    if (event.defaultPrevented || event.button !== 0) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const link = event.target.closest("a[href]");
+    if (!link) return;
+    const href = link.getAttribute("href") || "";
+    if (!href.startsWith("#")) return;
+    if (link.target && link.target !== "_self") return;
+    if (!shouldUsePageTransition(window.location.hash || "#/", href)) return;
+    event.preventDefault();
+    void navigateWithPageTransition(href);
+  }, true);
+}
+
+function handleHashChange() {
+  boot();
+  if (!pageTransitionState.pendingReveal) return;
+  if (pageTransitionState.phase !== "awaiting-route") return;
+  if ((window.location.hash || "#/") !== pageTransitionState.pendingHash) return;
+  pageTransitionState.phase = "revealing";
+  pageTransitionState.revealFrame = window.requestAnimationFrame(() => {
+    void animatePageTransitionReveal();
+  });
+}
 
 function initReveal() {
   const elements = Array.from(document.querySelectorAll("[data-reveal]"));
@@ -3474,5 +3806,7 @@ function boot() {
   }
 }
 
-window.addEventListener("hashchange", boot);
+initPageTransitions();
+window.addEventListener("hashchange", handleHashChange);
 boot();
+void playInitialPageTransition();

@@ -30,6 +30,7 @@
   --z-overlay-backdrop: 1000;
   --z-overlay-stage: 1001;
   --z-overlay-controls: 1002;
+  --z-page-transition: 11000;
 }
 
 * {
@@ -53,9 +54,81 @@ body {
   text-rendering: geometricPrecision;
 }
 
+body.is-page-transitioning {
+  cursor: progress;
+}
+
 main {
   background: var(--gray-100);
   isolation: isolate;
+}
+
+.page-transition {
+  background: transparent;
+  column-gap: 0;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: fixed;
+  row-gap: 0;
+  visibility: hidden;
+  z-index: var(--z-page-transition);
+}
+
+.page-transition[data-state="active"] {
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.has-played-initial-curtain .page-transition[data-initial] {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.page-transition-panel {
+  background: var(--panel-color, #050505);
+  margin-inline: -1px;
+  min-width: calc(100% + 2px);
+  transform: scaleY(0);
+  transform-origin: top center;
+  will-change: transform;
+}
+
+.page-transition[data-initial] .page-transition-panel {
+  transform: scaleY(1);
+}
+
+.page-transition-intro {
+  display: grid;
+  inset: 0;
+  place-items: center;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.page-transition-intro[hidden] {
+  display: none;
+}
+
+.page-transition-hello {
+  color: #fff;
+  height: auto;
+  overflow: visible;
+  width: min(78vw, 638px);
+}
+
+.page-transition-hello-path {
+  fill: none;
+  opacity: 0;
+  stroke: currentColor;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  stroke-linecap: round;
+  stroke-width: 14.8883;
+  will-change: stroke-dashoffset, opacity;
 }
 
 img {
