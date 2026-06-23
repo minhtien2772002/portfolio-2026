@@ -4762,22 +4762,23 @@ body[data-page="home"] .case-title-block h2 {
     padding-left: 20px;
   }
 
-  .app-icon-cloud {
+  .work-section .app-icon-cloud {
     align-content: flex-start;
     align-self: center;
     display: flex;
     flex-wrap: wrap;
-    gap: 19px 17px;
+    gap: 10px;
     justify-content: center;
     opacity: 1;
     pointer-events: none;
     position: relative;
-    width: 100%;
+    max-width: calc(100vw - 32px);
+    width: min(360px, calc(100% + 48px));
     z-index: 2;
   }
 
-  .app-icon-orbit {
-    --size: 72px;
+  .work-section .app-icon-orbit {
+    --size: clamp(40px, 11vw, 48px);
     left: auto;
     pointer-events: none;
     position: relative;
@@ -4785,9 +4786,15 @@ body[data-page="home"] .case-title-block h2 {
     transform: translate3d(0, 0, 0);
   }
 
-  .app-icon {
-    height: 72px;
-    width: 72px;
+  .work-section .app-icon {
+    border-radius: 16px;
+    height: var(--size);
+    padding: 7px;
+    width: var(--size);
+  }
+
+  .work-section .app-icon img {
+    border-radius: 10px;
   }
 
   .gallery-lightbox {
