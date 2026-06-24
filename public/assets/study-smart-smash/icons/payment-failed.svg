@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 27.5 23.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="payment failed">
+<path id="Vector" d="M11.75 18.75H4.75C3.68913 18.75 2.67172 18.3286 1.92157 17.5784C1.17143 16.8283 0.75 15.8109 0.75 14.75V4.75C0.75 3.68913 1.17143 2.67172 1.92157 1.92157C2.67172 1.17143 3.68913 0.75 4.75 0.75H22.75C23.8109 0.75 24.8283 1.17143 25.5784 1.92157C26.3286 2.67172 26.75 3.68913 26.75 4.75V8.75" stroke="var(--stroke-0, black)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M26.75 6.75H0.75" stroke="var(--stroke-0, black)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M19.75 15.75L22.75 18.75" stroke="var(--stroke-0, black)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M22.75 15.75L19.75 18.75" stroke="var(--stroke-0, black)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_5" d="M21.25 22.75C24.2876 22.75 26.75 20.2876 26.75 17.25C26.75 14.2124 24.2876 11.75 21.25 11.75C18.2124 11.75 15.75 14.2124 15.75 17.25C15.75 20.2876 18.2124 22.75 21.25 22.75Z" stroke="var(--stroke-0, black)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

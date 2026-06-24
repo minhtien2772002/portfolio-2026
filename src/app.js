@@ -1,4 +1,5 @@
 import { galleryAlbums } from "./data/gallery.js";
+import { smartSmashCardImage, smartSmashCase } from "./data/smart-smash.js";
 import { icon, magIcon } from "./icons/magicons.js";
 
 const asset = (name) => `./public/assets/${name}`;
@@ -37,7 +38,6 @@ const assets = {
   studyHabitCard: asset("study-habit-card.png"),
   studyEtubeCard: asset("study-etube-card.png"),
   studyHubCycleCard: asset("study-hub-cycle-card.png"),
-  studyPotluckCard: asset("study-potluck-card.png"),
   studyHabitSlides: Array.from({ length: 14 }, (_, index) => asset(`study-habit-slide-${String(index + 1).padStart(2, "0")}.png`)),
   studyEtubeSlides: Array.from({ length: 11 }, (_, index) => asset(`study-etube-slide-${String(index + 1).padStart(2, "0")}.png`)),
   studyHubCycle: {
@@ -264,15 +264,16 @@ const studyCaseCards = [
     href: "#/study-cases/hub-cycle",
   },
   {
-    slug: "cultural-exchange-potluck",
-    title: "Cultural exchange potluck",
-    meta: "06/20/2025",
-    image: assets.studyPotluckCard,
-    href: "#/contact",
+    slug: "smart-smash",
+    title: "Smart Smash",
+    meta: "Product Design Case Study - 2026",
+    image: smartSmashCardImage,
+    href: "#/study-cases/smart-smash",
   },
 ];
 
 const studyCaseDetails = {
+  "smart-smash": smartSmashCase,
   "habit-tracker-app": {
     title: "Habit Tracker App",
     label: "Case study,",
@@ -1501,15 +1502,16 @@ function studyListingCard(card) {
 }
 
 function studyCaseToc(detail) {
+  const sections = detail.sections.filter((section) => section.toc !== false);
   return `
     <nav class="study-toc" aria-label="${detail.title} table of contents" data-reveal>
       <a class="study-back-link" href="#/study-cases">${icon("arrow-left")}<span>All cases</span></a>
       <span class="study-toc-divider" aria-hidden="true"></span>
       <span class="study-toc-fade" aria-hidden="true"></span>
       <div class="study-toc-scroll">
-        ${detail.sections.map((section, index) => `
+        ${sections.map((section, index) => `
           <a class="study-toc-link${index === 0 ? " is-active" : ""}" href="#${section.id}" data-toc-link="${section.id}">
-            <span aria-hidden="true"></span>${section.title}
+            <span aria-hidden="true"></span>${section.tocLabel || section.title}
           </a>
         `).join("")}
       </div>
@@ -1531,7 +1533,8 @@ function studyAssetIcon(name) {
   return `<img class="study-case-icon study-case-icon-${name}" src="${asset(`study-case-icons/study-case-icon-${name}.png`)}" alt="" aria-hidden="true">`;
 }
 
-function studyBlockIcon(label = "") {
+function studyBlockIcon(label = "", iconSrc = "") {
+  if (iconSrc) return `<img class="study-case-icon" src="${iconSrc}" alt="" aria-hidden="true">`;
   const key = label.toLowerCase();
   const exactIconMap = {
     needs: "check",
@@ -1593,17 +1596,17 @@ function studyBlockIcon(label = "") {
 }
 
 function studyBlock(block) {
-  const renderCard = ([title, body]) => `
+  const renderCard = ([title, body, iconSrc]) => `
     <article class="study-info-card">
-      <span class="study-card-icon" aria-hidden="true">${studyBlockIcon(title)}</span>
+      <span class="study-card-icon" aria-hidden="true">${studyBlockIcon(title, iconSrc)}</span>
       <h3>${title}</h3>
       ${body ? `<p>${String(body).split("\n").join("<br>")}</p>` : ""}
     </article>
   `;
   if (block.type === "meta") {
-    return `<div class="study-meta-card">${block.rows.map(([label, value]) => `
+    return `<div class="study-meta-card">${block.rows.map(([label, value, iconSrc]) => `
       <div class="study-meta-row">
-        <span class="study-card-icon" aria-hidden="true">${studyBlockIcon(label)}</span>
+        <span class="study-card-icon" aria-hidden="true">${studyBlockIcon(label, iconSrc)}</span>
         <span><small>${label}</small><strong>${value}</strong></span>
       </div>
     `).join("")}</div>`;
@@ -1611,9 +1614,10 @@ function studyBlock(block) {
   if (block.type === "metrics") {
     return `<div class="study-metric-grid">${block.items.map((item) => `
       <article class="study-metric-card">
+        ${item[3] ? `<span class="study-card-icon" aria-hidden="true">${studyBlockIcon(item[0], item[3])}</span>` : ""}
         <small>${item[0]}</small>
         <strong>${item[1]}</strong>
-        ${item[2] ? `<p>${item[2]}</p>` : ""}
+        ${item[2] ? `<p>${String(item[2]).split("\n").join("<br>")}</p>` : ""}
       </article>
     `).join("")}</div>`;
   }
@@ -1630,10 +1634,18 @@ function studyBlock(block) {
     return `<figure class="${classes}"${style}><img src="${block.src}" alt="${block.alt || ""}" loading="lazy">${block.caption ? `<figcaption>${block.caption}</figcaption>` : ""}</figure>`;
   }
   if (block.type === "imageGrid") {
-    return `<div class="study-image-grid">${block.images.map(([src, alt]) => `<figure class="study-image-block"><img src="${src}" alt="${alt}" loading="lazy"></figure>`).join("")}</div>`;
+    const figureClasses = [
+      "study-image-block",
+      block.fit === "contain" ? "study-image-contain" : "",
+      block.variant ? `study-image-${block.variant}` : "",
+    ].filter(Boolean).join(" ");
+    return `<div class="study-image-grid study-image-grid-${block.columns || 2}">${block.images.map(([src, alt]) => `<figure class="${figureClasses}"><img src="${src}" alt="${alt}" loading="lazy"></figure>`).join("")}${block.caption ? `<p class="study-image-grid-caption">${block.caption}</p>` : ""}</div>`;
   }
   if (block.type === "flow") {
-    return `<div class="study-flow-row">${block.items.map((item) => `<article><span>${item}</span></article>`).join("")}</div>`;
+    return `<div class="study-flow-row">${block.items.map((item) => {
+      const [step, label] = Array.isArray(item) ? item : ["", item];
+      return `<article>${step ? `<small>${step}</small>` : ""}<span>${label}</span></article>`;
+    }).join("")}</div>`;
   }
   if (block.type === "highlight") {
     return `<aside class="study-highlight"><blockquote>${block.quote}</blockquote><p>${block.label}</p></aside>`;
@@ -1644,12 +1656,22 @@ function studyBlock(block) {
   if (block.type === "persona") {
     return `<article class="study-persona-card"><h3>${block.name}</h3><p>${block.meta}</p>${studyChips(block.chips)}</article>`;
   }
+  if (block.type === "profileCards") {
+    return `<div class="study-profile-card-grid study-card-grid-${block.columns || 3}">${block.items.map(([title, body, chips, iconSrc]) => `
+      <article class="study-profile-card">
+        <span class="study-card-icon" aria-hidden="true">${studyBlockIcon(title, iconSrc)}</span>
+        <h3>${title}</h3>
+        <p>${body}</p>
+        ${studyChips(chips)}
+      </article>
+    `).join("")}</div>`;
+  }
   if (block.type === "chipCard") {
     return `<article class="study-chip-card"><h3>${block.title}</h3>${studyChips(block.items)}</article>`;
   }
   if (block.type === "chips") return studyChips(block.items);
   if (block.type === "list") {
-    return `<div class="study-takeaways">${block.items.map((item) => `<p><span class="study-card-icon" aria-hidden="true">${studyAssetIcon("check")}</span>${item}</p>`).join("")}</div>`;
+    return `<div class="study-takeaways">${block.items.map((item) => `<p><span class="study-card-icon" aria-hidden="true">${block.icon ? studyBlockIcon("", block.icon) : studyAssetIcon("check")}</span>${item}</p>`).join("")}</div>`;
   }
   if (block.type === "paragraph") return `<p class="study-body-copy">${block.text}</p>`;
   if (block.type === "table") {

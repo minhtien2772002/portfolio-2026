@@ -1220,7 +1220,7 @@ button {
 }
 
 body[data-page="home"] .case-title-block h2 {
-  text-align: center;
+  text-align: left;
   width: 100%;
 }
 
@@ -1577,6 +1577,7 @@ body[data-page="home"] .case-title-block h2 {
 .study-info-card,
 .study-metric-card,
 .study-persona-card,
+.study-profile-card,
 .study-highlight,
 .study-chip-card,
 .study-note {
@@ -1775,6 +1776,38 @@ body[data-page="home"] .case-title-block h2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.study-image-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.study-image-grid-caption {
+  color: var(--text-default);
+  font-size: 14px;
+  grid-column: 1 / -1;
+  line-height: 18px;
+  margin: 0;
+  opacity: 0.72;
+  text-align: center;
+}
+
+.study-image-device {
+  background: var(--background-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-3xl);
+  overflow: hidden;
+  padding: 12px;
+}
+
+.study-image-device img {
+  background: transparent;
+  border: 0;
+  border-radius: 14px;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
 .study-flow-row {
   display: grid;
   gap: 16px;
@@ -1788,8 +1821,16 @@ body[data-page="home"] .case-title-block h2 {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-3xl);
   display: flex;
+  flex-direction: column;
+  gap: 8px;
   min-height: 108px;
   padding: 16px;
+}
+
+.study-flow-row small {
+  color: var(--text-quaternary);
+  font-size: 14px;
+  line-height: 18px;
 }
 
 .study-flow-row span {
@@ -1849,6 +1890,35 @@ body[data-page="home"] .case-title-block h2 {
   flex-direction: column;
   gap: 8px;
   padding: 24px;
+}
+
+.study-profile-card-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.study-profile-card {
+  border-radius: var(--radius-3xl);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 24px;
+}
+
+.study-profile-card h3 {
+  color: var(--text-default);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  margin: 0;
+}
+
+.study-profile-card p {
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0;
 }
 
 .study-persona-card h3 {
@@ -3606,6 +3676,10 @@ body[data-page="home"] .case-title-block h2 {
   }
 
   .study-card-grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .study-image-grid-3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
