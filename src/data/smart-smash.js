@@ -1,5 +1,5 @@
 const assetRoot = "./public/assets/study-smart-smash";
-const image = (name) => `${assetRoot}/study-smart-smash-${name}.png`;
+const image = (name) => `${assetRoot}/study-smart-smash-${name}.webp`;
 const icon = (name) => `${assetRoot}/icons/${name}.svg`;
 
 const deviceGrid = (names, columns = 3, caption = "") => ({
