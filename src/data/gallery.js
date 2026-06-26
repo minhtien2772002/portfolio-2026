@@ -947,6 +947,7 @@ export const galleryAlbums = [
       "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_48_50 PM.webp",
       "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 04_51_12 PM.webp",
       "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 18, 2026, 06_08_39 PM.webp",
+      "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 25, 2026, 04_40_08 PM.webp",
       "public/gallery/SaaS & B2B Product/Frame 2120331044.webp"
     ],
     "imageEntries": [
@@ -995,13 +996,24 @@ export const galleryAlbums = [
         "modifiedAtMs": 1781780919836
       },
       {
+        "id": "saas-b2b-product-chatgpt-image-jun-25-2026-04-40-08-pm",
+        "type": "image",
+        "src": "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 25, 2026, 04_40_08 PM.webp",
+        "fileName": "ChatGPT Image Jun 25, 2026, 04_40_08 PM.png",
+        "title": "ChatGPT Image Jun 25, 2026, 04 40 08 PM",
+        "alt": "SaaS & B2B Product media 5",
+        "order": 4,
+        "modifiedAt": "2026-06-25T09:40:09.009Z",
+        "modifiedAtMs": 1782380409009
+      },
+      {
         "id": "saas-b2b-product-frame-2120331044",
         "type": "image",
         "src": "public/gallery/SaaS & B2B Product/Frame 2120331044.webp",
         "fileName": "Frame 2120331044.png",
         "title": "Frame 2120331044",
-        "alt": "SaaS & B2B Product media 5",
-        "order": 4,
+        "alt": "SaaS & B2B Product media 6",
+        "order": 5,
         "modifiedAt": "2026-06-18T16:06:46.211Z",
         "modifiedAtMs": 1781798806211
       }
@@ -1052,13 +1064,24 @@ export const galleryAlbums = [
         "modifiedAtMs": 1781780919836
       },
       {
+        "id": "saas-b2b-product-chatgpt-image-jun-25-2026-04-40-08-pm",
+        "type": "image",
+        "src": "public/gallery/SaaS & B2B Product/ChatGPT Image Jun 25, 2026, 04_40_08 PM.webp",
+        "fileName": "ChatGPT Image Jun 25, 2026, 04_40_08 PM.png",
+        "title": "ChatGPT Image Jun 25, 2026, 04 40 08 PM",
+        "alt": "SaaS & B2B Product media 5",
+        "order": 4,
+        "modifiedAt": "2026-06-25T09:40:09.009Z",
+        "modifiedAtMs": 1782380409009
+      },
+      {
         "id": "saas-b2b-product-frame-2120331044",
         "type": "image",
         "src": "public/gallery/SaaS & B2B Product/Frame 2120331044.webp",
         "fileName": "Frame 2120331044.png",
         "title": "Frame 2120331044",
-        "alt": "SaaS & B2B Product media 5",
-        "order": 4,
+        "alt": "SaaS & B2B Product media 6",
+        "order": 5,
         "modifiedAt": "2026-06-18T16:06:46.211Z",
         "modifiedAtMs": 1781798806211
       }
