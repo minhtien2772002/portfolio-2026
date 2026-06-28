@@ -1,4 +1,5 @@
 import { galleryAlbums } from "./data/gallery.js";
+import { GradualBlur } from "./components/GradualBlur.js";
 import { smartSmashCardImage, smartSmashCase } from "./data/smart-smash.js";
 import { icon, magIcon } from "./icons/magicons.js";
 
@@ -35,9 +36,9 @@ const assets = {
   caseOne: asset("case-1.png"),
   caseTwo: asset("case-2.png"),
   caseThree: asset("case-3.png"),
-  studyHabitCard: asset("study-habit-card.png"),
-  studyEtubeCard: asset("study-etube-card.png"),
-  studyHubCycleCard: asset("study-hub-cycle-card.png"),
+  studyHabitCard: asset("study-habit-tracker.webp"),
+  studyEtubeCard: asset("study-etube.webp"),
+  studyHubCycleCard: asset("study-hub-cycle.webp"),
   studyHabitSlides: Array.from({ length: 14 }, (_, index) => asset(`study-habit-slide-${String(index + 1).padStart(2, "0")}.png`)),
   studyEtubeSlides: Array.from({ length: 11 }, (_, index) => asset(`study-etube-slide-${String(index + 1).padStart(2, "0")}.png`)),
   studyHubCycle: {
@@ -110,6 +111,14 @@ const approachCards = [
   ["Define", "Turn insights into a clear product direction, focused priorities, and an achievable scope.", assets.approachDefine],
   ["Deliver", "Align people, decisions, and execution to move the product from concept to reality.", assets.approachDeliver],
   ["Validate", "Test assumptions, measure outcomes, and improve the product through evidence.", assets.approachValidate],
+];
+
+const aboutQuestionStates = [
+  ["WHY", "does this need to exist?"],
+  ["WHO", "are we building this for?"],
+  ["WHAT", "problem are we really solving?"],
+  ["WHERE", "does the workflow break down?"],
+  ["HOW", "do we know it creates value?"],
 ];
 
 const workItems = [
@@ -935,6 +944,15 @@ function headerMarkup() {
   const isGallery = route.page === "gallery-list" || route.page === "gallery-detail";
   return `
     <header class="site-header">
+      ${GradualBlur({
+        target: "parent",
+        position: "top",
+        exponential: true,
+        strength: 2,
+        divCount: 5,
+        opacity: 1,
+        height: "var(--site-header-blur-height, 100px)",
+      })}
       <button class="mobile-menu-overlay" type="button" aria-hidden="true" tabindex="-1"></button>
       <nav class="nav-shell glass-light" aria-label="Primary navigation">
         <a class="brand" href="#/" aria-label="Nguyen Minh Tien home">
@@ -1075,17 +1093,47 @@ function approachSection() {
 }
 
 function caseSection() {
+  const homeCases = studyCaseCards.slice(0, 3);
   return `
     <section class="section case-section" aria-labelledby="case-title" data-reveal>
-      ${caseCard(studyCaseCards[0], "large")}
-      <div class="case-title-block">
-        <h2 id="case-title">Study Cases</h2>
-        <a class="button button-secondary" href="#/study-cases">See all ${icon()}</a>
+      <h2 class="sr-only" id="case-title">Study Cases</h2>
+      <div class="case-full-list">
+        ${homeCases.map((card) => caseFullWidthCard(card)).join("")}
       </div>
-      ${caseCard(studyCaseCards[1], "small")}
-      ${caseCard(studyCaseCards[2], "wide")}
-      <a class="button button-secondary case-mobile-button" href="#/study-cases">See all ${icon()}</a>
+      <div class="case-full-action">
+        <a class="button button-secondary" href="#/study-cases">All study cases ${icon()}</a>
+      </div>
     </section>
+  `;
+}
+
+function homeStudyCaseTitle(card) {
+  if (card.slug === "habit-tracker-app") return "Habit Tracker App";
+  if (card.slug === "etube-music-app-redesign") return "eTube Music";
+  if (card.slug === "hub-cycle") return "Hub Cycle";
+  return card.title;
+}
+
+function caseFullWidthCard(card) {
+  const title = homeStudyCaseTitle(card);
+  return `
+    <a class="case-full-card" href="${card.href}" aria-label="${title}, ${card.meta}">
+      <span class="case-full-media" aria-hidden="true">
+        <img class="case-full-image" src="${card.image}" alt="" loading="lazy">
+      </span>
+      <span class="case-full-overlay" aria-hidden="true"></span>
+      <span class="case-full-content">
+        <span class="case-full-title" aria-hidden="true">
+          <span class="case-full-title-mask">
+            <span class="case-full-title-stack">
+              <span>${title}</span>
+              <span>${title}</span>
+            </span>
+          </span>
+        </span>
+        <span class="round-icon case-full-icon" aria-hidden="true">${icon()}</span>
+      </span>
+    </a>
   `;
 }
 
@@ -1107,6 +1155,45 @@ function gallerySection() {
         </div>
       </div>
       ${latestImages.length ? galleryLightbox({ title: "Gallery", images: latestImages.map((image) => image.src) }) : ""}
+    </section>
+  `;
+}
+
+function aboutQuestionSection() {
+  const [firstWord, firstQuestion] = aboutQuestionStates[0];
+  const introLines = [
+    "I don’t start with UI",
+    "I start with better questions",
+  ];
+  const characterMarkup = (text) => text.split(" ").map((word) => {
+    const letters = Array.from(word).map((character) => (
+      `<span class="about-question-intro-char">${character}</span>`
+    )).join("");
+    return `<span class="about-question-intro-word">${letters}</span>`;
+  }).join(" ");
+  const introMarkup = introLines.map((line) => `
+    <span class="about-question-intro-line">${characterMarkup(line)}</span>
+  `).join("");
+  return `
+    <section class="about-question-section" aria-labelledby="about-question-title" data-about-questions>
+      <div class="about-question-inner">
+        <p class="about-question-intro" id="about-question-title" data-question-intro aria-label="I don’t start with UI. I start with better questions.">
+          ${introMarkup}
+        </p>
+        <div class="about-question-stage" aria-hidden="true">
+          <div class="about-question-state" data-question-panel="0">
+            <p class="about-question-word" data-question-word>${firstWord}</p>
+            <p class="about-question-copy" data-question-copy>${firstQuestion}</p>
+          </div>
+          <div class="about-question-state" data-question-panel="1">
+            <p class="about-question-word" data-question-word>${firstWord}</p>
+            <p class="about-question-copy" data-question-copy>${firstQuestion}</p>
+          </div>
+        </div>
+        <ol class="about-question-list sr-only" aria-label="Product questions">
+          ${aboutQuestionStates.map(([word, question]) => `<li><strong>${word}</strong><span>${question}</span></li>`).join("")}
+        </ol>
+      </div>
     </section>
   `;
 }
@@ -1392,6 +1479,7 @@ function renderAboutPage() {
       })}
       <div class="body-wrap about-body">
         ${profileIntroSection({ id: "about-profile", showAboutButton: false })}
+        ${aboutQuestionSection()}
         ${mottoSection()}
         ${workSection()}
         ${certificatesSection()}
@@ -3155,6 +3243,190 @@ function initGallery() {
   });
 }
 
+function initAboutQuestions() {
+  const section = document.querySelector("[data-about-questions]");
+  if (!section) return;
+  const intro = section.querySelector("[data-question-intro]");
+  const introChars = Array.from(section.querySelectorAll(".about-question-intro-char"));
+  const panels = Array.from(section.querySelectorAll("[data-question-panel]"));
+  if (!intro || !introChars.length || panels.length < 2) return;
+
+  const setPanelContent = (panel, index) => {
+    const [panelWord, panelQuestion] = aboutQuestionStates[clamp(index, 0, aboutQuestionStates.length - 1)];
+    panel.querySelector("[data-question-word]").textContent = panelWord;
+    panel.querySelector("[data-question-copy]").textContent = panelQuestion;
+  };
+  const setPanelVisual = (panel, opacity, blur) => {
+    panel.style.opacity = String(opacity);
+    panel.style.filter = `blur(${blur.toFixed(2)}px)`;
+  };
+  const setIntroVisual = (opacity, blur) => {
+    intro.style.opacity = String(opacity);
+    intro.style.filter = `blur(${blur.toFixed(2)}px)`;
+  };
+  const easeOut = (value) => 1 - Math.pow(1 - clamp(value), 3);
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    section.dataset.motion = "reduced";
+    panels.forEach((panel, index) => {
+      setPanelContent(panel, index === 0 ? 0 : 1);
+      setPanelVisual(panel, index === 0 ? 1 : 0, 0);
+    });
+    return;
+  }
+
+  let frame = 0;
+  let transitionFrame = 0;
+  let activeStage = -2;
+  let activePanel = 0;
+  let transition = null;
+  const transitionDuration = 620;
+
+  const applyStageInstant = (stage) => {
+    activeStage = stage;
+    transition = null;
+    if (stage === -2) {
+      setIntroVisual(0, 8);
+      panels.forEach((panel) => setPanelVisual(panel, 0, 10));
+      return;
+    }
+    if (stage === -1) {
+      setIntroVisual(1, 0);
+      panels.forEach((panel) => setPanelVisual(panel, 0, 10));
+      return;
+    }
+    setIntroVisual(0, 10);
+    setPanelContent(panels[activePanel], stage);
+    setPanelVisual(panels[activePanel], 1, 0);
+    setPanelVisual(panels[1 - activePanel], 0, 10);
+  };
+
+  const startTransition = (targetStage) => {
+    if (targetStage === activeStage || transition?.targetStage === targetStage) return;
+    const fromStage = activeStage;
+    const incomingPanel = targetStage >= 0 ? 1 - activePanel : activePanel;
+    const outgoingPanel = activePanel;
+    if (targetStage >= 0) setPanelContent(panels[incomingPanel], targetStage);
+    transition = {
+      fromStage,
+      targetStage,
+      start: performance.now(),
+      incomingPanel,
+      outgoingPanel,
+    };
+    if (!transitionFrame) transitionFrame = window.requestAnimationFrame(runTransition);
+  };
+
+  const runTransition = (time) => {
+    transitionFrame = 0;
+    if (!transition) return;
+    const progress = easeOut((time - transition.start) / transitionDuration);
+    const outOpacity = 1 - progress;
+    const inOpacity = progress;
+    const outBlur = progress * 10;
+    const inBlur = (1 - progress) * 10;
+
+    if (transition.fromStage === -1) {
+      setIntroVisual(outOpacity, outBlur);
+    } else if (transition.fromStage === -2) {
+      setIntroVisual(0, 8);
+    } else {
+      setPanelVisual(panels[transition.outgoingPanel], outOpacity, outBlur);
+    }
+
+    if (transition.targetStage === -1) {
+      setIntroVisual(inOpacity, inBlur);
+      panels.forEach((panel) => setPanelVisual(panel, 0, 10));
+    } else if (transition.targetStage === -2) {
+      setIntroVisual(0, 8);
+      panels.forEach((panel) => setPanelVisual(panel, 0, 10));
+    } else {
+      setIntroVisual(0, 10);
+      setPanelVisual(panels[transition.incomingPanel], inOpacity, inBlur);
+    }
+
+    if (progress < 1) {
+      transitionFrame = window.requestAnimationFrame(runTransition);
+      return;
+    }
+
+    if (transition.targetStage >= 0) activePanel = transition.incomingPanel;
+    applyStageInstant(transition.targetStage);
+  };
+
+  const render = () => {
+    frame = 0;
+    const rect = section.getBoundingClientRect();
+    const scrollRange = Math.max(1, rect.height - window.innerHeight);
+    const elapsed = clamp(-rect.top, 0, scrollRange);
+    const introDistance = Math.min(1600, scrollRange * 0.18);
+    const introHold = 260;
+    const questionStart = introDistance + introHold;
+    const stateDistance = 2000;
+    const beforeSectionPinned = rect.top > 0;
+    const introProgress = beforeSectionPinned ? 0 : clamp(elapsed / introDistance);
+    const questionElapsed = Math.max(0, elapsed - questionStart);
+    const targetStage = beforeSectionPinned
+      ? -2
+      : elapsed < questionStart
+        ? -1
+        : Math.min(aboutQuestionStates.length - 1, Math.floor(questionElapsed / stateDistance));
+
+    introChars.forEach((introChar, index) => {
+      const charProgress = clamp((introProgress * (introChars.length + 10) - index) / 10);
+      introChar.style.setProperty("--question-char-progress", charProgress.toFixed(3));
+    });
+
+    if (activeStage === -2 && !transition && targetStage === -1) {
+      applyStageInstant(-1);
+      return;
+    }
+    startTransition(targetStage);
+  };
+  const requestRender = () => {
+    if (frame) return;
+    frame = window.requestAnimationFrame(render);
+  };
+
+  render();
+  window.addEventListener("scroll", requestRender, { passive: true });
+  window.addEventListener("resize", requestRender, { passive: true });
+  addCleanup(() => {
+    window.removeEventListener("scroll", requestRender);
+    window.removeEventListener("resize", requestRender);
+    if (frame) window.cancelAnimationFrame(frame);
+    if (transitionFrame) window.cancelAnimationFrame(transitionFrame);
+  });
+}
+
+function initHomepageStudyCases() {
+  const cards = Array.from(document.querySelectorAll(".case-full-card"));
+  if (!cards.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  let frame = 0;
+  const update = () => {
+    frame = 0;
+    cards.forEach((card) => {
+      const rect = card.getBoundingClientRect();
+      const progress = clamp((window.innerHeight - rect.top) / Math.max(1, window.innerHeight + rect.height));
+      const y = mix(-34, 34, progress);
+      card.style.setProperty("--case-image-y", `${y.toFixed(2)}px`);
+    });
+  };
+  const request = () => {
+    if (!frame) frame = window.requestAnimationFrame(update);
+  };
+
+  update();
+  window.addEventListener("scroll", request, { passive: true });
+  window.addEventListener("resize", request, { passive: true });
+  addCleanup(() => {
+    window.removeEventListener("scroll", request);
+    window.removeEventListener("resize", request);
+    if (frame) window.cancelAnimationFrame(frame);
+  });
+}
+
 function initGalleryImageParallax() {
   const cards = Array.from(document.querySelectorAll(".gallery-masonry-card"));
   if (!cards.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -3811,6 +4083,8 @@ function boot() {
   initAccordions();
   initParallaxTiltCards();
   initAppIcons();
+  initAboutQuestions();
+  initHomepageStudyCases();
   initGallery();
   initGalleryScrollParallax();
   initGalleryLightbox();
