@@ -939,18 +939,19 @@ button {
   line-height: 28px;
   opacity: 0;
   overflow: hidden;
-  padding: 0 24px;
   transition:
-    height 360ms var(--ease-out),
     opacity 260ms var(--ease-out),
-    padding 360ms var(--ease-out),
     border-color 260ms var(--ease-out);
+  will-change: height;
 }
 
 .work-item[data-expanded="true"] .work-panel {
   border-top-color: var(--border-subtle);
   border-top-width: 1px;
   opacity: 1;
+}
+
+.work-panel-inner {
   padding: 20px 24px 24px;
 }
 
@@ -3219,6 +3220,7 @@ body[data-page="home"] .case-title-block h2 {
   line-height: 1.111;
   margin: 0;
   opacity: 0;
+  pointer-events: none;
   position: relative;
   z-index: 2;
 }
@@ -3288,6 +3290,7 @@ body[data-page="home"] .case-title-block h2 {
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1.2;
+  pointer-events: none;
   position: relative;
   z-index: 2;
 }
@@ -5144,6 +5147,31 @@ body[data-page="home"] .case-title-block h2 {
     width: 100%;
   }
 
+  .social-block.blur-reveal {
+    --reveal-y: 0px;
+    filter: blur(0);
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+
+  .social-block.blur-reveal.is-blur-revealed {
+    --reveal-y: 0px;
+    filter: blur(0);
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+    z-index: 1;
+  }
+
+  .social-block.blur-reveal.is-blur-revealed .social-links,
+  .social-block.blur-reveal.is-blur-revealed p {
+    opacity: 1;
+    visibility: visible;
+  }
+
   .work-card {
     gap: 28px;
     margin-inline: 0;
@@ -5209,10 +5237,9 @@ body[data-page="home"] .case-title-block h2 {
     font-weight: 500;
     letter-spacing: 0;
     line-height: 24px;
-    padding-inline: 16px;
   }
 
-  .work-item[data-expanded="true"] .work-panel {
+  .work-panel-inner {
     padding: 12px 16px 16px;
   }
 

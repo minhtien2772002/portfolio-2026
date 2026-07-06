@@ -1057,7 +1057,9 @@ function workSection({ reveal = true } = {}) {
                 <span class="chevron" aria-hidden="true">${magIcon("chevron-down")}</span>
               </button>
               <div class="work-panel" id="work-panel-${index}" role="region" aria-labelledby="work-button-${index}">
-                <ul>${item[3].map((bullet) => `<li>${bullet}</li>`).join("")}</ul>
+                <div class="work-panel-inner">
+                  <ul>${item[3].map((bullet) => `<li>${bullet}</li>`).join("")}</ul>
+                </div>
               </div>
             </article>
           `).join("")}
@@ -2418,48 +2420,111 @@ function initParallaxSections() {
 }
 
 function initAccordions() {
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const panelAnimationOptions = {
+    duration: 620,
+    easing: "cubic-bezier(0.25, 0.1, 0.25, 1)",
+    fill: "forwards",
+  };
+  const getExpandedHeight = (panel) => {
+    const content = panel.querySelector(".work-panel-inner");
+    return content ? content.scrollHeight : panel.scrollHeight;
+  };
+  const finishPanelAnimation = (panel) => {
+    if (!panel._workPanelAnimation) return;
+    panel._workPanelAnimation.cancel();
+    panel._workPanelAnimation = null;
+  };
+  const setPanelHeight = (panel, height) => {
+    panel.style.height = `${Math.max(0, Math.round(height))}px`;
+  };
+  const animatePanelHeight = (panel, fromHeight, toHeight, onFinish) => {
+    finishPanelAnimation(panel);
+    setPanelHeight(panel, fromHeight);
+    panel.offsetHeight;
+    const animation = panel.animate(
+      [{ height: `${Math.max(0, fromHeight)}px` }, { height: `${Math.max(0, toHeight)}px` }],
+      panelAnimationOptions
+    );
+    panel._workPanelAnimation = animation;
+    animation.onfinish = () => {
+      if (panel._workPanelAnimation !== animation) return;
+      panel._workPanelAnimation = null;
+      setPanelHeight(panel, toHeight);
+      onFinish?.();
+    };
+    animation.oncancel = () => {
+      if (panel._workPanelAnimation === animation) panel._workPanelAnimation = null;
+    };
+  };
+
   document.querySelectorAll(".work-header").forEach((button) => {
     const initialPanel = document.getElementById(button.getAttribute("aria-controls"));
     const initialItem = button.closest(".work-item");
     if (initialPanel && initialItem) {
       const expanded = button.getAttribute("aria-expanded") === "true";
       initialItem.dataset.expanded = String(expanded);
-      initialPanel.style.height = expanded ? "auto" : "0px";
+      initialPanel.style.height = expanded ? `${getExpandedHeight(initialPanel)}px` : "0px";
       initialPanel.style.overflow = expanded ? "visible" : "hidden";
     }
     button.addEventListener("click", () => {
       const expanded = button.getAttribute("aria-expanded") === "true";
       const panel = document.getElementById(button.getAttribute("aria-controls"));
       const item = button.closest(".work-item");
-      button.setAttribute("aria-expanded", String(!expanded));
       if (!panel || !item) return;
-      item.dataset.expanded = String(!expanded);
-      if (expanded) {
-        panel.style.overflow = "hidden";
-        panel.style.height = `${panel.scrollHeight}px`;
-        panel.offsetHeight;
-        panel.style.height = "0px";
-      } else {
-        panel.style.overflow = "hidden";
-        panel.style.height = `${panel.scrollHeight}px`;
+
+      const nextExpanded = !expanded;
+      button.setAttribute("aria-expanded", String(nextExpanded));
+      panel.style.overflow = "hidden";
+      const currentHeight = panel.getBoundingClientRect().height;
+      finishPanelAnimation(panel);
+      setPanelHeight(panel, currentHeight);
+
+      if (reduce) {
+        item.dataset.expanded = String(nextExpanded);
+        setPanelHeight(panel, nextExpanded ? getExpandedHeight(panel) : 0);
+        panel.style.overflow = nextExpanded ? "visible" : "hidden";
+        return;
       }
-      const onTransitionEnd = (event) => {
-        if (event.propertyName !== "height") return;
-        panel.removeEventListener("transitionend", onTransitionEnd);
-        if (button.getAttribute("aria-expanded") === "true") {
-          panel.style.height = "auto";
+
+      if (expanded) {
+        item.dataset.expanded = "false";
+        animatePanelHeight(panel, currentHeight || getExpandedHeight(panel), 0, () => {
+          panel.style.overflow = "hidden";
+        });
+      } else {
+        item.dataset.expanded = "true";
+        const targetHeight = getExpandedHeight(panel);
+        animatePanelHeight(panel, currentHeight, targetHeight, () => {
+          setPanelHeight(panel, getExpandedHeight(panel));
           panel.style.overflow = "visible";
-        }
-      };
-      panel.addEventListener("transitionend", onTransitionEnd);
+        });
+      }
     });
   });
-  window.addEventListener("resize", () => {
+
+  if ("ResizeObserver" in window) {
+    const resizeObserver = new ResizeObserver((entries) => {
+      entries.forEach((entry) => {
+        const panel = entry.target.closest(".work-panel");
+        if (!panel || panel.closest(".work-item")?.dataset.expanded !== "true") return;
+        if (panel._workPanelAnimation) return;
+        setPanelHeight(panel, getExpandedHeight(panel));
+      });
+    });
+    document.querySelectorAll(".work-panel-inner").forEach((content) => resizeObserver.observe(content));
+    addCleanup(() => resizeObserver.disconnect());
+  }
+
+  const handleResize = () => {
     document.querySelectorAll('.work-item[data-expanded="true"] .work-panel').forEach((panel) => {
-      panel.style.height = "auto";
+      if (panel._workPanelAnimation) return;
+      setPanelHeight(panel, getExpandedHeight(panel));
       panel.style.overflow = "visible";
     });
-  });
+  };
+  window.addEventListener("resize", handleResize);
+  addCleanup(() => window.removeEventListener("resize", handleResize));
 }
 
 function initAppIcons() {
@@ -2522,7 +2587,7 @@ function initParallaxTiltCards() {
   if (reduce || !canHover || mobileLayout) return;
 
   const tiltProfiles = {
-    approach: { maxAngleX: 5, maxAngleY: 5, scale: 1.015, perspective: 1000 },
+    approach: { maxAngleX: 8, maxAngleY: 8, scale: 1.024, perspective: 950 },
     project: { maxAngleX: 4, maxAngleY: 4, scale: 1.018, perspective: 1000 },
     album: { maxAngleX: 4, maxAngleY: 4, scale: 1.02, perspective: 1000 },
   };
@@ -2579,10 +2644,19 @@ function initParallaxTiltCards() {
       if (!state.frame) state.frame = window.requestAnimationFrame(render);
     };
 
+    const updateTiltFromPointer = (event) => {
+      const rect = root.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = ((event.clientY - rect.top) / rect.height) * 2 - 1;
+      state.targetY = clamp(x, -1, 1) * profile.maxAngleY;
+      state.targetX = clamp(y, -1, 1) * -profile.maxAngleX;
+      state.targetScale = profile.scale;
+    };
+
     const handleEnter = (event) => {
       if (event.pointerType === "touch") return;
       state.active = true;
-      state.targetScale = profile.scale;
+      updateTiltFromPointer(event);
       root.classList.add("is-parallax-tilting", "is-tilting");
       target.classList.add("is-parallax-tilting", "is-tilting");
       root.style.zIndex = String(20 + index);
@@ -2591,12 +2665,7 @@ function initParallaxTiltCards() {
 
     const handleMove = (event) => {
       if (event.pointerType === "touch") return;
-      const rect = root.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      const y = ((event.clientY - rect.top) / rect.height) * 2 - 1;
-      state.targetY = clamp(x, -1, 1) * profile.maxAngleY;
-      state.targetX = clamp(y, -1, 1) * -profile.maxAngleX;
-      state.targetScale = profile.scale;
+      updateTiltFromPointer(event);
       request();
     };
 
@@ -3259,6 +3328,7 @@ function initAboutQuestions() {
   const setPanelVisual = (panel, opacity, blur) => {
     panel.style.opacity = String(opacity);
     panel.style.filter = `blur(${blur.toFixed(2)}px)`;
+    panel.style.pointerEvents = opacity > 0.5 ? "auto" : "none";
   };
   const setIntroVisual = (opacity, blur) => {
     intro.style.opacity = String(opacity);
