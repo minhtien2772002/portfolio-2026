@@ -116,7 +116,7 @@ const approachCards = [
 const aboutQuestionStates = [
   ["WHY", "does this need to exist?"],
   ["WHO", "are we building this for?"],
-  ["WHAT", "problem are we really solving?"],
+  ["WHAT", "problem are we REALLY solving?"],
   ["WHERE", "does the workflow break down?"],
   ["HOW", "do we know it creates value?"],
 ];
