@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "npm run images:optimize && node scripts/build-static.mjs",
+    "build": "node scripts/build-static.mjs",
     "gallery:update": "node scripts/generate-gallery-data.js",
     "gallery:sync": "node scripts/sync-gallery-assets.js",
     "images:optimize": "node scripts/optimize-images.mjs",
