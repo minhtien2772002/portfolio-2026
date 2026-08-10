@@ -1,0 +1,6 @@
+assets-source/
+docs/
+dist/
+.github/
+.agents/
+SECURITY_AUDIT.md

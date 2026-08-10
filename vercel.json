@@ -1,5 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/hpf/content.js": {
+      "includeFiles": "private/hpf/*.cjs"
+    },
+    "api/hpf/assets.js": {
+      "includeFiles": "private/hpf/assets/**"
+    }
+  },
   "headers": [
     {
       "source": "/(.*)",

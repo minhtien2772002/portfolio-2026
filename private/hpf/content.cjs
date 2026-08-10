@@ -1,13 +1,10 @@
-import { hpfAssets } from "./hpf-assets.js";
+const { hpfAssets } = require("./assets.cjs");
 
 const iconRoot = "./public/assets/study-smart-smash/icons";
 const icon = (name) => `${iconRoot}/${name}.svg`;
 const shot = (name, label, alt, options = {}) => ({ ...hpfAssets[name], label, alt, ...options });
 
-export const hpfCardImage = hpfAssets.thumbnail.src;
-export const hpfCardImageSrcset = hpfAssets.thumbnail.srcset;
-
-export const hpfCase = {
+const hpfCase = {
   title: "HPF",
   label: "Product Design Case Study",
   subtitle: "A mobile personal-development ecosystem connecting habits, reflection, learning, coaching, challenges, and community support.",
@@ -447,3 +444,5 @@ export const hpfCase = {
     },
   ],
 };
+
+module.exports = { hpfCase };

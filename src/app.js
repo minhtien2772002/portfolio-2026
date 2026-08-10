@@ -1,7 +1,12 @@
 import { galleryAlbums } from "./data/gallery.js";
 import { GradualBlur } from "./components/GradualBlur.js";
+import {
+  getHpfPasscodeCellStates,
+  sanitizeHpfPasscode,
+  shouldAutoSubmitHpfPasscode,
+} from "./components/hpf-passcode.mjs";
 import { smartSmashCardImage, smartSmashCase } from "./data/smart-smash.js";
-import { hpfCardImage, hpfCardImageSrcset, hpfCase } from "./data/hpf.js";
+import { hpfCardImage, hpfCardImageSrcset } from "./data/hpf-public.js";
 import { icon, magIcon } from "./icons/magicons.js";
 
 const asset = (name) => `./public/assets/${name}`;
@@ -78,8 +83,9 @@ const assets = {
   certFptDegree: asset("certificate-fpt-digital-art-degree.png"),
 };
 
+const emailAddress = ["minhtien277", "20", "02", "@gmail.com"].join("");
 const siteLinks = {
-  email: "mailto:minhtien2772002@gmail.com",
+  email: `mailto:${emailAddress}`,
   phone: "tel:+84398466432",
   cv: "https://drive.google.com/file/d/1p9E_Y7Z-JFuyeyAxSJmP1U1zV33Q7ViL/view?usp=drive_link",
   zalo: "https://zalo.me/0398466432",
@@ -106,6 +112,15 @@ const pageTransitionConfig = {
   helloFadeDuration: 260,
 };
 const initialCurtainSessionKey = "portfolio.hasPlayedInitialCurtain";
+let hpfProtectedCase = null;
+let hpfAccessState = "checking";
+let hpfAccessRequest = null;
+let hpfAccessMessage = "";
+let hpfAccessGeneration = 0;
+let hpfRevealOnRender = false;
+let hpfVisitId = "";
+let hpfVisitAccessToken = "";
+let renderedRouteKey = "";
 
 const approachCards = [
   ["Discover", "Understand users, business needs, and the real problem before defining a solution.", assets.approachDiscover],
@@ -293,7 +308,6 @@ const studyCaseCards = [
 
 const studyCaseDetails = {
   "smart-smash": smartSmashCase,
-  hpf: hpfCase,
   "habit-tracker-app": {
     title: "Habit Tracker App",
     label: "Case study,",
@@ -996,7 +1010,7 @@ function footerMarkup() {
         </h2>
         <div class="footer-contact">
           <div class="footer-details">
-            <div><span>Email</span><a href="${siteLinks.email}">minhtien2772002@gmail.com</a></div>
+            <div><span>Email</span><a href="${siteLinks.email}">${emailAddress}</a></div>
             <div><span>Phone</span><a class="phone-link" href="${siteLinks.phone}"><span class="phone-dot" aria-hidden="true"><img src="${assets.footerVietnam}" alt=""></span>(+84)398.466.432</a></div>
           </div>
           <div class="social-block">
@@ -1521,11 +1535,12 @@ function renderStudyCaseListPage() {
 }
 
 function renderStudyCaseDetailPage(slug) {
-  const detail = studyCaseDetails[slug] || studyCaseDetails["habit-tracker-app"];
+  const detail = slug === "hpf" ? hpfProtectedCase : studyCaseDetails[slug] || studyCaseDetails["habit-tracker-app"];
+  if (!detail) return renderHpfAccessPage();
   const next = studyCaseDetails[detail.next];
-  const pageSlug = slug in studyCaseDetails ? slug : "habit-tracker-app";
+  const pageSlug = slug === "hpf" || slug in studyCaseDetails ? slug : "habit-tracker-app";
   return `
-    <main class="study-detail-page study-detail-page--${pageSlug}">
+    <main class="study-detail-page study-detail-page--${pageSlug}${pageSlug === "hpf" && hpfRevealOnRender ? " is-hpf-unlock-enter" : ""}">
       ${studyHero({ label: detail.label, title: detail.title, subtitle: detail.subtitle })}
       <div class="study-body study-detail-body">
         <div class="study-detail-wrapper">
@@ -1543,6 +1558,39 @@ function renderStudyCaseDetailPage(slug) {
   `;
 }
 
+function renderHpfAccessPage() {
+  const checking = hpfAccessState === "checking";
+  return `
+    <main class="hpf-access-page${checking ? " is-checking" : ""}" aria-labelledby="hpf-access-title">
+      <div class="hpf-access-content">
+        <form class="hpf-passcode-form" data-hpf-passcode-form novalidate>
+          <h1 id="hpf-access-title">Enter passcode to view <span>HPF Study Case</span></h1>
+          <div class="hpf-passcode-group" data-hpf-passcode-group>
+            <input
+              class="hpf-passcode-input"
+              data-hpf-passcode-input
+              type="password"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              maxlength="4"
+              autocomplete="one-time-code"
+              autofocus
+              aria-label="Secure 4-digit passcode"
+              aria-describedby="hpf-passcode-status"
+              ${checking ? "disabled" : ""}
+            >
+            <div class="hpf-passcode-cells" aria-hidden="true">
+              ${Array.from({ length: 4 }, (_, index) => `<span class="hpf-passcode-cell" data-hpf-passcode-cell="${index}"><span></span></span>`).join("")}
+            </div>
+          </div>
+          <p class="hpf-passcode-status" id="hpf-passcode-status" role="status" aria-live="polite">${checking ? "Checking access." : hpfAccessMessage}</p>
+        </form>
+        <a class="button button-secondary hpf-all-cases" href="#/study-cases">${icon("arrow-left")}<span>All Cases</span></a>
+      </div>
+    </main>
+  `;
+}
+
 const defaultPageMetadata = {
   title: "Nguyen Minh Tien - Product Designer",
   description: "Product Designer focused on UX/UI, product thinking, business analysis, and digital experience design.",
@@ -1553,11 +1601,12 @@ const defaultPageMetadata = {
 const pageMetadata = {
   hpf: {
     title: "HPF Case Study | Nguyen Minh Tien",
-    description: "HPF product-design case study: a mobile personal-development ecosystem connecting habits, reflection, learning, coaching, challenges, and community support.",
+    description: "A protected product-design case study by Nguyen Minh Tien.",
     image: hpfCardImage,
     imageAlt: "HPF High Performance Father case-study preview with two mobile product screens",
     imageWidth: "1280",
     imageHeight: "719",
+    robots: "noindex, noarchive, nosnippet",
   },
 };
 
@@ -1580,16 +1629,18 @@ function updatePageMetadata(route) {
   setMetaContent('meta[name="twitter:description"]', metadata.description);
   setMetaContent('meta[name="twitter:image"]', metadata.image);
   setMetaContent('meta[name="twitter:image:alt"]', metadata.imageAlt);
+  setMetaContent('meta[name="robots"]', metadata.robots || "index, follow");
 }
 
 function render() {
   const route = getRoute();
+  const isLockedHpf = route.page === "study-detail" && route.slug === "hpf" && !hpfProtectedCase;
   const pageMarkup = route.page === "about"
     ? renderAboutPage()
     : route.page === "study-list"
       ? renderStudyCaseListPage()
       : route.page === "study-detail"
-        ? renderStudyCaseDetailPage(route.slug)
+        ? isLockedHpf ? renderHpfAccessPage() : renderStudyCaseDetailPage(route.slug)
         : route.page === "gallery-list"
           ? renderGalleryPage()
           : route.page === "gallery-detail"
@@ -1598,7 +1649,7 @@ function render() {
   document.querySelector("#root").innerHTML = `
     ${headerMarkup()}
     ${pageMarkup}
-    ${footerMarkup()}
+    ${isLockedHpf ? "" : footerMarkup()}
   `;
   document.body.dataset.page = route.page;
   updatePageMetadata(route);
@@ -1644,17 +1695,21 @@ function studyListingCard(card) {
 
 function studyImageMarkup(image, { className = "", eager = false } = {}) {
   const source = typeof image === "string" ? { src: image } : image;
+  const protectedAssetMatch = String(source.src || "").match(/^\/api\/hpf\/assets\?name=([^&]+)$/);
+  const protectedAssetName = protectedAssetMatch ? decodeURIComponent(protectedAssetMatch[1]) : "";
+  const imageClass = [className, protectedAssetName ? "hpf-protected-image" : ""].filter(Boolean).join(" ");
   const attributes = [
-    `src="${source.src}"`,
-    source.srcset ? `srcset="${source.srcset}"` : "",
-    source.sizes ? `sizes="${source.sizes}"` : "",
+    protectedAssetName ? `src="data:image/gif;base64,R0lGODlhAQABAAAAACw="` : `src="${source.src}"`,
+    protectedAssetName ? `data-hpf-asset-name="${protectedAssetName}"` : "",
+    !protectedAssetName && source.srcset ? `srcset="${source.srcset}"` : "",
+    !protectedAssetName && source.sizes ? `sizes="${source.sizes}"` : "",
     source.width ? `width="${source.width}"` : "",
     source.height ? `height="${source.height}"` : "",
     `alt="${source.alt || ""}"`,
     `loading="${eager ? "eager" : "lazy"}"`,
     eager ? `fetchpriority="high"` : "",
     `decoding="async"`,
-    className ? `class="${className}"` : "",
+    imageClass ? `class="${imageClass}"` : "",
   ].filter(Boolean).join(" ");
   return `<img ${attributes}>`;
 }
@@ -2120,6 +2175,7 @@ function setPageTransitionActive(active) {
     appRoot.toggleAttribute("inert", active);
     appRoot.setAttribute("aria-busy", String(active));
   }
+  if (!active) document.dispatchEvent(new CustomEvent("portfolio:page-transition-idle"));
 }
 
 function cancelPageTransitionAnimations() {
@@ -4245,10 +4301,267 @@ function initStudyCaseToc() {
   });
 }
 
+function prepareHpfRouteState() {
+  const nextRouteKey = getMajorRouteKey();
+  if (nextRouteKey === renderedRouteKey) return;
+  const enteringHpf = nextRouteKey === "study-detail:hpf";
+  const leavingHpf = renderedRouteKey === "study-detail:hpf";
+  if (enteringHpf || leavingHpf) {
+    hpfAccessGeneration += 1;
+    hpfProtectedCase = null;
+    hpfAccessRequest = null;
+    hpfAccessMessage = "";
+    hpfRevealOnRender = false;
+    hpfVisitId = "";
+    hpfVisitAccessToken = "";
+  }
+  if (enteringHpf) {
+    hpfAccessState = "locked";
+    hpfVisitId = createHpfVisitId();
+  }
+  renderedRouteKey = nextRouteKey;
+}
+
+function createHpfVisitId() {
+  if (typeof window.crypto?.randomUUID === "function") return window.crypto.randomUUID();
+  const bytes = new Uint8Array(24);
+  window.crypto.getRandomValues(bytes);
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function hpfVisitHeaders(extra = {}) {
+  if (!hpfVisitId || !hpfVisitAccessToken) return extra;
+  return {
+    ...extra,
+    Authorization: `Bearer ${hpfVisitAccessToken}`,
+    "X-HPF-Visit": hpfVisitId,
+  };
+}
+
+async function loadHpfProtectedCase() {
+  if (hpfAccessRequest) return hpfAccessRequest;
+  const generation = hpfAccessGeneration;
+  hpfAccessRequest = (async () => {
+    try {
+      const response = await fetch("/api/hpf/content", {
+        cache: "no-store",
+        headers: hpfVisitHeaders({ Accept: "application/json" }),
+      });
+      if (getMajorRouteKey() !== "study-detail:hpf" || generation !== hpfAccessGeneration) return;
+      if (response.ok) {
+        const payload = await response.json();
+        if (!payload?.caseStudy?.title || !Array.isArray(payload.caseStudy.sections)) throw new Error("invalid-content");
+        hpfProtectedCase = payload.caseStudy;
+        hpfAccessMessage = "";
+      } else if (response.status === 401) {
+        hpfVisitAccessToken = "";
+        hpfAccessState = "locked";
+        hpfAccessMessage = "";
+      } else {
+        hpfAccessState = "locked";
+        hpfAccessMessage = "Unable to verify the passcode. Please try again.";
+      }
+    } catch {
+      if (getMajorRouteKey() !== "study-detail:hpf" || generation !== hpfAccessGeneration) return;
+      hpfAccessState = "locked";
+      hpfAccessMessage = "Unable to verify the passcode. Please try again.";
+    } finally {
+      if (generation === hpfAccessGeneration) hpfAccessRequest = null;
+    }
+    if (getMajorRouteKey() === "study-detail:hpf" && generation === hpfAccessGeneration) boot();
+  })();
+  return hpfAccessRequest;
+}
+
+function initHpfAccess() {
+  const route = getRoute();
+  if (route.page !== "study-detail" || route.slug !== "hpf" || hpfProtectedCase) return;
+  const form = document.querySelector("[data-hpf-passcode-form]");
+  const input = document.querySelector("[data-hpf-passcode-input]");
+  const group = document.querySelector("[data-hpf-passcode-group]");
+  const status = document.querySelector("#hpf-passcode-status");
+  const cells = Array.from(document.querySelectorAll("[data-hpf-passcode-cell]"));
+  if (!form || !input || !group || !status || !cells.length) return;
+
+  let submitting = false;
+  let recovering = false;
+  const updateCells = () => {
+    const states = getHpfPasscodeCellStates(input.value, document.activeElement === input || !input.value);
+    cells.forEach((cell, index) => {
+      const state = states[index];
+      cell.querySelector("span").textContent = state.mask;
+      cell.classList.toggle("is-filled", state.filled);
+      cell.classList.toggle("is-active", state.active);
+    });
+  };
+  const focusInput = () => {
+    input.focus({ preventScroll: true });
+    input.setSelectionRange(input.value.length, input.value.length);
+    updateCells();
+  };
+  const showInvalid = () => {
+    recovering = true;
+    input.readOnly = true;
+    status.textContent = "Incorrect passcode. Try again.";
+    group.classList.remove("is-invalid");
+    void group.offsetWidth;
+    group.classList.add("is-invalid");
+    window.setTimeout(() => {
+      group.classList.remove("is-invalid");
+      input.value = "";
+      recovering = false;
+      input.readOnly = false;
+      updateCells();
+      focusInput();
+    }, prefersReducedMotion() ? 120 : 340);
+  };
+  const submit = async () => {
+    if (!shouldAutoSubmitHpfPasscode(input.value, submitting, recovering)) return;
+    submitting = true;
+    group.classList.add("is-submitting");
+    input.readOnly = true;
+    status.textContent = "Checking passcode.";
+    try {
+      const response = await fetch("/api/hpf/unlock", {
+        method: "POST",
+        cache: "no-store",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ passcode: input.value, visitId: hpfVisitId }),
+      });
+      if (response.ok) {
+        const payload = await response.json();
+        if (typeof payload?.accessToken !== "string" || payload.accessToken.length < 32) {
+          throw new Error("invalid-visit-grant");
+        }
+        hpfVisitAccessToken = payload.accessToken;
+        hpfAccessState = "unlocking";
+        hpfAccessMessage = "";
+        document.querySelector(".hpf-access-page")?.classList.add("is-unlocking");
+        await new Promise((resolve) => window.setTimeout(resolve, prefersReducedMotion() ? 0 : 240));
+        hpfRevealOnRender = true;
+        await loadHpfProtectedCase();
+        return;
+      }
+      if (response.status === 401) {
+        showInvalid();
+      } else if (response.status === 429) {
+        status.textContent = "Please wait a moment and try again.";
+      } else {
+        status.textContent = "Unable to verify the passcode. Please try again.";
+      }
+    } catch {
+      status.textContent = "Unable to verify the passcode. Please try again.";
+    } finally {
+      submitting = false;
+      if (!recovering) input.readOnly = false;
+      group.classList.remove("is-submitting");
+      if (!hpfProtectedCase && !recovering && !group.classList.contains("is-invalid")) focusInput();
+    }
+  };
+
+  input.addEventListener("focus", updateCells);
+  input.addEventListener("blur", updateCells);
+  input.addEventListener("input", () => {
+    input.value = sanitizeHpfPasscode(input.value);
+    status.textContent = "";
+    updateCells();
+    if (shouldAutoSubmitHpfPasscode(input.value, submitting, recovering)) void submit();
+  });
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      void submit();
+    }
+  });
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    void submit();
+  });
+  group.addEventListener("pointerdown", (event) => {
+    if (event.target !== input) event.preventDefault();
+    focusInput();
+  });
+  const focusFrame = window.requestAnimationFrame(focusInput);
+  const focusFallback = window.setTimeout(() => {
+    if (document.activeElement !== input) focusInput();
+  }, 80);
+  const focusAfterPageTransition = () => focusInput();
+  document.addEventListener("portfolio:page-transition-idle", focusAfterPageTransition);
+  addCleanup(() => {
+    window.cancelAnimationFrame(focusFrame);
+    window.clearTimeout(focusFallback);
+    document.removeEventListener("portfolio:page-transition-idle", focusAfterPageTransition);
+  });
+}
+
+function initHpfProtectedImages() {
+  if (!hpfProtectedCase || !hpfVisitId || !hpfVisitAccessToken) return;
+  const images = Array.from(document.querySelectorAll("img[data-hpf-asset-name]"));
+  if (!images.length) return;
+
+  const generation = hpfAccessGeneration;
+  const controllers = new Set();
+  const objectUrls = new Set();
+  const assetRequests = new Map();
+  const loadAsset = (name) => {
+    if (assetRequests.has(name)) return assetRequests.get(name);
+    const controller = new AbortController();
+    controllers.add(controller);
+    const request = fetch(`/api/hpf/assets?name=${encodeURIComponent(name)}`, {
+      cache: "no-store",
+      headers: hpfVisitHeaders({ Accept: "image/webp" }),
+      signal: controller.signal,
+    }).then(async (response) => {
+      if (!response.ok) throw new Error("protected-asset-unavailable");
+      const objectUrl = URL.createObjectURL(await response.blob());
+      objectUrls.add(objectUrl);
+      return objectUrl;
+    }).finally(() => controllers.delete(controller));
+    assetRequests.set(name, request);
+    return request;
+  };
+  const loadImage = async (image) => {
+    if (image.dataset.hpfAssetLoading === "true") return;
+    image.dataset.hpfAssetLoading = "true";
+    try {
+      const objectUrl = await loadAsset(image.dataset.hpfAssetName);
+      if (generation !== hpfAccessGeneration || getMajorRouteKey() !== "study-detail:hpf") return;
+      image.src = objectUrl;
+      image.removeAttribute("data-hpf-asset-name");
+      image.removeAttribute("data-hpf-asset-loading");
+    } catch (error) {
+      if (error?.name !== "AbortError") image.removeAttribute("data-hpf-asset-loading");
+    }
+  };
+
+  let observer = null;
+  if ("IntersectionObserver" in window) {
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        void loadImage(entry.target);
+      });
+    }, { rootMargin: "600px 0px" });
+    images.forEach((image) => observer.observe(image));
+  } else {
+    images.forEach((image) => void loadImage(image));
+  }
+
+  addCleanup(() => {
+    observer?.disconnect();
+    controllers.forEach((controller) => controller.abort());
+    objectUrls.forEach((objectUrl) => URL.revokeObjectURL(objectUrl));
+  });
+}
+
 function boot() {
   runCleanups();
+  prepareHpfRouteState();
   render();
   initMenu();
+  initHpfAccess();
+  initHpfProtectedImages();
   initTypewriters();
   initReveal();
   initScrollBlurReveal();
@@ -4278,5 +4591,15 @@ function boot() {
 
 initPageTransitions();
 window.addEventListener("hashchange", handleHashChange);
+window.addEventListener("pagehide", () => {
+  hpfProtectedCase = null;
+  hpfVisitAccessToken = "";
+  hpfVisitId = "";
+});
+window.addEventListener("pageshow", (event) => {
+  if (!event.persisted || getMajorRouteKey() !== "study-detail:hpf") return;
+  renderedRouteKey = "";
+  boot();
+});
 boot();
 void playInitialPageTransition();

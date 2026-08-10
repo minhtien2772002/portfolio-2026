@@ -85,13 +85,37 @@ if (/script-src[^;]*'unsafe-(?:inline|eval)'/.test(csp)) {
 }
 
 const javascriptFiles = trackedAndUntrackedFiles.filter(
-  (file) => file.endsWith(".js") && !file.startsWith("public/vendor/"),
+  (file) => /\.(?:cjs|js|mjs)$/.test(file) && !file.startsWith("public/vendor/"),
 );
 for (const file of javascriptFiles) {
   try {
     execFileSync(process.execPath, ["--check", path.join(rootDir, file)], { stdio: "pipe" });
   } catch (error) {
     errors.push(`${file}: JavaScript syntax check failed`);
+  }
+}
+
+const envExample = fs.readFileSync(path.join(rootDir, ".env.example"), "utf8");
+for (const variable of ["HPF_PASSCODE", "HPF_SESSION_SECRET"]) {
+  const match = envExample.match(new RegExp(`^${variable}=(.*)$`, "m"));
+  if (!match) errors.push(`.env.example: missing ${variable}`);
+  else if (match[1].trim()) errors.push(`.env.example: ${variable} must not contain a value`);
+}
+
+for (const file of ["index.html", ...trackedAndUntrackedFiles.filter((entry) => entry.startsWith("src/"))]) {
+  const source = fs.readFileSync(path.join(rootDir, file), "utf8");
+  if (source.includes("mobile-first personal-development platform for men pursuing stronger roles")) {
+    errors.push(`${file}: protected HPF copy is present in a public browser artifact`);
+  }
+  if (/hpfUnlocked\s*=\s*true/i.test(source)) {
+    errors.push(`${file}: unsigned HPF authorization state is not allowed`);
+  }
+}
+
+const publicHpfDirectory = path.join(rootDir, "public/images/study-cases/hpf");
+for (const file of fs.readdirSync(publicHpfDirectory)) {
+  if (!/^hpf-thumbnail(?:-sm|-lg)?\.webp$/.test(file)) {
+    errors.push(`public/images/study-cases/hpf/${file}: confidential HPF asset must not be public`);
   }
 }
 

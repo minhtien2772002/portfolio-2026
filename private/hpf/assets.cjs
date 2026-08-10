@@ -1,10 +1,11 @@
-const root = "./public/images/study-cases/hpf";
+const publicThumbnailRoot = "./public/images/study-cases/hpf";
+const protectedAssetUrl = (file) => `/api/hpf/assets?name=${encodeURIComponent(file)}`;
 
 const screen = (file, width, height, sourceNode, usages) => ({
-  src: `${root}/${file}.webp`,
+  src: protectedAssetUrl(`${file}.webp`),
   srcset: width > 188
-    ? `${root}/${file}-sm.webp 188w, ${root}/${file}.webp ${width}w`
-    : `${root}/${file}.webp ${width}w`,
+    ? `${protectedAssetUrl(`${file}-sm.webp`)} 188w, ${protectedAssetUrl(`${file}.webp`)} ${width}w`
+    : `${protectedAssetUrl(`${file}.webp`)} ${width}w`,
   sizes: "(max-width: 520px) min(100vw - 48px, 375px), (max-width: 900px) 30vw, 215px",
   width,
   height,
@@ -12,10 +13,10 @@ const screen = (file, width, height, sourceNode, usages) => ({
   usages,
 });
 
-export const hpfAssets = {
+const hpfAssets = {
   thumbnail: {
-    src: `${root}/hpf-thumbnail.webp`,
-    srcset: `${root}/hpf-thumbnail-sm.webp 640w, ${root}/hpf-thumbnail.webp 1280w, ${root}/hpf-thumbnail-lg.webp 2560w`,
+    src: `${publicThumbnailRoot}/hpf-thumbnail.webp`,
+    srcset: `${publicThumbnailRoot}/hpf-thumbnail-sm.webp 640w, ${publicThumbnailRoot}/hpf-thumbnail.webp 1280w, ${publicThumbnailRoot}/hpf-thumbnail-lg.webp 2560w`,
     sizes: "(max-width: 720px) 100vw, (max-width: 1180px) 90vw, 1152px",
     width: 1280,
     height: 719,
@@ -68,4 +69,6 @@ export const hpfAssets = {
   courseState5: screen("course-state-5", 375, 892, "4986:137845", ["community and learning"]),
 };
 
-export const hpfAssetManifest = Object.entries(hpfAssets).map(([name, asset]) => ({ name, ...asset }));
+const hpfAssetManifest = Object.entries(hpfAssets).map(([name, asset]) => ({ name, ...asset }));
+
+module.exports = { hpfAssets, hpfAssetManifest };
