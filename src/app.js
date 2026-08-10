@@ -1,6 +1,7 @@
 import { galleryAlbums } from "./data/gallery.js";
 import { GradualBlur } from "./components/GradualBlur.js";
 import { smartSmashCardImage, smartSmashCase } from "./data/smart-smash.js";
+import { hpfCardImage, hpfCardImageSrcset, hpfCase } from "./data/hpf.js";
 import { icon, magIcon } from "./icons/magicons.js";
 
 const asset = (name) => `./public/assets/${name}`;
@@ -279,10 +280,20 @@ const studyCaseCards = [
     image: smartSmashCardImage,
     href: "#/study-cases/smart-smash",
   },
+  {
+    slug: "hpf",
+    title: "HPF",
+    meta: "Product Design Case Study - 2026",
+    image: hpfCardImage,
+    imageSrcset: hpfCardImageSrcset,
+    imageSizes: "(max-width: 720px) calc(100vw - 48px), (max-width: 1180px) calc(100vw - 80px), 564px",
+    href: "#/study-cases/hpf",
+  },
 ];
 
 const studyCaseDetails = {
   "smart-smash": smartSmashCase,
+  hpf: hpfCase,
   "habit-tracker-app": {
     title: "Habit Tracker App",
     label: "Case study,",
@@ -1121,7 +1132,7 @@ function caseFullWidthCard(card) {
   return `
     <a class="case-full-card" href="${card.href}" aria-label="${title}, ${card.meta}">
       <span class="case-full-media" aria-hidden="true">
-        <img class="case-full-image" src="${card.image}" alt="" loading="lazy">
+        <img class="case-full-image" src="${card.image}" ${card.imageSrcset ? `srcset="${card.imageSrcset}" sizes="${card.imageSizes}"` : ""} alt="" loading="lazy" decoding="async">
       </span>
       <span class="case-full-overlay" aria-hidden="true"></span>
       <span class="case-full-content">
@@ -1532,6 +1543,45 @@ function renderStudyCaseDetailPage(slug) {
   `;
 }
 
+const defaultPageMetadata = {
+  title: "Nguyen Minh Tien - Product Designer",
+  description: "Product Designer focused on UX/UI, product thinking, business analysis, and digital experience design.",
+  image: "./public/og-image.png",
+  imageAlt: "Nguyen Minh Tien Portfolio preview",
+};
+
+const pageMetadata = {
+  hpf: {
+    title: "HPF Case Study | Nguyen Minh Tien",
+    description: "HPF product-design case study: a mobile personal-development ecosystem connecting habits, reflection, learning, coaching, challenges, and community support.",
+    image: hpfCardImage,
+    imageAlt: "HPF High Performance Father case-study preview with two mobile product screens",
+    imageWidth: "1280",
+    imageHeight: "719",
+  },
+};
+
+function setMetaContent(selector, value) {
+  const element = document.querySelector(selector);
+  if (element) element.setAttribute("content", value);
+}
+
+function updatePageMetadata(route) {
+  const metadata = route.page === "study-detail" ? pageMetadata[route.slug] || defaultPageMetadata : defaultPageMetadata;
+  document.title = metadata.title;
+  setMetaContent('meta[name="description"]', metadata.description);
+  setMetaContent('meta[property="og:title"]', metadata.title);
+  setMetaContent('meta[property="og:description"]', metadata.description);
+  setMetaContent('meta[property="og:image"]', metadata.image);
+  setMetaContent('meta[property="og:image:alt"]', metadata.imageAlt);
+  setMetaContent('meta[property="og:image:width"]', metadata.imageWidth || "1200");
+  setMetaContent('meta[property="og:image:height"]', metadata.imageHeight || "630");
+  setMetaContent('meta[name="twitter:title"]', metadata.title);
+  setMetaContent('meta[name="twitter:description"]', metadata.description);
+  setMetaContent('meta[name="twitter:image"]', metadata.image);
+  setMetaContent('meta[name="twitter:image:alt"]', metadata.imageAlt);
+}
+
 function render() {
   const route = getRoute();
   const pageMarkup = route.page === "about"
@@ -1551,6 +1601,7 @@ function render() {
     ${footerMarkup()}
   `;
   document.body.dataset.page = route.page;
+  updatePageMetadata(route);
 }
 
 function caseCard(card, size) {
@@ -1581,7 +1632,7 @@ function studyListingCard(card) {
   return `
     <a class="study-list-card" href="${card.href}" aria-label="${card.title}, ${card.meta}">
       <span class="study-list-tilt-layer parallax-tilt-layer" data-parallax-tilt="project">
-        <span class="study-list-image"><img src="${card.image}" alt="" loading="lazy"></span>
+        <span class="study-list-image"><img src="${card.image}" ${card.imageSrcset ? `srcset="${card.imageSrcset}" sizes="${card.imageSizes}"` : ""} alt="" loading="lazy" decoding="async"></span>
         <span class="study-list-info">
           <span><strong>${card.title}</strong><small>${card.meta}</small></span>
           <span class="round-icon" aria-hidden="true">${icon()}</span>
@@ -1589,6 +1640,23 @@ function studyListingCard(card) {
       </span>
     </a>
   `;
+}
+
+function studyImageMarkup(image, { className = "", eager = false } = {}) {
+  const source = typeof image === "string" ? { src: image } : image;
+  const attributes = [
+    `src="${source.src}"`,
+    source.srcset ? `srcset="${source.srcset}"` : "",
+    source.sizes ? `sizes="${source.sizes}"` : "",
+    source.width ? `width="${source.width}"` : "",
+    source.height ? `height="${source.height}"` : "",
+    `alt="${source.alt || ""}"`,
+    `loading="${eager ? "eager" : "lazy"}"`,
+    eager ? `fetchpriority="high"` : "",
+    `decoding="async"`,
+    className ? `class="${className}"` : "",
+  ].filter(Boolean).join(" ");
+  return `<img ${attributes}>`;
 }
 
 function studyCaseToc(detail) {
@@ -1721,7 +1789,7 @@ function studyBlock(block) {
       block.ratio ? `--study-image-ratio: ${block.ratio}` : "",
     ].filter(Boolean).join("; ");
     const style = styleVars ? ` style="${styleVars}"` : "";
-    return `<figure class="${classes}"${style}><img src="${block.src}" alt="${block.alt || ""}" loading="lazy">${block.caption ? `<figcaption>${block.caption}</figcaption>` : ""}</figure>`;
+    return `<figure class="${classes}"${style}>${studyImageMarkup({ src: block.src, srcset: block.srcset, sizes: block.sizes, width: block.width, height: block.height, alt: block.alt })}${block.caption ? `<figcaption>${block.caption}</figcaption>` : ""}</figure>`;
   }
   if (block.type === "imageGrid") {
     const figureClasses = [
@@ -1729,7 +1797,19 @@ function studyBlock(block) {
       block.fit === "contain" ? "study-image-contain" : "",
       block.variant ? `study-image-${block.variant}` : "",
     ].filter(Boolean).join(" ");
-    return `<div class="study-image-grid study-image-grid-${block.columns || 2}">${block.images.map(([src, alt]) => `<figure class="${figureClasses}"><img src="${src}" alt="${alt}" loading="lazy"></figure>`).join("")}${block.caption ? `<p class="study-image-grid-caption">${block.caption}</p>` : ""}</div>`;
+    return `<div class="study-image-grid study-image-grid-${block.columns || 2}">${block.images.map(([src, alt]) => `<figure class="${figureClasses}">${studyImageMarkup({ src, alt })}</figure>`).join("")}${block.caption ? `<p class="study-image-grid-caption">${block.caption}</p>` : ""}</div>`;
+  }
+  if (block.type === "evidence") {
+    return `<figure class="study-evidence" aria-label="${block.title || "Product evidence"}">
+      ${block.title ? `<h3 class="study-evidence-title">${block.title}</h3>` : ""}
+      <div class="study-evidence-grid study-evidence-grid-${block.columns || 3}">
+        ${block.items.map((item, index) => `<figure class="study-evidence-item${item.crop ? ` study-evidence-item--${item.crop}` : ""}">
+          <span class="study-evidence-media">${studyImageMarkup(item)}</span>
+          <figcaption>${block.numbered ? `${index + 1}. ` : ""}${item.label}</figcaption>
+        </figure>`).join("")}
+      </div>
+      ${block.caption ? `<figcaption class="study-evidence-caption">${block.caption}</figcaption>` : ""}
+    </figure>`;
   }
   if (block.type === "flow") {
     return `<div class="study-flow-row">${block.items.map((item) => {
@@ -1738,7 +1818,7 @@ function studyBlock(block) {
     }).join("")}</div>`;
   }
   if (block.type === "highlight") {
-    return `<aside class="study-highlight"><blockquote>${block.quote}</blockquote><p>${block.label}</p></aside>`;
+    return `<aside class="study-highlight"><blockquote>${block.quote}</blockquote>${block.label ? `<p>${block.label}</p>` : ""}</aside>`;
   }
   if (block.type === "formula") {
     return `<div class="study-formula">${block.items.map(([label, value]) => `<article><small>${label}</small><strong>${value}</strong></article>`).join("")}</div>`;
@@ -1753,6 +1833,23 @@ function studyBlock(block) {
         <h3>${title}</h3>
         <p>${body}</p>
         ${studyChips(chips)}
+      </article>
+    `).join("")}</div>`;
+  }
+  if (block.type === "personas") {
+    return `<div class="study-persona-grid">${block.items.map((item) => `
+      <article class="study-persona-profile">
+        <div class="study-persona-heading"><span class="study-card-icon" aria-hidden="true">${studyBlockIcon(item.title, item.icon)}</span><h3>${item.title}</h3></div>
+        <div><small>Primary Need</small><p>${item.need}</p></div>
+        <div><small>Relevant Experience</small>${studyChips(item.experiences)}</div>
+      </article>
+    `).join("")}</div>`;
+  }
+  if (block.type === "architecture") {
+    return `<div class="study-architecture">${block.groups.map((group) => `
+      <article class="study-architecture-card${group.emphasis ? " is-emphasis" : ""}">
+        <span class="study-card-icon" aria-hidden="true">${studyBlockIcon(group.title, group.icon)}</span>
+        <div>${group.label ? `<small>${group.label}</small>` : ""}<h3>${group.title}</h3><p>${group.body}</p></div>
       </article>
     `).join("")}</div>`;
   }
@@ -4101,7 +4198,10 @@ function initStudyCaseToc() {
   };
 
   const updateActiveByPosition = () => {
-    const offset = 170;
+    const sectionScrollMargin = Number.parseFloat(getComputedStyle(sections[0]).scrollMarginTop) || 0;
+    const offset = page.classList.contains("study-detail-page--hpf")
+      ? Math.max(170, sectionScrollMargin + 1)
+      : 170;
     const current = sections
       .map((section) => ({ id: section.id, top: section.getBoundingClientRect().top - offset }))
       .filter((item) => item.top <= 0)
@@ -4125,6 +4225,10 @@ function initStudyCaseToc() {
   });
 
   const observer = new IntersectionObserver((entries) => {
+    if (page.classList.contains("study-detail-page--hpf")) {
+      updateActiveByPosition();
+      return;
+    }
     const visible = entries
       .filter((entry) => entry.isIntersecting)
       .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
