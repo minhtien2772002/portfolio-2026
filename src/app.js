@@ -138,43 +138,48 @@ const aboutQuestionStates = [
 ];
 
 const workItems = [
-  ["Product Designer", "Advizia Vietnam", "04/2025 - Present", [
-    "Own the end-to-end design process for web and mobile products, from requirement discovery and workflow definition to final delivery and implementation review.",
-    "Work directly with international clients, primarily Australian stakeholders, in an outsourced product development environment.",
-    "Partner with clients, Business Analysts, Product Owners, and stakeholders to clarify requirements, identify gaps and edge cases, map business processes, and translate complex needs into scalable product solutions.",
-    "Define information architecture, user flows, interaction models, wireframes, and interactive prototypes for workflow-heavy products.",
-    "Review initial design solutions with Business Analysts to validate business logic and requirement coverage before presenting them to clients for feedback and approval.",
-    "Evaluate and iterate design alternatives based on user needs, client feedback, business priorities, technical feasibility, and delivery constraints, using AI-assisted analysis to explore alternative flows and improve UX decisions.",
-    "Build and maintain reusable components, design patterns, and documentation, while collaborating with developers to clarify interaction logic, review implementation quality, and resolve usability issues.",
-  ]],
-  ["UI/UX Designer", "VietTS Software", "08/2024 - 03/2025", [
-    "Designed responsive web and mobile experiences, covering user flows, wireframes, interaction design, high-fidelity interfaces, and prototypes.",
-    "Worked with stakeholders and cross-functional teams to clarify requirements, identify workflow issues, and convert product needs into practical UX solutions.",
-    "Improved navigation, form structures, task flows, information hierarchy, and interaction patterns based on usability principles and product constraints.",
-    "Presented design rationale, compared alternative solutions, and refined product experiences based on stakeholder feedback and implementation feasibility.",
-    "Prepared design specifications, interaction notes, responsive behaviors, and assets for developer handoff.",
-    "Reviewed implemented interfaces and collaborated with developers to resolve inconsistencies between design intent and final delivery.",
-  ]],
-  ["Product Designer", "GapoWork", "04/2024 - 08/2024", [
-    "Collaborated with Business Analysts and Product Managers to translate business requirements into user flows, feature structures, and interface solutions.",
-    "Designed product features aligned with roadmap priorities, operational workflows, user needs, and technical constraints.",
-    "Identified gaps and edge cases within product requirements before translating them into wireframes and interaction models.",
-    "Created interactive prototypes to communicate product logic, support internal validation, and reduce ambiguity before implementation.",
-    "Worked with developers during feature delivery to clarify design decisions and maintain consistency across the product experience.",
-  ]],
-  ["UI/UX Designer", "Cloudify Vietnam", "07/2022 - 03/2024", [
-    "Designed CRM and ERP interfaces for data-heavy screens and business workflows.",
-    "Created user flows, wireframes, prototypes, and UI specifications for web and mobile products.",
-    "Collaborated with Product Managers, Business Analysts, and developers to improve UX consistency and handoff quality.",
-    "Supported landing pages, WordPress websites, and digital marketing materials.",
-  ]],
-  ["Freelance UI/UX Designer", "PageFly, Tigren & tabtab.me", "Project-based", [
-    "Worked with clients including PageFly, Tigren, and tabtab.me on landing pages, ecommerce visuals, campaign assets, and digital marketing materials.",
-    "Translated client briefs, commercial goals, and brand guidelines into polished visual solutions across multiple digital channels.",
-    "Designed assets for product communication, acquisition campaigns, ecommerce presentation, and brand consistency.",
-    "Managed feedback, revisions, and delivery timelines across project-based freelance assignments.",
-  ]],
-];
+    ["Product Designer", "Advizia Vietnam", "04/2025 - Present", [
+      "Work across product discovery and delivery for web and mobile products, collaborating directly with international clients, Product Owners, Business Analysts, and Engineering teams.",
+      
+      "Clarify business and user needs, identify gaps and edge cases, and translate complex requirements into structured workflows, information architecture, interaction logic, and product solutions.",
+      
+      "Review proposed workflows and solutions with cross-functional teams to validate business logic, requirement coverage, usability, technical feasibility, and delivery constraints.",
+      
+      "Support implementation by walking Engineering through product behavior, clarifying requirements during development, reviewing delivered solutions, and iterating based on stakeholder and technical feedback."
+    ]],
+
+    ["Product Designer", "VietTS Software", "08/2024 - 03/2025", [
+      "Took high-level product ideas from early research through product definition, exploring unfamiliar domains, competing products, target use cases, and potential solution directions.",
+      
+      "Defined information architecture, end-to-end workflows, functional behavior, interaction logic, wireframes, and prototypes for web and mobile products.",
+      
+      "Presented product workflows and solution rationale to stakeholders and Engineering, refining behavior based on feedback, usability considerations, and implementation feasibility.",
+      
+      "Supported delivery through design specifications, implementation review, and ongoing clarification of product behavior with developers."
+    ]],
+
+    ["Product Designer", "GapoWork", "04/2024 - 08/2024", [
+      "Collaborated with Business Analysts and Product Managers to translate business needs and roadmap initiatives into feature structures, workflows, and product solutions.",
+      
+      "Identified gaps, edge cases, and interaction requirements, using user flows and prototypes to communicate product logic and support internal validation.",
+      
+      "Worked with Engineering throughout delivery to clarify product behavior, balance usability with technical constraints, and maintain consistency across the product experience."
+    ]],
+
+    ["UI/UX Designer", "Cloudify Vietnam", "07/2022 - 03/2024", [
+      "Worked on enterprise CRM and ERP products, translating operational workflows and data-heavy requirements into structured web and mobile experiences.",
+      
+      "Created product flows, wireframes, prototypes, and specifications while collaborating with Product Managers, Business Analysts, and Engineering teams throughout delivery.",
+      
+      "Also contributed to landing pages, WordPress websites, and digital communication projects when needed."
+    ]],
+
+    ["Freelance UI/UX Designer", "PageFly, Tigren & tabtab.me", "Project-based", [
+      "Delivered project-based digital design work for clients including PageFly, Tigren, and tabtab.me across ecommerce, landing pages, product communication, and campaign experiences.",
+      
+      "Translated client briefs, commercial goals, and brand requirements into practical digital solutions while managing feedback, revisions, and delivery independently."
+    ]]
+  ];
 
 const certificates = [
   {
@@ -1035,14 +1040,14 @@ function profileIntroSection({ id = "about", reveal = true, showAboutButton = tr
           <div class="profile-shape layer" data-layer="profile-shape"><img src="${assets.profileShape}" alt=""></div>
           <div class="experience-badge glass-light layer" data-layer="profile-badge">Have lots of ideas in mind</div>
         </div>
-        <figcaption class="profile-caption"><strong>Nguyen Minh Tien</strong><span>Product Designer</span></figcaption>
+        <figcaption class="profile-caption"><strong>Nguyen Minh Tien</strong><span>Product Designer | Business Analysis</span></figcaption>
       </figure>
       <div class="about-copy">
         <h2 id="${id}-title"><span>Hello there,</span><span>How u’ doing?</span></h2>
         <div class="body-copy">
-          <p>I’m a product-oriented professional with a background in UX/UI design and business analysis. I work at the intersection of user needs, business goals, and delivery constraints, turning complex problems into clear requirements, priorities, and practical product experiences.</p>
-          <p>My UX background helps me understand users and usability, while business analysis has strengthened my ability to clarify workflows, manage requirements, and align stakeholders. Over time, I became increasingly interested in the broader decisions behind the interface—what should be built, why it matters, and how success should be evaluated.</p>
-          <p>This naturally led me toward Product Management. I have also always had a long-term ambition to build and bring a real product of my own to market. That goal continues to shape how I approach product discovery, strategy, execution, and cross-functional collaboration: not only as a contributor, but as someone who wants to understand and take ownership of the entire product journey.</p>
+          <p>I’m a Product Designer with a growing focus on Business Analysis and Product Management. My work has gradually expanded beyond the interface—from understanding users and designing experiences to clarifying requirements, defining workflows and product logic, and working with stakeholders and engineering through delivery.</p>
+          <p>Over time, I became increasingly interested in the decisions behind the product: what problem should be solved, what should be built, how it should work, and what should be prioritized. This naturally led me toward broader product ownership.</p>
+          <p>Building products from early ideas through implementation has reinforced that direction. Today, I’m focused on combining my design foundation with structured analysis, product thinking, and cross-functional delivery to take greater ownership of the product journey.</p>
         </div>
         <div class="button-row">
           ${showAboutButton ? `<a class="button button-primary" href="#/about">About me ${icon()}</a>` : ""}
