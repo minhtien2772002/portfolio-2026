@@ -9,8 +9,8 @@ import { smartSmashCardImage, smartSmashCase } from "./data/smart-smash.js";
 import { hpfCardImage, hpfCardImageSrcset } from "./data/hpf-public.js";
 import { icon, magIcon } from "./icons/magicons.js";
 
-const asset = (name) => `./public/assets/${name}`;
-const vendorAsset = (name) => `./public/vendor/${name}`;
+const asset = (name) => `/public/assets/${name}`;
+const vendorAsset = (name) => `/public/vendor/${name}`;
 
 const assets = {
   menuIcon: asset("menu-icon.png"),
@@ -277,28 +277,28 @@ const studyCaseCards = [
     title: "Habit Tracker App Engagement",
     meta: "Product Design Case Study - 2025",
     image: assets.studyHabitCard,
-    href: "#/study-cases/habit-tracker-app",
+    href: "/study-cases/habit-tracker-app",
   },
   {
     slug: "etube-music-app-redesign",
     title: "eTube Music App Redesign",
     meta: "UX/UI Case Study - 2025",
     image: assets.studyEtubeCard,
-    href: "#/study-cases/etube-music-app-redesign",
+    href: "/study-cases/etube-music-app-redesign",
   },
   {
     slug: "hub-cycle",
     title: "HubCycle",
     meta: "Capstone Project - 2023",
     image: assets.studyHubCycleCard,
-    href: "#/study-cases/hub-cycle",
+    href: "/study-cases/hub-cycle",
   },
   {
     slug: "smart-smash",
     title: "Smart Smash",
     meta: "Product Design Case Study - 2026",
     image: smartSmashCardImage,
-    href: "#/study-cases/smart-smash",
+    href: "/study-cases/smart-smash",
   },
   {
     slug: "hpf",
@@ -307,7 +307,7 @@ const studyCaseCards = [
     image: hpfCardImage,
     imageSrcset: hpfCardImageSrcset,
     imageSizes: "(max-width: 720px) calc(100vw - 48px), (max-width: 1180px) calc(100vw - 80px), 564px",
-    href: "#/study-cases/hpf",
+    href: "/study-cases/hpf",
   },
 ];
 
@@ -985,7 +985,7 @@ function headerMarkup() {
       })}
       <button class="mobile-menu-overlay" type="button" aria-hidden="true" tabindex="-1"></button>
       <nav class="nav-shell glass-light" aria-label="Primary navigation">
-        <a class="brand" href="#/" aria-label="Nguyen Minh Tien home">
+        <a class="brand" href="/" aria-label="Nguyen Minh Tien home">
           <span class="brand-avatar"><img src="${assets.menuIcon}" alt=""></span>
           <span>Tien Nguyen</span>
         </a>
@@ -994,9 +994,9 @@ function headerMarkup() {
           <span class="mobile-menu-label">Menu</span>
         </button>
         <div class="nav-links" id="site-menu" data-open="false">
-          <a href="#/about" ${route.page === "about" ? `aria-current="page"` : ""}>About me</a>
-          <a href="#/study-cases" ${isStudyCase ? `aria-current="page"` : ""}>Study-cases</a>
-          <a href="#/gallery" ${isGallery ? `aria-current="page"` : ""}>Gallery</a>
+          <a href="/about" ${route.page === "about" ? `aria-current="page"` : ""}>About me</a>
+          <a href="/study-cases" ${isStudyCase ? `aria-current="page"` : ""}>Study-cases</a>
+          <a href="/gallery" ${isGallery ? `aria-current="page"` : ""}>Gallery</a>
           <a class="button button-primary button-small" href="${siteLinks.cv}" ${externalLinkAttrs} aria-label="Open Nguyen Minh Tien CV in Google Drive">My CV ${icon()}</a>
         </div>
       </nav>
@@ -1050,7 +1050,7 @@ function profileIntroSection({ id = "about", reveal = true, showAboutButton = tr
           <p>Building products from early ideas through implementation has reinforced that direction. Today, I’m focused on combining my design foundation with structured analysis, product thinking, and cross-functional delivery to take greater ownership of the product journey.</p>
         </div>
         <div class="button-row">
-          ${showAboutButton ? `<a class="button button-primary" href="#/about">About me ${icon()}</a>` : ""}
+          ${showAboutButton ? `<a class="button button-primary" href="/about">About me ${icon()}</a>` : ""}
           <a class="button button-secondary" href="${siteLinks.cv}" ${externalLinkAttrs} aria-label="Open Nguyen Minh Tien CV in Google Drive">My CV ${icon()}</a>
         </div>
       </div>
@@ -1133,7 +1133,7 @@ function caseSection() {
         ${homeCases.map((card) => caseFullWidthCard(card)).join("")}
       </div>
       <div class="case-full-action">
-        <a class="button button-secondary" href="#/study-cases">All study cases ${icon()}</a>
+        <a class="button button-secondary" href="/study-cases">All study cases ${icon()}</a>
       </div>
     </section>
   `;
@@ -1183,7 +1183,7 @@ function gallerySection() {
               </button>
             `).join("")}
           </div>
-          <a class="button button-secondary gallery-button" href="#/gallery">See all ${icon()}</a>
+          <a class="button button-secondary gallery-button" href="/gallery">See all ${icon()}</a>
         </div>
       </div>
       ${latestImages.length ? galleryLightbox({ title: "Gallery", images: latestImages.map((image) => image.src) }) : ""}
@@ -1251,7 +1251,7 @@ function renderGalleryPage() {
         id: "gallery-page-title",
         label: "Selected UI explorations",
         title: "Design Gallery",
-        buttonHref: "#/study-cases",
+        buttonHref: "/study-cases",
       })}
       <section class="gallery-folder-body" aria-label="Gallery albums">
         <div class="gallery-folder-grid" data-reveal>
@@ -1272,7 +1272,7 @@ function galleryFolderCard(album) {
     { name: "front", image: previews[0] },
   ];
   return `
-    <a class="gallery-folder-card" href="#/gallery/${encodeURIComponent(album.slug)}" aria-label="Open ${album.title} gallery">
+    <a class="gallery-folder-card" href="/gallery/${encodeURIComponent(album.slug)}" aria-label="Open ${album.title} gallery">
       <span class="gallery-folder-tilt-layer parallax-tilt-layer" data-parallax-tilt="album">
         <span class="gallery-preview-stack" aria-hidden="true">
           ${slots.map((slot) => `
@@ -1297,7 +1297,7 @@ function renderGalleryAlbumPage(slug) {
           contentClass: "gallery-album-title-row",
           id: "gallery-album-title",
           title: "Gallery",
-          buttonHref: "#/gallery",
+          buttonHref: "/gallery",
         })}
         <section class="gallery-album-body"><p class="gallery-empty">No gallery album data found.</p></section>
       </main>
@@ -1311,7 +1311,7 @@ function renderGalleryAlbumPage(slug) {
         contentClass: "gallery-album-title-row",
         id: "gallery-album-title",
         title: album.title,
-        buttonHref: "#/gallery",
+        buttonHref: "/gallery",
       })}
       <section class="gallery-album-body" aria-label="${album.title} media">
         ${media.length ? galleryMasonry(album, media) : `<p class="gallery-empty">This album folder is empty.</p>`}
@@ -1553,8 +1553,8 @@ function renderStudyCaseDetailPage(slug) {
           <article class="study-article" aria-label="${detail.title} study case">
             ${detail.sections.map((section) => studySection(section)).join("")}
             <nav class="study-next" aria-label="Study case navigation" data-reveal>
-              <a class="button button-secondary" href="#/study-cases">Back to Study Cases ${icon()}</a>
-              ${next ? `<a class="button button-primary" href="#/study-cases/${detail.next}">Next: ${next.title} ${icon()}</a>` : ""}
+              <a class="button button-secondary" href="/study-cases">Back to Study Cases ${icon()}</a>
+              ${next ? `<a class="button button-primary" href="/study-cases/${detail.next}">Next: ${next.title} ${icon()}</a>` : ""}
             </nav>
           </article>
         </div>
@@ -1590,7 +1590,7 @@ function renderHpfAccessPage() {
           </div>
           <p class="hpf-passcode-status" id="hpf-passcode-status" role="status" aria-live="polite">${checking ? "Checking access." : hpfAccessMessage}</p>
         </form>
-        <a class="button button-secondary hpf-all-cases" href="#/study-cases">${icon("arrow-left")}<span>All Cases</span></a>
+        <a class="button button-secondary hpf-all-cases" href="/study-cases">${icon("arrow-left")}<span>All Cases</span></a>
       </div>
     </main>
   `;
@@ -1599,7 +1599,7 @@ function renderHpfAccessPage() {
 const defaultPageMetadata = {
   title: "Nguyen Minh Tien - Product Designer",
   description: "Product Designer focused on UX/UI, product thinking, business analysis, and digital experience design.",
-  image: "./public/og-image.png",
+  image: "/public/og-image.png",
   imageAlt: "Nguyen Minh Tien Portfolio preview",
 };
 
@@ -1723,7 +1723,7 @@ function studyCaseToc(detail) {
   const sections = detail.sections.filter((section) => section.toc !== false);
   return `
     <nav class="study-toc" aria-label="${detail.title} table of contents" data-reveal>
-      <a class="study-back-link" href="#/study-cases">${icon("arrow-left")}<span>All cases</span></a>
+      <a class="study-back-link" href="/study-cases">${icon("arrow-left")}<span>All cases</span></a>
       <span class="study-toc-divider" aria-hidden="true"></span>
       <span class="study-toc-fade" aria-hidden="true"></span>
       <div class="study-toc-scroll">
@@ -2065,17 +2065,36 @@ function initTypewriters() {
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 const mix = (from, to, progress) => from + (to - from) * progress;
 
-function parseRoute(hash = window.location.hash || "#/") {
-  const currentHash = hash || "#/";
-  const slugMatch = currentHash.match(/^#\/study-cases\/([^/?#]+)/);
-  if (slugMatch) return { page: "study-detail", slug: decodeURIComponent(slugMatch[1]) };
-  const gallerySlugMatch = currentHash.match(/^#\/gallery\/([^/?#]+)/);
-  if (gallerySlugMatch) return { page: "gallery-detail", slug: decodeURIComponent(gallerySlugMatch[1]) };
-  if (currentHash === "#study-cases" || currentHash.startsWith("#/study-cases")) return { page: "study-list" };
-  if (currentHash === "#about" || currentHash.startsWith("#/about")) return { page: "about" };
-  if (currentHash === "#works" || currentHash.startsWith("#/works")) return { page: "home", target: "works" };
-  if (currentHash === "#gallery" || currentHash === "#/gallery") return { page: "gallery-list" };
-  if (currentHash === "#contact" || currentHash.startsWith("#/contact")) return { page: "home", target: "contact" };
+function toRouteUrl(value = window.location) {
+  if (value instanceof URL) return value;
+  if (typeof value === "string") return new URL(value, window.location.origin);
+  return new URL(`${value.pathname || "/"}${value.search || ""}${value.hash || ""}`, window.location.origin);
+}
+
+function normalizedPathname(value = window.location) {
+  const pathname = toRouteUrl(value).pathname.replace(/\/{2,}/g, "/");
+  return pathname.length > 1 ? pathname.replace(/\/+$/, "") : "/";
+}
+
+function decodeRouteSegment(value) {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
+function parseRoute(value = window.location) {
+  const pathname = normalizedPathname(value);
+  const slugMatch = pathname.match(/^\/study-cases\/([^/]+)$/);
+  if (slugMatch) return { page: "study-detail", slug: decodeRouteSegment(slugMatch[1]) };
+  const gallerySlugMatch = pathname.match(/^\/gallery\/([^/]+)$/);
+  if (gallerySlugMatch) return { page: "gallery-detail", slug: decodeRouteSegment(gallerySlugMatch[1]) };
+  if (pathname === "/study-cases") return { page: "study-list" };
+  if (pathname === "/about") return { page: "about" };
+  if (pathname === "/works") return { page: "home", target: "works" };
+  if (pathname === "/gallery") return { page: "gallery-list" };
+  if (pathname === "/contact") return { page: "home", target: "contact" };
   return { page: "home" };
 }
 
@@ -2083,34 +2102,43 @@ function getRoute() {
   return parseRoute();
 }
 
-function getMajorRouteKey(hash = window.location.hash || "#/") {
-  const route = parseRoute(hash);
+function getMajorRouteKey(value = window.location) {
+  const route = parseRoute(value);
   if (route.page === "study-detail" || route.page === "gallery-detail") return `${route.page}:${route.slug}`;
   return route.page;
 }
 
-function isMajorHashRoute(hash = "") {
-  if (!hash.startsWith("#")) return false;
-  const knownHashRoute = hash === "#/"
-    || hash === "#about"
-    || hash === "#study-cases"
-    || hash === "#gallery"
-    || hash === "#contact"
-    || hash === "#works"
-    || hash.startsWith("#/about")
-    || hash.startsWith("#/study-cases")
-    || hash === "#/gallery"
-    || /^#\/gallery\/[^/?#]+/.test(hash)
-    || hash.startsWith("#/contact")
-    || hash.startsWith("#/works");
-  if (!knownHashRoute) return false;
-  const route = parseRoute(hash);
-  return ["home", "about", "study-list", "study-detail", "gallery-list", "gallery-detail"].includes(route.page);
+function isPageRoute(value) {
+  const pathname = normalizedPathname(value);
+  return pathname === "/"
+    || pathname === "/about"
+    || pathname === "/study-cases"
+    || /^\/study-cases\/[^/]+$/.test(pathname)
+    || pathname === "/gallery"
+    || /^\/gallery\/[^/]+$/.test(pathname)
+    || pathname === "/contact"
+    || pathname === "/works";
 }
 
-function shouldUsePageTransition(fromHash, toHash) {
-  if (!isMajorHashRoute(toHash)) return false;
-  return getMajorRouteKey(fromHash || "#/") !== getMajorRouteKey(toHash || "#/");
+function routeHref(value = window.location) {
+  const url = toRouteUrl(value);
+  return `${url.pathname}${url.search}${url.hash}`;
+}
+
+function shouldUsePageTransition(fromUrl, toUrl) {
+  if (!isPageRoute(toUrl)) return false;
+  return getMajorRouteKey(fromUrl) !== getMajorRouteKey(toUrl);
+}
+
+function migrateLegacyHashRoute() {
+  const hash = window.location.hash;
+  const legacyPath = hash.startsWith("#/")
+    ? hash.slice(1)
+    : ({ "#about": "/about", "#study-cases": "/study-cases", "#gallery": "/gallery", "#contact": "/contact", "#works": "/works" })[hash];
+  if (!legacyPath || !isPageRoute(legacyPath)) return;
+  const legacyUrl = toRouteUrl(legacyPath);
+  const search = legacyUrl.search || window.location.search;
+  window.history.replaceState(window.history.state, "", `${legacyUrl.pathname}${search}${legacyUrl.hash}`);
 }
 
 const pageTransitionState = {
@@ -2118,8 +2146,6 @@ const pageTransitionState = {
   phase: "idle",
   initialized: false,
   initialRevealStarted: false,
-  pendingReveal: false,
-  pendingHash: "",
   revealFrame: 0,
   root: null,
   panels: [],
@@ -2245,8 +2271,6 @@ async function animatePageTransitionReveal({
     pageTransitionState.root.style.background = "transparent";
     setPageTransitionActive(false);
     resetPageTransitionPanels(0, "top center");
-    pageTransitionState.pendingReveal = false;
-    pageTransitionState.pendingHash = "";
     pageTransitionState.phase = "idle";
     return;
   }
@@ -2267,8 +2291,6 @@ async function animatePageTransitionReveal({
   ).finished));
   setPageTransitionActive(false);
   resetPageTransitionPanels(0, "top center");
-  pageTransitionState.pendingReveal = false;
-  pageTransitionState.pendingHash = "";
   pageTransitionState.phase = "idle";
 }
 
@@ -2343,23 +2365,22 @@ async function playInitialPageTransition() {
   });
 }
 
-async function navigateWithPageTransition(nextHash) {
-  const currentHash = window.location.hash || "#/";
-  if (pageTransitionState.phase !== "idle" || !nextHash || nextHash === currentHash) return;
-  if (!shouldUsePageTransition(currentHash, nextHash)) {
-    window.location.hash = nextHash;
+async function navigateWithPageTransition(nextHref) {
+  if (pageTransitionState.phase !== "idle" || !nextHref) return;
+  const currentUrl = toRouteUrl(window.location);
+  const nextUrl = toRouteUrl(nextHref);
+  const nextRouteHref = routeHref(nextUrl);
+  if (nextUrl.origin !== window.location.origin || nextRouteHref === routeHref(currentUrl)) return;
+  if (!shouldUsePageTransition(currentUrl, nextUrl)) {
+    window.history.pushState(null, "", nextRouteHref);
+    boot();
     return;
   }
 
-  pageTransitionState.pendingHash = nextHash;
-  pageTransitionState.pendingReveal = true;
   document.body.classList.remove("is-mobile-menu-open");
   await animatePageTransitionCover();
   pageTransitionState.phase = "awaiting-route";
-  if (window.location.hash !== nextHash) {
-    window.location.hash = nextHash;
-    return;
-  }
+  window.history.pushState(null, "", nextRouteHref);
   boot();
   pageTransitionState.phase = "revealing";
   pageTransitionState.revealFrame = window.requestAnimationFrame(() => {
@@ -2377,23 +2398,17 @@ function initPageTransitions() {
     const link = event.target.closest("a[href]");
     if (!link) return;
     const href = link.getAttribute("href") || "";
-    if (!href.startsWith("#")) return;
+    if (!href || href.startsWith("#") || link.hasAttribute("download")) return;
     if (link.target && link.target !== "_self") return;
-    if (!shouldUsePageTransition(window.location.hash || "#/", href)) return;
+    const nextUrl = toRouteUrl(href);
+    if (nextUrl.origin !== window.location.origin || !isPageRoute(nextUrl)) return;
     event.preventDefault();
     void navigateWithPageTransition(href);
   }, true);
 }
 
-function handleHashChange() {
+function handlePopState() {
   boot();
-  if (!pageTransitionState.pendingReveal) return;
-  if (pageTransitionState.phase !== "awaiting-route") return;
-  if ((window.location.hash || "#/") !== pageTransitionState.pendingHash) return;
-  pageTransitionState.phase = "revealing";
-  pageTransitionState.revealFrame = window.requestAnimationFrame(() => {
-    void animatePageTransitionReveal();
-  });
 }
 
 function initReveal() {
@@ -4585,17 +4600,22 @@ function boot() {
   initFooterGrid();
   initSkillPhysics();
   const route = getRoute();
-  if (route.target) {
+  const anchorTarget = window.location.hash && !window.location.hash.startsWith("#/")
+    ? decodeRouteSegment(window.location.hash.slice(1))
+    : "";
+  const scrollTarget = route.target || anchorTarget;
+  if (scrollTarget) {
     window.requestAnimationFrame(() => {
-      document.getElementById(route.target)?.scrollIntoView({ block: "start" });
+      document.getElementById(scrollTarget)?.scrollIntoView({ block: "start" });
     });
   } else {
     window.scrollTo({ top: 0 });
   }
 }
 
+migrateLegacyHashRoute();
 initPageTransitions();
-window.addEventListener("hashchange", handleHashChange);
+window.addEventListener("popstate", handlePopState);
 window.addEventListener("pagehide", () => {
   hpfProtectedCase = null;
   hpfVisitAccessToken = "";

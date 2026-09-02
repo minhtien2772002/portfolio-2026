@@ -9,6 +9,36 @@
       "includeFiles": "private/hpf/assets/**"
     }
   },
+  "rewrites": [
+    {
+      "source": "/about",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/study-cases",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/study-cases/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/gallery",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/gallery/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/works",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

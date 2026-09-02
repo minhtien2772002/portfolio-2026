@@ -37,6 +37,15 @@ const contentTypes = {
   ".webp": "image/webp",
   ".woff2": "font/woff2",
 };
+const spaRoutePatterns = [
+  /^\/$/,
+  /^\/about\/?$/,
+  /^\/study-cases(?:\/[^/]+)?\/?$/,
+  /^\/gallery(?:\/[^/]+)?\/?$/,
+  /^\/works\/?$/,
+  /^\/contact\/?$/,
+];
+const isSpaRoute = (pathname) => spaRoutePatterns.some((pattern) => pattern.test(pathname));
 
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || "127.0.0.1"}`);
@@ -51,7 +60,10 @@ const server = http.createServer((req, res) => {
   }
 
   const relativePath = url.pathname === "/" ? "index.html" : decodeURIComponent(url.pathname).replace(/^\/+/, "");
-  const filePath = path.resolve(output, relativePath);
+  const requestedFilePath = path.resolve(output, relativePath);
+  const filePath = isSpaRoute(url.pathname) && !fs.existsSync(requestedFilePath)
+    ? path.join(output, "index.html")
+    : requestedFilePath;
   if (!filePath.startsWith(`${output}${path.sep}`) || !fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
     res.statusCode = 404;
     res.end("Not found");

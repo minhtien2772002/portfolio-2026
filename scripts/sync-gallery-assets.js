@@ -138,7 +138,7 @@ const buildAlbums = (folders, existingAlbums) => {
       const sourcePath = path.join(folder, item.original);
       const stats = fs.statSync(sourcePath);
       const id = `${slug}-${slugify(item.stem) || index}`;
-      const src = `public/gallery/${folderName}/${item.selected}`;
+      const src = `/public/gallery/${folderName}/${item.selected}`;
       if (previousMedia.get(id) !== src) mediaReferencesUpdated += 1;
       return {
         id,
@@ -158,7 +158,7 @@ const buildAlbums = (folders, existingAlbums) => {
       id: existing?.id || slug,
       title,
       slug,
-      folderPath: `./public/gallery/${folderName}`,
+      folderPath: `/public/gallery/${folderName}`,
       coverImage: imageEntries[0]?.src || media[0]?.src || "",
       images: imageEntries.map((item) => item.src),
       imageEntries,
