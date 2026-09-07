@@ -2044,7 +2044,7 @@ function typewriter(element, options) {
 
 function initTypewriters() {
   typewriter(document.querySelector('[data-typewriter="hero"]'), {
-    words: ["Nguyen Minh Tien", "Product Designer", "Product Builder"],
+    words: ["Nguyen Minh Tien", "Product Designer", "Product Builder", "Business Analyst"],
     typingSpeed: 90,
     deletingSpeed: 45,
     holdDuration: 1800,
