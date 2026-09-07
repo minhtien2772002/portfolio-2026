@@ -87,7 +87,7 @@ const emailAddress = ["minhtien277", "20", "02", "@gmail.com"].join("");
 const siteLinks = {
   email: `mailto:${emailAddress}`,
   phone: "tel:+84398466432",
-  cv: "https://drive.google.com/file/d/1p9E_Y7Z-JFuyeyAxSJmP1U1zV33Q7ViL/view?usp=drive_link",
+  cv: "https://drive.google.com/file/d/1wEKVJfJt6oDA5yN_NloMscD4_x5eGCsi/view?usp=sharing",
   zalo: "https://zalo.me/0398466432",
   linkedin: "https://www.linkedin.com/in/tien-nguyen-minh-5b99a8164/",
   dribbble: "https://dribbble.com/cuc22cu",
