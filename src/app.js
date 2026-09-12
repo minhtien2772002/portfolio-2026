@@ -4579,6 +4579,7 @@ function boot() {
   runCleanups();
   prepareHpfRouteState();
   render();
+  window.portfolioAnalytics?.trackPageView();
   initMenu();
   initHpfAccess();
   initHpfProtectedImages();

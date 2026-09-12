@@ -6,9 +6,10 @@
     "images:optimize": "node scripts/optimize-images.mjs",
     "preview:secure": "node scripts/serve-secure-preview.js",
     "security:check": "node scripts/security-check.js",
+    "test:analytics": "node scripts/test-analytics.js",
     "test:hpf-security": "node scripts/test-hpf-security.js",
     "test:hpf-ui": "node scripts/test-hpf-passcode-ui.js",
-    "test": "npm run security:check && npm run test:hpf-security && npm run test:hpf-ui"
+    "test": "npm run security:check && npm run test:analytics && npm run test:hpf-security && npm run test:hpf-ui"
   },
   "dependencies": {
     "gsap": "^3.15.0",
