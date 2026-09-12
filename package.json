@@ -17,7 +17,7 @@
     "motion": "^12.40.0",
     "react-intersection-observer": "^10.0.3",
     "react-parallax-tilt": "^1.7.331",
-    "webp-converter": "^2.3.3"
+    "webp-converter": "^3.0.1"
   },
   "overrides": {
     "webp-converter": {
