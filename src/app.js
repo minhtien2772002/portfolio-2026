@@ -8,6 +8,7 @@ import {
 import { smartSmashCardImage, smartSmashCase } from "./data/smart-smash.js";
 import { hpfCardImage, hpfCardImageSrcset } from "./data/hpf-public.js";
 import { icon, magIcon } from "./icons/magicons.js";
+import { initFarewell, renderFarewellPage } from "./farewell.js";
 
 const asset = (name) => `/public/assets/${name}`;
 const vendorAsset = (name) => `/public/vendor/${name}`;
@@ -1613,6 +1614,13 @@ const pageMetadata = {
     imageHeight: "719",
     robots: "noindex, noarchive, nosnippet",
   },
+  farewell: {
+    title: "I left something for you | Tien Nguyen",
+    description: "A private farewell letter experience by Tien Nguyen.",
+    image: defaultPageMetadata.image,
+    imageAlt: "Tien Nguyen Portfolio preview",
+    robots: "noindex, noarchive, nosnippet",
+  },
 };
 
 function setMetaContent(selector, value) {
@@ -1621,7 +1629,11 @@ function setMetaContent(selector, value) {
 }
 
 function updatePageMetadata(route) {
-  const metadata = route.page === "study-detail" ? pageMetadata[route.slug] || defaultPageMetadata : defaultPageMetadata;
+  const metadata = route.page === "study-detail"
+    ? pageMetadata[route.slug] || defaultPageMetadata
+    : route.page === "farewell"
+      ? pageMetadata.farewell
+      : defaultPageMetadata;
   document.title = metadata.title;
   setMetaContent('meta[name="description"]', metadata.description);
   setMetaContent('meta[property="og:title"]', metadata.title);
@@ -1639,8 +1651,11 @@ function updatePageMetadata(route) {
 
 function render() {
   const route = getRoute();
+  const isFarewell = route.page === "farewell";
   const isLockedHpf = route.page === "study-detail" && route.slug === "hpf" && !hpfProtectedCase;
-  const pageMarkup = route.page === "about"
+  const pageMarkup = isFarewell
+    ? renderFarewellPage()
+    : route.page === "about"
     ? renderAboutPage()
     : route.page === "study-list"
       ? renderStudyCaseListPage()
@@ -1651,11 +1666,13 @@ function render() {
           : route.page === "gallery-detail"
             ? renderGalleryAlbumPage(route.slug)
             : renderHomePage();
-  document.querySelector("#root").innerHTML = `
-    ${headerMarkup()}
-    ${pageMarkup}
-    ${isLockedHpf ? "" : footerMarkup()}
-  `;
+  document.querySelector("#root").innerHTML = isFarewell
+    ? pageMarkup
+    : `
+      ${headerMarkup()}
+      ${pageMarkup}
+      ${isLockedHpf ? "" : footerMarkup()}
+    `;
   document.body.dataset.page = route.page;
   updatePageMetadata(route);
 }
@@ -2086,6 +2103,7 @@ function decodeRouteSegment(value) {
 
 function parseRoute(value = window.location) {
   const pathname = normalizedPathname(value);
+  if (pathname === "/4ever") return { page: "farewell" };
   const slugMatch = pathname.match(/^\/study-cases\/([^/]+)$/);
   if (slugMatch) return { page: "study-detail", slug: decodeRouteSegment(slugMatch[1]) };
   const gallerySlugMatch = pathname.match(/^\/gallery\/([^/]+)$/);
@@ -2111,6 +2129,7 @@ function getMajorRouteKey(value = window.location) {
 function isPageRoute(value) {
   const pathname = normalizedPathname(value);
   return pathname === "/"
+    || pathname === "/4ever"
     || pathname === "/about"
     || pathname === "/study-cases"
     || /^\/study-cases\/[^/]+$/.test(pathname)
@@ -4581,6 +4600,8 @@ function boot() {
   render();
   window.portfolioAnalytics?.trackPageView();
   initMenu();
+  const farewellCleanup = initFarewell();
+  if (farewellCleanup) addCleanup(farewellCleanup);
   initHpfAccess();
   initHpfProtectedImages();
   initTypewriters();

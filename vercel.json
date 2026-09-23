@@ -7,9 +7,22 @@
     },
     "api/hpf/assets.js": {
       "includeFiles": "private/hpf/assets/**"
+    },
+    "api/farewell/unlock.js": {
+      "includeFiles": "private/farewell/recipients.cjs"
+    },
+    "api/farewell/content.js": {
+      "includeFiles": "private/farewell/**"
+    },
+    "api/farewell/image.js": {
+      "includeFiles": "private/farewell/**"
     }
   },
   "rewrites": [
+    {
+      "source": "/4ever",
+      "destination": "/index.html"
+    },
     {
       "source": "/about",
       "destination": "/index.html"

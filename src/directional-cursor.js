@@ -1,8 +1,6 @@
 (function () {
-  const isFinePointer = window.matchMedia("(pointer: fine)").matches;
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  if (!isFinePointer || prefersReducedMotion) return;
+  const finePointerQuery = window.matchMedia("(pointer: fine)");
+  const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   const style = document.createElement("style");
   style.textContent = `
@@ -50,7 +48,6 @@
   `;
 
   document.head.appendChild(style);
-  document.body.classList.add("directional-cursor-enabled");
 
   const cursor = document.createElement("div");
   cursor.className = "directional-cursor";
@@ -60,8 +57,6 @@
       <path class="outer" d="M16,3A2.59,2.59,0,0,1,18.34,4.6l9,20.74A2.59,2.59,0,0,1,25,29a5.42,5.42,0,0,1-.86-.15l-7.37-3.48a1.84,1.84,0,0,0-.77-.17,1.69,1.69,0,0,0-.73.16l-7.4,3.31a5.89,5.89,0,0,1-.79.12,2.59,2.59,0,0,1-2.37-3.62L13.6,4.6A2.58,2.58,0,0,1,16,3m0-2h0A4.58,4.58,0,0,0,11.76,3.8L2.84,24.33A4.58,4.58,0,0,0,7,30.75a6.08,6.08,0,0,0,1.21-.17,1.87,1.87,0,0,0,.4-.13L16,27.18l7.29,3.44a1.64,1.64,0,0,0,.39.14A6.37,6.37,0,0,0,25,31a4.59,4.59,0,0,0,4.21-6.41l-9-20.75A4.62,4.62,0,0,0,16,1Z" />
     </svg>
   `;
-
-  document.body.appendChild(cursor);
 
   let currentX = 0;
   let currentY = 0;
@@ -76,6 +71,8 @@
 
   let hasMoved = false;
   let isVisible = false;
+  let isEnabled = false;
+  let animationFrame = 0;
 
   const positionEase = 0.22;
   const angleEase = 0.18;
@@ -124,6 +121,7 @@
   }
 
   function animate() {
+    if (!isEnabled) return;
     if (hasMoved) {
       currentX = lerp(currentX, targetX, positionEase);
       currentY = lerp(currentY, targetY, positionEase);
@@ -132,7 +130,7 @@
       cursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%) rotate(${currentAngle}deg)`;
     }
 
-    requestAnimationFrame(animate);
+    animationFrame = requestAnimationFrame(animate);
   }
 
   function hideCursor() {
@@ -140,7 +138,43 @@
     isVisible = false;
   }
 
-  window.addEventListener("mousemove", onMouseMove, { passive: true });
-  window.addEventListener("mouseleave", hideCursor);
-  requestAnimationFrame(animate);
+  function enableCursor() {
+    if (isEnabled) return;
+    isEnabled = true;
+    document.body.classList.add("directional-cursor-enabled");
+    document.body.appendChild(cursor);
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    window.addEventListener("mouseleave", hideCursor);
+    animationFrame = requestAnimationFrame(animate);
+  }
+
+  function disableCursor() {
+    if (!isEnabled && !cursor.isConnected) return;
+    isEnabled = false;
+    window.removeEventListener("mousemove", onMouseMove);
+    window.removeEventListener("mouseleave", hideCursor);
+    window.cancelAnimationFrame(animationFrame);
+    animationFrame = 0;
+    hasMoved = false;
+    isVisible = false;
+    cursor.style.opacity = "0";
+    cursor.classList.remove("is-hovering");
+    cursor.remove();
+    document.body.classList.remove("directional-cursor-enabled");
+  }
+
+  function syncCursorAvailability() {
+    const onFarewellPage = document.body.dataset.page === "farewell";
+    if (finePointerQuery.matches && !reducedMotionQuery.matches && !onFarewellPage) {
+      enableCursor();
+    } else {
+      disableCursor();
+    }
+  }
+
+  const pageObserver = new MutationObserver(syncCursorAvailability);
+  pageObserver.observe(document.body, { attributes: true, attributeFilter: ["data-page"] });
+  finePointerQuery.addEventListener?.("change", syncCursorAvailability);
+  reducedMotionQuery.addEventListener?.("change", syncCursorAvailability);
+  syncCursorAvailability();
 })();

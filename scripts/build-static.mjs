@@ -7,6 +7,7 @@ const output = path.join(root, "dist");
 const productionEntries = ["index.html", "src", "public"];
 const temporaryFigmaAssetPrefix = ["figma.com/api/mcp/", "asset"].join("");
 const protectedCopyMarker = "mobile-first personal-development platform for men pursuing stronger roles";
+const farewellProtectedCopyMarker = "Ước gì tôi là con lợn lòi";
 
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
@@ -30,6 +31,9 @@ for (const file of sourceFiles) {
   }
   if (contents.includes(protectedCopyMarker)) {
     throw new Error(`Protected HPF content found in public build file ${path.relative(root, file)}`);
+  }
+  if (contents.includes(farewellProtectedCopyMarker)) {
+    throw new Error(`Protected farewell content found in public build file ${path.relative(root, file)}`);
   }
 }
 

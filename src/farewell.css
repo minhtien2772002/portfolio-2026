@@ -1,0 +1,1130 @@
+@font-face {
+  font-family: "DFVN Excalifont";
+  src: url("/public/assets/farewell/DFVN-Excalifont.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+.farewell-page {
+  --farewell-error: #e8001f;
+  --farewell-motion-fast: 220ms;
+  --farewell-motion-base: 420ms;
+  --farewell-motion-slow: 680ms;
+  --farewell-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  min-height: 100svh;
+  overflow: clip;
+  background: #fff;
+  color: #000;
+  font-family: "Syne", sans-serif;
+}
+
+.farewell-page *,
+.farewell-page *::before,
+.farewell-page *::after {
+  box-sizing: border-box;
+}
+
+body[data-page="farewell"] {
+  overflow-x: clip;
+}
+
+body[data-page="farewell"] .directional-cursor {
+  display: none !important;
+}
+
+@media (pointer: fine) {
+  body[data-page="farewell"].directional-cursor-enabled,
+  body[data-page="farewell"].directional-cursor-enabled * {
+    cursor: auto !important;
+  }
+
+  body[data-page="farewell"] .directional-cursor {
+    display: none !important;
+  }
+
+  body[data-page="farewell"] button,
+  body[data-page="farewell"] [role="button"] {
+    cursor: pointer !important;
+  }
+
+  body[data-page="farewell"] input {
+    cursor: text !important;
+  }
+}
+
+.farewell-root,
+.farewell-loading {
+  min-height: 100svh;
+}
+
+.farewell-root.is-view-exiting {
+  pointer-events: none;
+}
+
+.farewell-view {
+  animation: farewell-view-enter var(--farewell-motion-base) var(--farewell-motion-ease) both;
+}
+
+.farewell-root.is-view-exiting > .farewell-view {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateY(-8px) scale(0.995);
+  transition:
+    opacity var(--farewell-motion-fast) ease-out,
+    filter var(--farewell-motion-fast) ease-out,
+    transform var(--farewell-motion-fast) ease-out;
+}
+
+@keyframes farewell-view-enter {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateY(10px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+.farewell-loading {
+  background: #fff;
+}
+
+.farewell-header {
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 36px 24px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5) 65%, rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+.farewell-header-pill {
+  display: flex;
+  width: min(760px, 100%);
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 6px 6px 14px;
+  border: 1px solid #e9eaeb;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 12px 32px -8px rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(7.5px);
+  backdrop-filter: blur(7.5px);
+}
+
+.farewell-header-pill img {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.farewell-header-pill span {
+  width: 106px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 28px;
+}
+
+.farewell-landing {
+  min-height: 100svh;
+  background: #fff;
+}
+
+.farewell-landing-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 160px 12.5vw 64px;
+  text-align: center;
+}
+
+.farewell-landing-copy h1 {
+  max-width: 960px;
+  margin: 0;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 72px;
+  letter-spacing: 0;
+}
+
+.farewell-landing-copy p {
+  max-width: 960px;
+  margin: 24px auto 0;
+  color: #535862;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+}
+
+.farewell-envelope-area {
+  display: flex;
+  justify-content: center;
+  padding: 108px 64px 128px;
+}
+
+.farewell-envelope-button {
+  display: block;
+  width: min(883px, 100%);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.farewell-envelope-button:focus-visible {
+  outline: 3px solid #000;
+  outline-offset: 10px;
+  border-radius: 24px;
+}
+
+.farewell-envelope-stage {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1152 / 655;
+}
+
+.farewell-envelope-stage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+[data-farewell-depth] {
+  --farewell-parallax-y: 0px;
+  transform: translate3d(0, var(--farewell-parallax-y), 0);
+  will-change: transform;
+}
+
+.farewell-envelope-flower,
+.farewell-envelope-letter,
+.farewell-play-parallax {
+  position: absolute;
+}
+
+.farewell-envelope-flower img {
+  object-fit: contain;
+  transform: rotate(var(--landing-flower-rotate, 0deg));
+  transform-origin: 50% 50%;
+  transition: transform 300ms ease-out;
+}
+
+.farewell-envelope-flower-top {
+  --landing-flower-rotate: 0deg;
+  top: -21.8%;
+  left: 40.2%;
+  width: 20%;
+  height: 45.3%;
+}
+
+.farewell-envelope-flower-left-top {
+  --landing-flower-rotate: -44.3deg;
+  top: -16.3%;
+  right: 46.25%;
+  bottom: 49.58%;
+  left: 15.97%;
+}
+
+.farewell-envelope-flower-right-top {
+  --landing-flower-rotate: 9.68deg;
+  top: -3.66%;
+  right: 18.62%;
+  bottom: 46.23%;
+  left: 52.08%;
+}
+
+.farewell-envelope-flower-left-bottom {
+  --landing-flower-rotate: -17.34deg;
+  top: 20.46%;
+  right: 63.88%;
+  bottom: 2.46%;
+  left: 6.34%;
+}
+
+.farewell-envelope-flower-right-bottom {
+  --landing-flower-rotate: 22.52deg;
+  top: 27.02%;
+  right: 10.32%;
+  bottom: 11.37%;
+  left: 61.81%;
+}
+
+.farewell-envelope-letter {
+  inset: 0;
+}
+
+.farewell-envelope-back {
+  position: absolute;
+  z-index: 1;
+  top: 12.67%;
+  left: 22.92%;
+  width: 54.25% !important;
+  height: 69.55% !important;
+  object-fit: contain;
+}
+
+.farewell-envelope-paper {
+  position: absolute;
+  z-index: 2;
+  top: 19.69%;
+  right: 26.85%;
+  bottom: 20.4%;
+  left: 27.11%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12.5% 5% 0;
+  overflow: hidden;
+  border: 1px solid #fff;
+  border-radius: 24px;
+  background: #f5f5f5 url("/public/assets/farewell/envelope-paper.webp") center / cover;
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.2);
+  transition: transform 300ms ease-out;
+}
+
+.farewell-envelope-paper::after {
+  position: absolute;
+  inset: 5.6% 3.35%;
+  border: 1px solid rgba(164, 167, 174, 0.6);
+  border-radius: 16px;
+  content: "";
+}
+
+.farewell-envelope-paper-text {
+  position: relative;
+  z-index: 1;
+  font-family: "DFVN Excalifont", cursive;
+  font-size: clamp(15px, 2.91vw, 33.5px);
+  font-weight: 400;
+  line-height: 1.05;
+  text-align: center;
+}
+
+.farewell-envelope-front {
+  position: absolute;
+  z-index: 3;
+  top: 44.11%;
+  left: 22.28%;
+  width: 55.82% !important;
+  height: 52% !important;
+  object-fit: contain;
+}
+
+.farewell-play-parallax {
+  z-index: 4;
+  top: 53.28%;
+  left: 40.02%;
+  width: 19.97%;
+  aspect-ratio: 230 / 243.687;
+}
+
+.farewell-play-float {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: farewell-play-float 4.8s ease-in-out infinite;
+  transition: transform var(--farewell-motion-base) var(--farewell-motion-ease);
+}
+
+.farewell-play-float img {
+  position: absolute;
+  inset: 0;
+  object-fit: contain;
+  transition: opacity 180ms ease-out;
+}
+
+.farewell-play-active {
+  opacity: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .farewell-envelope-button:hover .farewell-envelope-flower-top img,
+  .farewell-envelope-button.is-opening .farewell-envelope-flower-top img {
+    transform: translateY(-20px) rotate(var(--landing-flower-rotate));
+  }
+
+  .farewell-envelope-button:hover .farewell-envelope-flower-left-top img,
+  .farewell-envelope-button.is-opening .farewell-envelope-flower-left-top img {
+    transform: translate(-4%, -6%) rotate(var(--landing-flower-rotate));
+  }
+
+  .farewell-envelope-button:hover .farewell-envelope-flower-right-top img,
+  .farewell-envelope-button.is-opening .farewell-envelope-flower-right-top img {
+    transform: translate(4%, -7%) rotate(var(--landing-flower-rotate));
+  }
+
+  .farewell-envelope-button:hover .farewell-envelope-flower-left-bottom img,
+  .farewell-envelope-button.is-opening .farewell-envelope-flower-left-bottom img {
+    transform: translate(-5%, -4%) rotate(var(--landing-flower-rotate));
+  }
+
+  .farewell-envelope-button:hover .farewell-envelope-flower-right-bottom img,
+  .farewell-envelope-button.is-opening .farewell-envelope-flower-right-bottom img {
+    transform: translate(4%, -6%) rotate(var(--landing-flower-rotate));
+  }
+
+  .farewell-envelope-button:hover .farewell-envelope-paper,
+  .farewell-envelope-button.is-opening .farewell-envelope-paper {
+    transform: translateY(-17.33%);
+  }
+
+  .farewell-envelope-button:hover .farewell-play-float,
+  .farewell-envelope-button.is-opening .farewell-play-float {
+    transform: rotate(-20.18deg) scale(1.283);
+  }
+
+  .farewell-envelope-button:hover .farewell-play-default,
+  .farewell-envelope-button.is-opening .farewell-play-default {
+    opacity: 0;
+  }
+
+  .farewell-envelope-button:hover .farewell-play-active,
+  .farewell-envelope-button.is-opening .farewell-play-active {
+    opacity: 1;
+  }
+}
+
+.farewell-envelope-button.is-opening .farewell-envelope-flower-top img {
+  transform: translateY(-20px) rotate(var(--landing-flower-rotate));
+}
+
+.farewell-envelope-button.is-opening .farewell-envelope-flower-left-top img {
+  transform: translate(-4%, -6%) rotate(var(--landing-flower-rotate));
+}
+
+.farewell-envelope-button.is-opening .farewell-envelope-flower-right-top img {
+  transform: translate(4%, -7%) rotate(var(--landing-flower-rotate));
+}
+
+.farewell-envelope-button.is-opening .farewell-envelope-flower-left-bottom img {
+  transform: translate(-5%, -4%) rotate(var(--landing-flower-rotate));
+}
+
+.farewell-envelope-button.is-opening .farewell-envelope-flower-right-bottom img {
+  transform: translate(4%, -6%) rotate(var(--landing-flower-rotate));
+}
+
+.farewell-envelope-button.is-opening .farewell-envelope-paper {
+  transform: translateY(-17.33%);
+}
+
+.farewell-envelope-button.is-opening .farewell-play-float {
+  transform: rotate(-20.18deg) scale(1.283);
+}
+
+.farewell-envelope-button.is-opening .farewell-play-default {
+  opacity: 0;
+}
+
+.farewell-envelope-button.is-opening .farewell-play-active {
+  opacity: 1;
+}
+
+@keyframes farewell-play-float {
+  0%, 100% { translate: 0 -3px; }
+  50% { translate: 0 6px; }
+}
+
+.farewell-landing-view .farewell-header,
+.farewell-landing-copy > *,
+.farewell-envelope-button,
+.farewell-key-form > *,
+.farewell-close-shell {
+  animation: farewell-content-rise var(--farewell-motion-slow) var(--farewell-motion-ease) both;
+}
+
+.farewell-landing-copy h1 { animation-delay: 60ms; }
+.farewell-landing-copy p { animation-delay: 130ms; }
+.farewell-envelope-button { animation-delay: 190ms; }
+.farewell-key-form h1 { animation-delay: 40ms; }
+.farewell-key-fields { animation-delay: 100ms; }
+.farewell-key-help { animation-delay: 160ms; }
+.farewell-key-status { animation-delay: 180ms; }
+
+@keyframes farewell-content-rise {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+.farewell-key-screen {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  place-items: start center;
+  padding: 160px 64px 96px;
+  background: #fff;
+}
+
+.farewell-close-shell {
+  position: absolute;
+  z-index: 4;
+  top: 54px;
+  right: 54px;
+  padding: 24px;
+  border-radius: 9999px;
+  -webkit-backdrop-filter: blur(7.5px);
+  backdrop-filter: blur(7.5px);
+}
+
+.farewell-close-button,
+.farewell-lightbox-close {
+  display: grid;
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.farewell-close-button img,
+.farewell-lightbox-close img {
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+}
+
+.farewell-close-button:focus-visible,
+.farewell-lightbox-close:focus-visible,
+.farewell-stamp:focus-visible {
+  outline: 3px solid #000;
+  outline-offset: 4px;
+}
+
+.farewell-key-form {
+  display: flex;
+  width: min(100%, 1000px);
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+}
+
+.farewell-key-form h1 {
+  margin: 0;
+  color: #535862;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 40px;
+  text-align: center;
+}
+
+.farewell-key-fields {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.farewell-key-group {
+  display: block;
+  width: 208px;
+  height: 96px;
+  border: 2px solid #a4a7ae;
+  border-radius: 16px;
+  background: #fff;
+  transition: border-color 180ms ease-out, box-shadow 180ms ease-out;
+}
+
+.farewell-key-group:first-child {
+  width: 288px;
+}
+
+.farewell-key-group:focus-within {
+  border-color: #000;
+  box-shadow: 0 0 0 1px #000;
+}
+
+.farewell-key-group input {
+  width: 100%;
+  height: 100%;
+  padding: 0 24px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #000;
+  font-family: "Syne", sans-serif;
+  font-size: 56px;
+  font-weight: 500;
+  line-height: 64px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.farewell-key-group input::placeholder {
+  color: #a4a7ae;
+  opacity: 1;
+}
+
+.farewell-key-divider {
+  color: #a4a7ae;
+  font-size: 56px;
+  font-weight: 500;
+  line-height: 64px;
+}
+
+.farewell-key-help,
+.farewell-key-status {
+  margin: 0;
+  color: #535862;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 28px;
+  text-align: center;
+}
+
+.farewell-key-status {
+  min-height: 28px;
+  margin-top: -36px;
+}
+
+.farewell-key-form.has-error .farewell-key-group {
+  border-color: var(--farewell-error);
+}
+
+.farewell-key-form.has-error .farewell-key-status {
+  color: var(--farewell-error);
+}
+
+.farewell-key-form.is-shaking .farewell-key-fields {
+  animation: farewell-key-shake 300ms ease-out;
+}
+
+@keyframes farewell-key-shake {
+  0%, 100% { transform: translateX(0); }
+  30% { transform: translateX(-8px); }
+  65% { transform: translateX(6px); }
+}
+
+.farewell-reader {
+  min-height: 100svh;
+  overflow: clip;
+  background: #f7f7f7;
+}
+
+.farewell-reader-canvas {
+  position: relative;
+  width: min(1280px, 100%);
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: 169px 138px 194px;
+}
+
+.farewell-letter {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: 500px;
+  padding: 80px;
+  border: 1px solid #fff;
+  outline: 0;
+  background: #fff url("/public/assets/farewell/letter-paper.webp") center / cover;
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.2);
+  animation: farewell-paper-enter 720ms var(--farewell-motion-ease) 80ms both;
+}
+
+@keyframes farewell-paper-enter {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(24px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+.farewell-letter-copy {
+  position: relative;
+  z-index: 1;
+  font-family: "DFVN Excalifont", cursive;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.farewell-letter-copy p {
+  margin: 0 0 24px;
+  overflow-wrap: break-word;
+}
+
+.farewell-letter-copy p:last-child {
+  margin-bottom: 0;
+}
+
+.farewell-letter-close {
+  position: absolute;
+  z-index: 5;
+  top: -1px;
+  right: -1px;
+  padding: 24px;
+  border-radius: 9999px;
+  -webkit-backdrop-filter: blur(7.5px);
+  backdrop-filter: blur(7.5px);
+}
+
+.farewell-decoration-layer,
+.farewell-stamp-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.farewell-decoration-layer {
+  z-index: 1;
+}
+
+.farewell-stamp-layer {
+  z-index: 4;
+}
+
+.farewell-flower {
+  --reader-parallax-x: 0px;
+  --reader-parallax-y: 0px;
+  position: absolute;
+  top: var(--flower-top);
+  left: var(--flower-left);
+  display: block;
+  width: 220px;
+  height: 320px;
+  transform: translate3d(var(--reader-parallax-x), var(--reader-parallax-y), 0) rotate(var(--flower-rotate)) scale(var(--flower-scale));
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.farewell-flower img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: farewell-flower-enter 620ms var(--farewell-motion-ease) var(--flower-enter-delay, 0ms) both;
+}
+
+@keyframes farewell-flower-enter {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+    transform: translateY(14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+.farewell-stamp {
+  --reader-parallax-y: 0px;
+  --stamp-rotate: 8deg;
+  --stamp-hover-y: 0px;
+  --stamp-hover-rotate: 0deg;
+  --stamp-hover-scale: 1;
+  position: absolute;
+  z-index: 1;
+  display: block;
+  width: 180px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.2));
+  transform: translate3d(0, calc(var(--reader-parallax-y) + var(--stamp-hover-y)), 0) rotate(calc(var(--stamp-rotate) + var(--stamp-hover-rotate))) scale(var(--stamp-hover-scale));
+  transition:
+    filter var(--farewell-motion-base) var(--farewell-motion-ease),
+    transform var(--farewell-motion-base) var(--farewell-motion-ease);
+  will-change: transform;
+}
+
+.farewell-stamp-0 {
+  top: calc(169px + 24%);
+  right: 0;
+}
+
+.farewell-stamp-1 {
+  top: calc(169px + 43%);
+  left: 0;
+}
+
+.farewell-stamp-2 {
+  top: calc(169px + 62%);
+  right: 4px;
+}
+
+.farewell-stamp-3 {
+  top: calc(169px + 78%);
+  left: 4px;
+}
+
+.farewell-stamp-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 180 / 193;
+  padding: 15px;
+  background: #fff;
+  -webkit-mask: url("/public/assets/farewell/stamp-outline.svg") center / 100% 100% no-repeat;
+  mask: url("/public/assets/farewell/stamp-outline.svg") center / 100% 100% no-repeat;
+  animation: farewell-stamp-enter 620ms var(--farewell-motion-ease) var(--stamp-enter-delay, 0ms) both;
+}
+
+@keyframes farewell-stamp-enter {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+    transform: translateY(18px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .farewell-stamp:hover {
+    --stamp-hover-y: -8px;
+    --stamp-hover-rotate: 2deg;
+    --stamp-hover-scale: 1.035;
+    filter: drop-shadow(0 20px 22px rgba(0, 0, 0, 0.24));
+  }
+}
+
+.farewell-stamp-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #f1f1f1;
+  object-fit: cover;
+}
+
+.farewell-lightbox {
+  --farewell-motion-base: 420ms;
+  --farewell-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: fixed;
+  z-index: 2147483600;
+  inset: 0;
+  display: grid;
+  width: 100vw;
+  height: 100dvh;
+  min-height: 100svh;
+  padding:
+    max(16px, env(safe-area-inset-top))
+    max(16px, env(safe-area-inset-right))
+    max(16px, env(safe-area-inset-bottom))
+    max(16px, env(safe-area-inset-left));
+  place-items: center;
+  isolation: isolate;
+  overscroll-behavior: contain;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 220ms ease-out, visibility 0s linear 220ms;
+}
+
+.farewell-lightbox[data-open="true"] {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+}
+
+.farewell-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: rgba(0, 0, 0, 0.72);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.farewell-lightbox-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: fit-content;
+  max-width: min(90vw, 1100px);
+  max-height: min(88dvh, 980px);
+  place-items: center;
+  opacity: 0;
+  transform: translateY(14px) scale(0.985);
+  transition:
+    opacity var(--farewell-motion-base) var(--farewell-motion-ease),
+    transform var(--farewell-motion-base) var(--farewell-motion-ease);
+}
+
+.farewell-lightbox[data-open="true"] .farewell-lightbox-content {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.farewell-lightbox-content > img:first-child {
+  display: block;
+  max-width: 100%;
+  max-height: min(88dvh, 980px);
+  border-radius: 0;
+  object-fit: contain;
+}
+
+.farewell-lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(7.5px);
+  backdrop-filter: blur(7.5px);
+}
+
+body.is-farewell-lightbox-open {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+@media (max-width: 767px) {
+  .farewell-header {
+    padding: 24px;
+  }
+
+  .farewell-header-pill {
+    width: 100%;
+  }
+
+  .farewell-landing-copy {
+    padding: 128px 24px 56px;
+    text-align: center;
+  }
+
+  .farewell-landing-copy h1 {
+    max-width: 100%;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 48px;
+  }
+
+  .farewell-landing-copy p {
+    max-width: 100%;
+    margin-top: 10px;
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .farewell-envelope-area {
+    min-height: 486px;
+    align-items: flex-start;
+    padding: 112px 0 96px;
+  }
+
+  .farewell-envelope-button {
+    width: min(620px, 142vw);
+    max-width: none;
+    flex: 0 0 auto;
+    container-type: inline-size;
+  }
+
+  .farewell-envelope-paper {
+    border-radius: 12px;
+  }
+
+  .farewell-envelope-paper::after {
+    border-radius: 8px;
+  }
+
+  .farewell-envelope-paper-text {
+    font-size: clamp(12px, 2.91cqw, 16px);
+  }
+
+  .farewell-key-screen {
+    display: grid;
+    place-items: start center;
+    padding: clamp(176px, 27.7svh, 264px) 24px 80px;
+  }
+
+  .farewell-close-shell {
+    top: 0;
+    right: 0;
+    padding: 24px;
+  }
+
+  .farewell-key-form {
+    align-items: center;
+    gap: 48px;
+  }
+
+  .farewell-key-form h1 {
+    max-width: calc(100% - 48px);
+    text-align: center;
+  }
+
+  .farewell-key-fields {
+    width: 208px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .farewell-key-group,
+  .farewell-key-group:first-child {
+    width: 208px;
+  }
+
+  .farewell-key-divider {
+    display: none;
+  }
+
+  .farewell-key-help,
+  .farewell-key-status {
+    max-width: 320px;
+    text-align: center;
+  }
+
+  .farewell-reader-canvas {
+    width: 440px;
+    max-width: 100%;
+    padding: 68px 0 77px;
+  }
+
+  .farewell-letter {
+    width: min(334px, calc(100% - 48px));
+    min-height: 600px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  .farewell-letter-copy {
+    font-size: 16px;
+    line-height: 1.18;
+  }
+
+  .farewell-letter-copy p {
+    margin-bottom: 20px;
+  }
+
+  .farewell-letter-close {
+    padding: 16px;
+  }
+
+  .farewell-flower {
+    width: 145px;
+    height: 210px;
+  }
+
+  .farewell-stamp {
+    width: 112px;
+  }
+
+  .farewell-stamp-0 {
+    top: calc(68px + 23%);
+    right: -28px;
+  }
+
+  .farewell-stamp-1 {
+    top: calc(68px + 48%);
+    left: -26px;
+  }
+
+  .farewell-stamp-2 {
+    top: calc(68px + 67%);
+    right: -30px;
+  }
+
+  .farewell-stamp-3 {
+    top: calc(68px + 82%);
+    left: -28px;
+  }
+
+  .farewell-stamp-frame {
+    padding: 9px;
+  }
+
+  .farewell-lightbox-content {
+    max-width: calc(100vw - max(32px, env(safe-area-inset-left) + env(safe-area-inset-right)));
+    max-height: calc(100dvh - max(32px, env(safe-area-inset-top) + env(safe-area-inset-bottom)));
+  }
+
+  .farewell-lightbox-content > img:first-child {
+    max-height: calc(100dvh - max(32px, env(safe-area-inset-top) + env(safe-area-inset-bottom)));
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .farewell-landing-copy {
+    padding-right: 64px;
+    padding-left: 64px;
+  }
+
+  .farewell-envelope-area {
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+
+  .farewell-key-fields {
+    gap: 16px;
+  }
+
+  .farewell-key-group {
+    width: 168px;
+  }
+
+  .farewell-key-group:first-child {
+    width: 230px;
+  }
+
+  .farewell-reader-canvas {
+    padding-right: 72px;
+    padding-left: 72px;
+  }
+
+  .farewell-letter {
+    padding: 56px;
+  }
+
+  .farewell-stamp {
+    width: 145px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .farewell-page *,
+  .farewell-page *::before,
+  .farewell-page *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  [data-farewell-depth],
+  .farewell-flower,
+  .farewell-stamp {
+    --farewell-parallax-y: 0px !important;
+    --reader-parallax-x: 0px !important;
+    --reader-parallax-y: 0px !important;
+  }
+}

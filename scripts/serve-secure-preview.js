@@ -13,8 +13,8 @@ if (fs.existsSync(localEnvironmentPath)) {
   }
 }
 
-if (!process.env.HPF_PASSCODE || !process.env.HPF_SESSION_SECRET) {
-  console.error("HPF_PASSCODE and HPF_SESSION_SECRET are required for the secure preview.");
+if (!process.env.HPF_PASSCODE || !process.env.HPF_SESSION_SECRET || !process.env.FAREWELL_SESSION_SECRET) {
+  console.error("HPF_PASSCODE, HPF_SESSION_SECRET, and FAREWELL_SESSION_SECRET are required for the secure preview.");
   process.exit(1);
 }
 
@@ -24,6 +24,10 @@ const apiRoutes = new Map([
   ["/api/hpf/unlock", require("../api/hpf/unlock.js")],
   ["/api/hpf/content", require("../api/hpf/content.js")],
   ["/api/hpf/assets", require("../api/hpf/assets.js")],
+  ["/api/farewell/unlock", require("../api/farewell/unlock.js")],
+  ["/api/farewell/content", require("../api/farewell/content.js")],
+  ["/api/farewell/image", require("../api/farewell/image.js")],
+  ["/api/farewell/close", require("../api/farewell/close.js")],
 ]);
 const contentTypes = {
   ".css": "text/css; charset=utf-8",
@@ -34,11 +38,13 @@ const contentTypes = {
   ".mjs": "text/javascript; charset=utf-8",
   ".png": "image/png",
   ".svg": "image/svg+xml",
+  ".ttf": "font/ttf",
   ".webp": "image/webp",
   ".woff2": "font/woff2",
 };
 const spaRoutePatterns = [
   /^\/$/,
+  /^\/4ever\/?$/,
   /^\/about\/?$/,
   /^\/study-cases(?:\/[^/]+)?\/?$/,
   /^\/gallery(?:\/[^/]+)?\/?$/,

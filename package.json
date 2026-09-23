@@ -9,7 +9,9 @@
     "test:analytics": "node scripts/test-analytics.js",
     "test:hpf-security": "node scripts/test-hpf-security.js",
     "test:hpf-ui": "node scripts/test-hpf-passcode-ui.js",
-    "test": "npm run security:check && npm run test:analytics && npm run test:hpf-security && npm run test:hpf-ui"
+    "test:farewell-security": "node scripts/test-farewell-security.js",
+    "test:farewell-ui": "node scripts/test-farewell-ui.js",
+    "test": "npm run security:check && npm run test:analytics && npm run test:hpf-security && npm run test:hpf-ui && npm run test:farewell-security && npm run test:farewell-ui"
   },
   "dependencies": {
     "gsap": "^3.15.0",

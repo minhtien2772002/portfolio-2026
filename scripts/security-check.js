@@ -96,7 +96,7 @@ for (const file of javascriptFiles) {
 }
 
 const envExample = fs.readFileSync(path.join(rootDir, ".env.example"), "utf8");
-for (const variable of ["HPF_PASSCODE", "HPF_SESSION_SECRET"]) {
+for (const variable of ["HPF_PASSCODE", "HPF_SESSION_SECRET", "FAREWELL_SESSION_SECRET"]) {
   const match = envExample.match(new RegExp(`^${variable}=(.*)$`, "m"));
   if (!match) errors.push(`.env.example: missing ${variable}`);
   else if (match[1].trim()) errors.push(`.env.example: ${variable} must not contain a value`);
@@ -109,6 +109,12 @@ for (const file of ["index.html", ...trackedAndUntrackedFiles.filter((entry) => 
   }
   if (/hpfUnlocked\s*=\s*true/i.test(source)) {
     errors.push(`${file}: unsigned HPF authorization state is not allowed`);
+  }
+  if (source.includes("Ước gì tôi là con lợn lòi")) {
+    errors.push(`${file}: protected farewell copy is present in a public browser artifact`);
+  }
+  if (/farewellUnlocked\s*=\s*true/i.test(source)) {
+    errors.push(`${file}: unsigned farewell authorization state is not allowed`);
   }
 }
 
