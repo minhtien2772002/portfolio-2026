@@ -12,6 +12,15 @@
   --farewell-motion-base: 420ms;
   --farewell-motion-slow: 680ms;
   --farewell-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --farewell-entry-background: radial-gradient(
+    ellipse 184% 58% at 50% 112%,
+    #e9d1ec 0%,
+    #e9d1ec 48%,
+    #eedbf0 62%,
+    #f4e8f6 76%,
+    #fbf6fb 89%,
+    #fff 100%
+  );
   min-height: 100svh;
   overflow: clip;
   background: #fff;
@@ -56,6 +65,12 @@ body[data-page="farewell"] .directional-cursor {
 .farewell-root,
 .farewell-loading {
   min-height: 100svh;
+  min-height: 100dvh;
+}
+
+.farewell-root {
+  background: var(--farewell-entry-background) top center / 100% 100dvh no-repeat;
+  background-color: #e9d1ec;
 }
 
 .farewell-root.is-view-exiting {
@@ -138,7 +153,7 @@ body[data-page="farewell"] .directional-cursor {
 
 .farewell-landing {
   min-height: 100svh;
-  background: #fff;
+  background: transparent;
 }
 
 .farewell-landing-copy {
@@ -474,7 +489,7 @@ body[data-page="farewell"] .directional-cursor {
   min-height: 100svh;
   place-items: start center;
   padding: 160px 64px 96px;
-  background: #fff;
+  background: transparent;
 }
 
 .farewell-close-shell {
@@ -708,15 +723,31 @@ body[data-page="farewell"] .directional-cursor {
 .farewell-flower {
   --reader-parallax-x: 0px;
   --reader-parallax-y: 0px;
+  --reader-parallax-rotate: 0deg;
+  --reader-parallax-scale: 1;
   position: absolute;
   top: var(--flower-top);
   left: var(--flower-left);
   display: block;
   width: 220px;
   height: 320px;
-  transform: translate3d(var(--reader-parallax-x), var(--reader-parallax-y), 0) rotate(var(--flower-rotate)) scale(var(--flower-scale));
+}
+
+.farewell-flower-motion,
+.farewell-flower-orientation {
+  display: block;
+  width: 100%;
+  height: 100%;
   transform-origin: 50% 50%;
+}
+
+.farewell-flower-motion {
+  transform: translate3d(var(--reader-parallax-x), var(--reader-parallax-y), 0) rotate(var(--reader-parallax-rotate)) scale(var(--reader-parallax-scale));
   will-change: transform;
+}
+
+.farewell-flower-orientation {
+  transform: rotate(var(--flower-rotate)) scale(var(--flower-scale));
 }
 
 .farewell-flower img {
@@ -763,26 +794,6 @@ body[data-page="farewell"] .directional-cursor {
   will-change: transform;
 }
 
-.farewell-stamp-0 {
-  top: calc(169px + 24%);
-  right: 0;
-}
-
-.farewell-stamp-1 {
-  top: calc(169px + 43%);
-  left: 0;
-}
-
-.farewell-stamp-2 {
-  top: calc(169px + 62%);
-  right: 4px;
-}
-
-.farewell-stamp-3 {
-  top: calc(169px + 78%);
-  left: 4px;
-}
-
 .farewell-stamp-frame {
   position: relative;
   display: block;
@@ -823,6 +834,34 @@ body[data-page="farewell"] .directional-cursor {
   height: 100%;
   background: #f1f1f1;
   object-fit: cover;
+}
+
+@media (max-width: 1024px) {
+  .farewell-stamp-layer[data-farewell-stamp-layout="grid"] {
+    position: relative;
+    inset: auto;
+    display: grid;
+    width: 100%;
+    margin: 64px auto 0;
+    grid-template-columns: repeat(2, 145px);
+    column-gap: 48px;
+    row-gap: 40px;
+    justify-content: center;
+    align-items: start;
+  }
+
+  .farewell-stamp-layer[data-farewell-stamp-layout="grid"]:empty {
+    display: none;
+    margin-top: 0;
+  }
+
+  .farewell-stamp-layer[data-farewell-stamp-layout="grid"] .farewell-stamp {
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
+    width: 145px;
+  }
 }
 
 .farewell-lightbox {
@@ -1039,24 +1078,16 @@ body.is-farewell-lightbox-open {
     width: 112px;
   }
 
-  .farewell-stamp-0 {
-    top: calc(68px + 23%);
-    right: -28px;
+  .farewell-stamp-layer[data-farewell-stamp-layout="grid"] {
+    width: 100%;
+    margin-top: 48px;
+    grid-template-columns: repeat(2, 112px);
+    column-gap: 36px;
+    row-gap: 32px;
   }
 
-  .farewell-stamp-1 {
-    top: calc(68px + 48%);
-    left: -26px;
-  }
-
-  .farewell-stamp-2 {
-    top: calc(68px + 67%);
-    right: -30px;
-  }
-
-  .farewell-stamp-3 {
-    top: calc(68px + 82%);
-    left: -28px;
+  .farewell-stamp-layer[data-farewell-stamp-layout="grid"] .farewell-stamp {
+    width: 112px;
   }
 
   .farewell-stamp-frame {
@@ -1126,5 +1157,9 @@ body.is-farewell-lightbox-open {
     --farewell-parallax-y: 0px !important;
     --reader-parallax-x: 0px !important;
     --reader-parallax-y: 0px !important;
+  }
+
+  .farewell-flower-motion {
+    transform: none !important;
   }
 }

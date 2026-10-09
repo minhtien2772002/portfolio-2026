@@ -1,6 +1,10 @@
 {
   "scripts": {
     "build": "node scripts/build-static.mjs",
+    "farewell:add": "node scripts/farewell-add.cjs",
+    "farewell:list": "node scripts/farewell-list.cjs",
+    "farewell:images": "node scripts/farewell-images.mjs",
+    "farewell:images:all": "node scripts/farewell-images-all.mjs",
     "gallery:update": "node scripts/generate-gallery-data.js",
     "gallery:sync": "node scripts/sync-gallery-assets.js",
     "images:optimize": "node scripts/optimize-images.mjs",
@@ -11,7 +15,9 @@
     "test:hpf-ui": "node scripts/test-hpf-passcode-ui.js",
     "test:farewell-security": "node scripts/test-farewell-security.js",
     "test:farewell-ui": "node scripts/test-farewell-ui.js",
-    "test": "npm run security:check && npm run test:analytics && npm run test:hpf-security && npm run test:hpf-ui && npm run test:farewell-security && npm run test:farewell-ui"
+    "test:farewell-manager": "node scripts/test-farewell-manager.js",
+    "test:farewell-images": "node scripts/test-farewell-images.mjs",
+    "test": "npm run security:check && npm run test:analytics && npm run test:hpf-security && npm run test:hpf-ui && npm run test:farewell-security && npm run test:farewell-ui && npm run test:farewell-manager && npm run test:farewell-images"
   },
   "dependencies": {
     "gsap": "^3.15.0",

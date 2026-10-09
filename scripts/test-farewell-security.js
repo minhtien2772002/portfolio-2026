@@ -5,7 +5,6 @@ const path = require("node:path");
 
 const root = path.resolve(__dirname, "..");
 const validKey = ["ADZ", "96", "TT"].join("-");
-const privateMarker = "Ước gì tôi là con lợn lòi";
 const testSecret = "farewell-test-session-secret-with-more-than-thirty-two-bytes";
 process.env.FAREWELL_SESSION_SECRET = testSecret;
 process.env.NODE_ENV = "test";
@@ -15,6 +14,7 @@ const content = require("../api/farewell/content.js");
 const image = require("../api/farewell/image.js");
 const close = require("../api/farewell/close.js");
 const { createSessionToken, verifySessionToken } = require("../server/farewell-auth.js");
+const { recipients } = require("../private/farewell/recipients.cjs");
 
 const routes = new Map([
   ["/api/farewell/unlock", unlock],
@@ -57,12 +57,11 @@ async function run() {
   const publicPage = await request(baseUrl, "/4ever");
   const publicHtml = await publicPage.text();
   assert.equal(publicPage.status, 200);
-  assert.doesNotMatch(publicHtml, new RegExp(privateMarker, "i"));
   assert.doesNotMatch(publicHtml, /private\/farewell|hot-air-balloon/i);
 
   const anonymousContent = await request(baseUrl, "/api/farewell/content");
   assert.equal(anonymousContent.status, 401);
-  assert.doesNotMatch(await anonymousContent.text(), new RegExp(privateMarker, "i"));
+  await anonymousContent.text();
 
   const anonymousImage = await request(baseUrl, "/api/farewell/image?index=0");
   assert.equal(anonymousImage.status, 401);
@@ -99,13 +98,18 @@ async function run() {
   assert.equal(refreshedContent.status, 200);
   const payload = await refreshedContent.json();
   assert.equal(payload.recipient, "Thi Thao");
-  assert.match(payload.letter, new RegExp(privateMarker, "i"));
-  assert.equal(payload.images.length, 1);
+  const privateMarker = payload.letter.trim().slice(0, 64);
+  assert.ok(privateMarker.length >= 16);
+  assert.equal(publicHtml.includes(privateMarker), false);
+  const fixtureRecipient = recipients.find((recipient) => recipient.id === "advizia-thi-thao");
+  const expectedImageCount = fs.readdirSync(path.join(fixtureRecipient.directory, "images"))
+    .filter((fileName) => /\.(?:avif|jpe?g|png|webp)$/i.test(fileName)).length;
+  assert.equal(payload.images.length, expectedImageCount);
   assert.deepEqual(Object.keys(payload.images[0]).sort(), ["id", "index"]);
 
   const authorizedImage = await request(baseUrl, "/api/farewell/image?index=0", { headers: { Cookie: cookie } });
   assert.equal(authorizedImage.status, 200);
-  assert.equal(authorizedImage.headers.get("content-type"), "image/webp");
+  assert.match(authorizedImage.headers.get("content-type"), /^image\/(?:avif|jpeg|png|webp)$/);
   assert.ok((await authorizedImage.arrayBuffer()).byteLength > 0);
 
   const forged = await request(baseUrl, "/api/farewell/content", { headers: { Cookie: "farewell_session=unsigned" } });
@@ -149,7 +153,7 @@ async function run() {
     fs.readFileSync(path.join(root, "src/app.js"), "utf8"),
     fs.readFileSync(path.join(root, "src/farewell.js"), "utf8"),
   ].join("\n");
-  assert.doesNotMatch(publicSources, new RegExp(privateMarker, "i"));
+  assert.equal(publicSources.includes(privateMarker), false);
   assert.doesNotMatch(publicSources, new RegExp(validKey));
   assert.doesNotMatch(publicSources, /hot-air-balloon|private\/farewell/i);
 

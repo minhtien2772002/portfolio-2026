@@ -127,26 +127,113 @@ export function createFarewellFlowerSequence(seed, count) {
   const random = seededRandom(seed);
   const sequence = [];
   for (let index = 0; index < count; index += 1) {
-    let variant = Math.floor(random() * flowerAssets.length);
-    if (variant === sequence[index - 1]) {
-      variant = (variant + 1 + Math.floor(random() * (flowerAssets.length - 1))) % flowerAssets.length;
-    }
+    const recentVariants = new Set(sequence.slice(-2));
+    const allowedVariants = flowerAssets
+      .map((_, variant) => variant)
+      .filter((variant) => !recentVariants.has(variant));
+    const variant = allowedVariants[Math.floor(random() * allowedVariants.length)];
     sequence.push(variant);
   }
   return sequence;
 }
 
-export function createFarewellFlowerMotion(seed, count) {
-  const random = seededRandom(`${seed}:flower-motion`);
-  return Array.from({ length: count }, () => {
-    const active = random() >= 0.34;
-    if (!active) return { x: 0, y: 0 };
-    const direction = random() < 0.42 ? -1 : 1;
+export function createFarewellFlowerMotion(seed, flowers) {
+  const descriptors = typeof flowers === "number"
+    ? Array.from({ length: flowers }, (_, index) => ({ index, side: "perimeter", variant: index % flowerAssets.length }))
+    : flowers;
+
+  return descriptors.map(({ index, side, variant }, fallbackIndex) => {
+    const flowerIndex = Number.isInteger(index) ? index : fallbackIndex;
+    const random = seededRandom(`${seed}:flower-motion:${flowerIndex}:${variant}:${side}`);
+    const depth = 0.08 + random() * 0.92;
+    const profile = random();
+    const xDirection = random() < 0.5 ? -1 : 1;
+    const yDirection = random() < 0.5 ? -1 : 1;
+    const rotationDirection = random() < 0.5 ? -1 : 1;
+    const scaleDirection = random() < 0.48 ? -1 : 1;
+    let x = (5 + depth * 25) * (0.72 + random() * 0.28);
+    let y = (10 + depth * 60) * (0.72 + random() * 0.28);
+
+    // A few flowers favor one transform axis so the perimeter does not move as a synchronized ring.
+    if (profile < 0.18) x *= 0.2;
+    else if (profile < 0.36) y *= 0.42;
+    else if (profile < 0.52) {
+      x *= 0.4;
+      y *= 0.5;
+    }
+
+    const rotation = (1 + depth * 5) * (0.72 + random() * 0.28);
+    const scaleDelta = scaleDirection < 0
+      ? -(0.008 + depth * 0.022)
+      : 0.01 + depth * 0.05;
+
     return {
-      x: Number(((random() - 0.5) * 0.22).toFixed(3)),
-      y: Number((direction * (0.18 + random() * 0.52)).toFixed(3)),
+      depth: Number(depth.toFixed(3)),
+      x: Number((xDirection * x).toFixed(3)),
+      y: Number((yDirection * y).toFixed(3)),
+      rotation: Number((rotationDirection * rotation).toFixed(3)),
+      scale: Number((1 + scaleDelta).toFixed(4)),
     };
   });
+}
+
+export function createFarewellPhotoLayout(seed, photoIds, letterHeight, mobile = false) {
+  const identities = Array.isArray(photoIds) ? photoIds.map(String) : [];
+  const count = identities.length;
+  if (count === 0) return [];
+
+  const normalizedHeight = Math.max(mobile ? 600 : 500, Math.round(Number(letterHeight) || 0));
+  const random = seededRandom(`${seed}:photo-layout:${identities.join("|")}:${normalizedHeight}:${mobile ? "mobile" : "desktop"}`);
+  const stampHeight = mobile ? 120 : 193;
+  const usableStart = mobile ? 76 : 104;
+  const usableEnd = Math.max(usableStart, normalizedHeight - stampHeight - (mobile ? 36 : 56));
+  const usableSpan = usableEnd - usableStart;
+
+  const startSide = random() < 0.5 ? "left" : "right";
+  const oppositeSide = startSide === "left" ? "right" : "left";
+  const sides = Array.from({ length: count }, (_, index) => index % 2 === 0 ? startSide : oppositeSide);
+  // Preserve the random stream consumed by the former side shuffle so every non-side value stays stable.
+  for (let index = 1; index < count; index += 1) random();
+
+  const step = count > 1 ? usableSpan / (count - 1) : 0;
+  const minimumGap = count > 1 ? Math.min(mobile ? 92 : 145, step * 0.68) : 0;
+  const jitterLimit = count > 1 ? Math.min(step * 0.26, Math.max(0, (step - minimumGap) * 0.45)) : 0;
+  let previousTop = Number.NEGATIVE_INFINITY;
+
+  return identities.map((_, index) => {
+    const baseTop = count === 1 ? usableStart + usableSpan * 0.5 : usableStart + step * index;
+    const directionalJitter = index === 0
+      ? random() * jitterLimit
+      : index === count - 1
+        ? -random() * jitterLimit
+        : (random() * 2 - 1) * jitterLimit;
+    const remaining = count - index - 1;
+    const maximumTop = usableEnd - remaining * minimumGap;
+    const top = Math.min(maximumTop, Math.max(usableStart, previousTop + minimumGap, baseTop + directionalJitter));
+    previousTop = top;
+
+    return {
+      side: sides[index],
+      top: Number(top.toFixed(2)),
+      edgeOffset: mobile ? Math.round(-30 + random() * 13) : Math.round(random() * 15),
+      rotation: [8, -9, 6, -6][Math.floor(random() * 4)],
+      motionDepth: Number((0.76 + random() * 0.24).toFixed(3)),
+    };
+  });
+}
+
+export function createFarewellPhotoGridLayout(seed, photoIds) {
+  const identities = Array.isArray(photoIds) ? photoIds.map(String) : [];
+  const random = seededRandom(`${seed}:photo-grid:${identities.join("|")}`);
+  const rotations = [-6, -4, -3, 3, 4, 6];
+
+  return identities.map((_, index) => ({
+    column: identities.length % 2 === 1 && index === identities.length - 1
+      ? "center"
+      : index % 2 === 0 ? "left" : "right",
+    rotation: rotations[Math.floor(random() * rotations.length)],
+    motionDepth: Number((0.76 + random() * 0.24).toFixed(3)),
+  }));
 }
 
 function paragraphsFromLetter(letter) {
@@ -180,6 +267,41 @@ function readerMarkup(content) {
   `;
 }
 
+export function createFarewellProtectedImageCache(urlApi = URL) {
+  const objectUrls = new Map();
+  let activeScope = "";
+  let activeVersion = 0;
+
+  const clear = () => {
+    activeVersion += 1;
+    activeScope = "";
+    objectUrls.forEach((url) => urlApi.revokeObjectURL(url));
+    objectUrls.clear();
+  };
+  const activate = (scope) => {
+    clear();
+    activeScope = String(scope);
+    return { scope: activeScope, version: activeVersion };
+  };
+  const isActive = (context) => (
+    context?.version === activeVersion && context?.scope === activeScope && activeScope !== ""
+  );
+  const cacheKey = (context, index) => `${context.scope}:${index}`;
+  const get = (context, index) => isActive(context) ? objectUrls.get(cacheKey(context, index)) : undefined;
+  const commit = (context, index, blob) => {
+    if (!isActive(context)) throw Object.assign(new Error("stale-image-request"), { name: "AbortError" });
+    const objectUrl = urlApi.createObjectURL(blob);
+    if (!isActive(context)) {
+      urlApi.revokeObjectURL(objectUrl);
+      throw Object.assign(new Error("stale-image-request"), { name: "AbortError" });
+    }
+    objectUrls.set(cacheKey(context, index), objectUrl);
+    return objectUrl;
+  };
+
+  return { activate, clear, commit, get, isActive };
+}
+
 export function renderFarewellPage() {
   return `
     <main class="farewell-page" data-farewell-page>
@@ -195,7 +317,8 @@ export function initFarewell() {
   if (!root) return null;
 
   const controllers = new Set();
-  const objectUrls = new Map();
+  const protectedImages = createFarewellProtectedImageCache();
+  const protectedImageRequests = new Map();
   const cleanupCallbacks = [];
   let activeView = "checking";
   let content = null;
@@ -399,11 +522,17 @@ export function initFarewell() {
       ...Array.from({ length: horizontalCount }, (_, index) => ({ side: "bottom", index, total: horizontalCount })),
     ];
     const flowerSequence = createFarewellFlowerSequence(seed, slots.length);
-    const flowerMotion = createFarewellFlowerMotion(seed, slots.length);
+    const flowerMotion = createFarewellFlowerMotion(seed, slots.map((slot, index) => ({
+      index,
+      side: slot.side,
+      variant: flowerSequence[index],
+    })));
     layer.replaceChildren();
     slots.forEach((slot, slotIndex) => {
       const variant = flowerSequence[slotIndex];
       const wrapper = document.createElement("span");
+      const motionLayer = document.createElement("span");
+      const orientationLayer = document.createElement("span");
       const image = document.createElement("img");
       wrapper.className = `farewell-flower farewell-flower-${slot.side}`;
       wrapper.dataset.farewellFlowerSide = slot.side;
@@ -428,32 +557,74 @@ export function initFarewell() {
       wrapper.style.setProperty("--flower-top", `${positions[slot.side][1]}px`);
       wrapper.style.setProperty("--flower-rotate", `${sideRotation[slot.side] + Math.round(random() * 14 - 7)}deg`);
       wrapper.style.setProperty("--flower-scale", String((mobile ? 0.46 : 0.64) + random() * (mobile ? 0.12 : 0.2)));
-      wrapper.style.setProperty("--flower-parallax-x", String(flowerMotion[slotIndex].x));
-      wrapper.style.setProperty("--flower-parallax-y", String(flowerMotion[slotIndex].y));
+      wrapper.style.setProperty("--flower-motion-depth", String(flowerMotion[slotIndex].depth));
+      wrapper.style.setProperty("--flower-motion-x", String(flowerMotion[slotIndex].x));
+      wrapper.style.setProperty("--flower-motion-y", String(flowerMotion[slotIndex].y));
+      wrapper.style.setProperty("--flower-motion-rotate", String(flowerMotion[slotIndex].rotation));
+      wrapper.style.setProperty("--flower-motion-scale", String(flowerMotion[slotIndex].scale - 1));
       wrapper.style.setProperty("--flower-enter-delay", `${Math.min(480, 35 + slotIndex * 12)}ms`);
       image.src = flowerAssets[variant];
       image.alt = "";
-      wrapper.append(image);
+      motionLayer.className = "farewell-flower-motion";
+      orientationLayer.className = "farewell-flower-orientation";
+      orientationLayer.append(image);
+      motionLayer.append(orientationLayer);
+      wrapper.append(motionLayer);
       layer.append(wrapper);
     });
   };
 
-  const loadProtectedImage = async (index) => {
-    if (objectUrls.has(index)) return objectUrls.get(index);
-    const response = await request(`/api/farewell/image?index=${encodeURIComponent(index)}`, { headers: {} });
-    if (!response.ok) throw new Error("image-unavailable");
-    const objectUrl = URL.createObjectURL(await response.blob());
-    objectUrls.set(index, objectUrl);
-    return objectUrl;
+  const invalidateProtectedImages = () => {
+    root.querySelectorAll("[data-farewell-stamp-image]").forEach((image) => image.removeAttribute("src"));
+    lightboxPortal?.querySelector("[data-farewell-lightbox-image]")?.removeAttribute("src");
+    protectedImageRequests.clear();
+    protectedImages.clear();
   };
 
-  const openLightbox = async (trigger, index) => {
+  const activateProtectedImages = (readerContent, readerImages) => {
+    root.querySelectorAll("[data-farewell-stamp-image]").forEach((image) => image.removeAttribute("src"));
+    lightboxPortal?.querySelector("[data-farewell-lightbox-image]")?.removeAttribute("src");
+    protectedImageRequests.clear();
+    const scope = `${readerContent.flowerSeed}:${hashSeed(readerContent.letter)}:${readerImages.map((image) => image.id).join("|")}`;
+    return protectedImages.activate(scope);
+  };
+
+  const isActiveImageContext = (context) => (
+    !destroyed
+    && activeView === "reader"
+    && protectedImages.isActive(context)
+  );
+
+  const staleImageError = () => Object.assign(new Error("stale-image-request"), { name: "AbortError" });
+
+  const loadProtectedImage = async (index, context) => {
+    if (!isActiveImageContext(context)) throw staleImageError();
+    const cachedUrl = protectedImages.get(context, index);
+    if (cachedUrl) return cachedUrl;
+    const requestKey = `${context.scope}:${context.version}:${index}`;
+    if (protectedImageRequests.has(requestKey)) return protectedImageRequests.get(requestKey);
+    const imageRequest = (async () => {
+      const response = await request(`/api/farewell/image?index=${encodeURIComponent(index)}`, { headers: {} });
+      if (!response.ok) throw new Error("image-unavailable");
+      const blob = await response.blob();
+      if (!isActiveImageContext(context)) throw staleImageError();
+      return protectedImages.commit(context, index, blob);
+    })();
+    protectedImageRequests.set(requestKey, imageRequest);
+    try {
+      return await imageRequest;
+    } finally {
+      if (protectedImageRequests.get(requestKey) === imageRequest) protectedImageRequests.delete(requestKey);
+    }
+  };
+
+  const openLightbox = async (trigger, index, imageContext) => {
     const lightbox = lightboxPortal;
     const image = lightbox?.querySelector("[data-farewell-lightbox-image]");
     if (!lightbox || !image) return;
     try {
-      image.src = await loadProtectedImage(index);
-      if (!lightbox.isConnected || lightbox !== lightboxPortal) return;
+      image.src = await loadProtectedImage(index, imageContext);
+      if (!isActiveImageContext(imageContext) || !lightbox.isConnected || lightbox !== lightboxPortal) return;
       image.alt = `Farewell memory ${index + 1}`;
       lightboxTrigger = trigger;
       lightbox.dataset.open = "true";
@@ -480,6 +651,7 @@ export function initFarewell() {
     const close = root.querySelector("[data-farewell-close]");
     if (!copy || !letter || !stampLayer) return;
     const readerImages = Array.isArray(readerContent.images) ? readerContent.images : [];
+    const imageContext = activateProtectedImages(readerContent, readerImages);
 
     if (readerImages.length > 0) {
       const template = document.createElement("template");
@@ -496,25 +668,60 @@ export function initFarewell() {
     readerImages.forEach((imageData, index) => {
       const button = document.createElement("button");
       button.type = "button";
-      button.className = `farewell-stamp farewell-stamp-${index % 4}`;
+      button.className = "farewell-stamp";
       button.dataset.farewellStampIndex = String(imageData.index);
-      button.style.setProperty("--stamp-position", String(index));
-      button.style.setProperty("--stamp-rotate", `${[8, -9, 6, -6][index % 4]}deg`);
-      button.style.setProperty("--motion-depth", String(0.78 + (index % 3) * 0.1));
       button.style.setProperty("--stamp-enter-delay", `${180 + index * 90}ms`);
       button.setAttribute("aria-label", `Open farewell memory ${index + 1}`);
       button.innerHTML = `<span class="farewell-stamp-frame"><img alt="" data-farewell-stamp-image></span>`;
-      button.addEventListener("click", () => void openLightbox(button, imageData.index));
+      button.addEventListener("click", () => void openLightbox(button, imageData.index, imageContext));
       stampLayer.append(button);
     });
 
     const stampButtons = Array.from(stampLayer.querySelectorAll("[data-farewell-stamp-index]"));
+    const positionStamps = () => {
+      const compact = window.matchMedia("(max-width: 1024px)").matches;
+      const canvas = root.querySelector("[data-farewell-reader-canvas]");
+      if (compact && stampLayer.parentElement !== letter) {
+        letter.append(stampLayer);
+      } else if (!compact && canvas && stampLayer.parentElement !== canvas) {
+        letter.after(stampLayer);
+      }
+      const layoutSeed = `${readerContent.flowerSeed}:${hashSeed(readerContent.letter)}`;
+      const photoIds = readerImages.map((image) => image.id);
+      const layout = compact
+        ? createFarewellPhotoGridLayout(layoutSeed, photoIds)
+        : createFarewellPhotoLayout(layoutSeed, photoIds, letter.offsetHeight);
+      stampLayer.dataset.farewellStampLayout = compact ? "grid" : "sides";
+      stampButtons.forEach((button, index) => {
+        const placement = layout[index];
+        if (!placement) return;
+        button.style.removeProperty("top");
+        button.style.removeProperty("left");
+        button.style.removeProperty("right");
+        button.style.removeProperty("grid-column");
+        button.style.removeProperty("justify-self");
+        if (compact) {
+          button.style.gridColumn = placement.column === "center"
+            ? "1 / -1"
+            : placement.column === "left" ? "1" : "2";
+          button.style.justifySelf = "center";
+        } else {
+          button.style.top = `${letter.offsetTop + placement.top}px`;
+          button.style[placement.side] = `${placement.edgeOffset}px`;
+        }
+        button.style.setProperty("--stamp-rotate", `${placement.rotation}deg`);
+        button.style.setProperty("--motion-depth", String(placement.motionDepth));
+        button.dataset.farewellStampSide = compact ? placement.column : placement.side;
+      });
+    };
+    positionStamps();
+
     const loadStamp = async (button) => {
       if (button.dataset.loaded === "true") return;
       button.dataset.loaded = "true";
       try {
         const image = button.querySelector("[data-farewell-stamp-image]");
-        image.src = await loadProtectedImage(Number(button.dataset.farewellStampIndex));
+        image.src = await loadProtectedImage(Number(button.dataset.farewellStampIndex), imageContext);
       } catch {
         delete button.dataset.loaded;
       }
@@ -536,24 +743,31 @@ export function initFarewell() {
     let motionElements = [];
     let currentReaderOffset = 0;
     let targetReaderOffset = 0;
+    let currentFlowerProgress = 0;
+    let targetFlowerProgress = 0;
+    let flowerMotionStrength = 1;
     let readerParallaxFrame = 0;
     const applyReaderParallax = () => {
       currentReaderOffset += (targetReaderOffset - currentReaderOffset) * farewellMotion.parallaxEase;
-      motionElements.forEach((element) => {
-        if (element.classList.contains("farewell-flower")) {
-          const xMultiplier = Number(element.style.getPropertyValue("--flower-parallax-x") || 0);
-          const yMultiplier = Number(element.style.getPropertyValue("--flower-parallax-y") || 0);
-          element.style.setProperty("--reader-parallax-x", `${currentReaderOffset * xMultiplier}px`);
-          element.style.setProperty("--reader-parallax-y", `${currentReaderOffset * yMultiplier}px`);
+      currentFlowerProgress += (targetFlowerProgress - currentFlowerProgress) * farewellMotion.parallaxEase;
+      motionElements.forEach((motion) => {
+        if (motion.type === "flower") {
+          const progress = currentFlowerProgress * flowerMotionStrength;
+          motion.element.style.setProperty("--reader-parallax-x", `${motion.x * progress}px`);
+          motion.element.style.setProperty("--reader-parallax-y", `${motion.y * progress}px`);
+          motion.element.style.setProperty("--reader-parallax-rotate", `${motion.rotation * progress}deg`);
+          motion.element.style.setProperty("--reader-parallax-scale", String(1 + motion.scale * progress));
         } else {
-          const depth = Number(element.style.getPropertyValue("--motion-depth") || 0.8);
-          element.style.setProperty("--reader-parallax-y", `${currentReaderOffset * depth}px`);
+          motion.element.style.setProperty("--reader-parallax-y", `${currentReaderOffset * motion.depth}px`);
         }
       });
-      if (Math.abs(targetReaderOffset - currentReaderOffset) > farewellMotion.parallaxStop) {
+      const offsetMoving = Math.abs(targetReaderOffset - currentReaderOffset) > farewellMotion.parallaxStop;
+      const flowerMoving = Math.abs(targetFlowerProgress - currentFlowerProgress) > 0.0005;
+      if (offsetMoving || flowerMoving) {
         readerParallaxFrame = window.requestAnimationFrame(applyReaderParallax);
       } else {
         currentReaderOffset = targetReaderOffset;
+        currentFlowerProgress = targetFlowerProgress;
         readerParallaxFrame = 0;
       }
     };
@@ -563,11 +777,30 @@ export function initFarewell() {
       if (!canvas) return;
       const canvasTop = window.scrollY + canvas.getBoundingClientRect().top;
       targetReaderOffset = Math.max(-36, Math.min(36, (window.scrollY + window.innerHeight / 2 - canvasTop) * 0.035));
+      const viewportCenter = window.scrollY + window.innerHeight / 2;
+      targetFlowerProgress = Math.max(0, Math.min(1, (viewportCenter - canvasTop) / Math.max(1, canvas.offsetHeight)));
       if (!readerParallaxFrame) readerParallaxFrame = window.requestAnimationFrame(applyReaderParallax);
     };
     const positionDecorations = () => {
+      flowerMotionStrength = window.matchMedia("(max-width: 767px)").matches ? 0.62 : 1;
+      positionStamps();
       buildFlowers(readerContent.flowerSeed);
-      motionElements = Array.from(root.querySelectorAll(".farewell-flower, .farewell-stamp"));
+      motionElements = Array.from(root.querySelectorAll(".farewell-flower, .farewell-stamp")).map((element) => (
+        element.classList.contains("farewell-flower")
+          ? {
+              element,
+              type: "flower",
+              x: Number(element.style.getPropertyValue("--flower-motion-x") || 0),
+              y: Number(element.style.getPropertyValue("--flower-motion-y") || 0),
+              rotation: Number(element.style.getPropertyValue("--flower-motion-rotate") || 0),
+              scale: Number(element.style.getPropertyValue("--flower-motion-scale") || 0),
+            }
+          : {
+              element,
+              type: "stamp",
+              depth: Number(element.style.getPropertyValue("--motion-depth") || 0.8),
+            }
+      ));
       measureReaderParallax();
     };
     window.requestAnimationFrame(positionDecorations);
@@ -587,6 +820,8 @@ export function initFarewell() {
     measureReaderParallax();
 
     close?.addEventListener("click", async () => {
+      closeLightbox(false);
+      invalidateProtectedImages();
       try {
         await request("/api/farewell/close", { method: "POST", body: "{}" });
       } finally {
@@ -608,6 +843,7 @@ export function initFarewell() {
       document.removeEventListener("keydown", onKeydown);
       if (readerParallaxFrame) window.cancelAnimationFrame(readerParallaxFrame);
       closeLightbox(false);
+      invalidateProtectedImages();
       lightboxPortal?.remove();
       lightboxPortal = null;
       document.body.classList.remove("is-farewell-lightbox-open");
@@ -627,8 +863,8 @@ export function initFarewell() {
     destroyed = true;
     controllers.forEach((controller) => controller.abort());
     cleanupCallbacks.splice(0).forEach((callback) => callback());
-    objectUrls.forEach((url) => URL.revokeObjectURL(url));
-    objectUrls.clear();
+    protectedImageRequests.clear();
+    protectedImages.clear();
     closeLightbox(false);
     lightboxPortal?.remove();
     lightboxPortal = null;
