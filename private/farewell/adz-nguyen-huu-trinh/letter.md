@@ -13,3 +13,9 @@ Và anh Trình à, mọi người đã kể với em rất nhiều về anh ngà
 Em vẫn còn quá nhỏ để có thể đánh giá việc quản lý của anh, nhưng em chỉ biết rằng anh đã làm rất tốt trong việc để em tự chịu trách nhiệm với những hành động của mình. Đưa cho em mua bánh trung thu, tổ chức YEP, tổ chức team building, chuyến di lịch vừ rôi, ... Em cảm ơn anh rất nhiều vì đã để em tự trưởng thành và khôn lớn, có thể không phải về mặt chuyên môn, nhưng em đã thấy mình lớn hơn rất nhiều vì anh đã cho em rất nhiều cơ hội. 
 
 Chúc gia đình lớn nhỏ của anh luôn mạnh khoẻ, hạnh phúc nha! Và cũng như anh nói đó, biết đâu trong tương lai mình lại tiếp tục được gặp và làm việc với nhau nhỉ! 
+
+_________________
+
+P.S: 11/10/2026
+
+Hôm ở quán bánh canh rong biển, anh có nói là anh đã phải chịu đựng nỗi buồn trong suốt chuyến đi chơi. Em thực sự xin lỗi anh nhiều nhé! Đấy là lý do mà em phải đợi sau khi đi chơi về thì mới báo cho mọi người, mà quên mất rằng anh cũng xứng đáng được đi chơi mà không biết chuyện. 
