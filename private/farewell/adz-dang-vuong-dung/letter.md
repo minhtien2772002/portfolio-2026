@@ -14,6 +14,6 @@ Nhắc lại thì cũng chả có mấy kỷ niệm gì nữa với anh cả. Bi
 
 Chắc chắn chúng mình sẽ gặp lại, có thể là trên bàn làm việc hoặc cũng có thể là trên bàn nhậu. Và tiếc là dù có uống tới mấy thì em cũng không hé miệng nửa lời đâu, vì em không có say được. 
 
-Còn nếu chị Hạnh có đang đọc bức thư này, thì em xin cam đoan với chị, anh Dũng không có đủ tầm để với tới em đâu chị ơi huhu. Kiểu, giáo viên chấm điểm các bài kiểm tra mà học sinh nộp bài, nên nếu coi anh Dũng là một bài kiểm tra, thì cái đứa học sinh đó quên nộp bài luôn á chị; nói ngắn gọn là anh Dũng không có đủ trình để được chấm điểm luôn á chứ đừng nói tới việc có điểm trong mắt em. Nên chị cứ an tâm dưỡng sức chăm bé Sóc nhé. 
+Còn nếu chị Hạnh có đang đọc bức thư này, thì em xin cam đoan với chị, anh Dũng không có đủ tầm để với tới em đâu chị ơi huhu. Kiểu, giáo viên chấm điểm các bài kiểm tra mà học sinh nộp bài, nên nếu coi anh Dũng là một bài kiểm tra, thì cái đứa học sinh đó quên nộp bài luôn á chị; nói ngắn gọn là anh Dũng không có đủ trình để được chấm điểm luôn á chứ đừng nói tới việc có điểm trong mắt em. Nên chị cứ an tâm dưỡng sức chăm bé Bi nhé (tên em tự đặt). 
 
 Chúc chị Hạnh luôn xinh tươi, giỏi giang, không cần làm gì cả, để anh Dũng làm thôi nhé! Còn em chúc anh Dũng ok. 

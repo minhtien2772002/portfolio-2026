@@ -2,7 +2,7 @@
 
 Hello chị Minh yêu quý của em,
 
-Lần cuối cùng em hỏi thì chị bảo tháng 10 chị sẽ vào lại Đà Nẵng. Và em cũng đã cố gắng đợi gặp chị lần cuối rồi mới chuyển đi. Nhưng mà không kịp nữa rồi. 
+Lần cuối cùng em hỏi thì chị bảo tháng 10 chị sẽ vào lại Đà Nẵng. Và em cũng đã cố gắng đợi gặp chị lần cuối rồi mới chuyển đi. Nhưng mà không kịp nữa rồi. Khi nào chị về tới Đà Nẵng thì nhắn em nhé, kể cả lúc đó em có ở Hà Nội thì em vẫn sẽ vào gặp chị!
 
 Chị là người cuối cùng em viết thư cho, không phải vì mình có ít kỷ niệm nên em viết cuối, mà là do chị là một trong những người để lại ấn tượng sâu đậm nhất, dù làm việc với chị chưa được tròn 1 năm. 
 

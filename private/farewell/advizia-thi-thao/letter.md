@@ -1,4 +1,5 @@
-Đà Nẵng, 24/09/2026 - 01 ngày sau sinh nhật thứ 30 của chị,
+Đà Nẵng, 24/09/2026 
+- 01 ngày sau sinh nhật thứ 30 của chị,
 
 Hello chị Thảo - người chị thân quý của em,
 
@@ -19,3 +20,9 @@ Cảm ơn chị vì đã học cầu lông cùng em nhé. Mấy tháng đấy đ
 Chị ở lại cùng với mọi người thật vui nhé. Nếu có cơ hội thì chắc chắc chúng mình vẫn sẽ đi ăn uống và đi chơi cùng nhau mà. 
 
 Advizia là ngôi nhà đầu tiên của em ở Đà Nẵng, và cảm ơn chị đã là một phần không thể thiếu trong em <3 
+
+_____________________
+
+P.S:
+
+Xin lỗi chị vì đã để chị biết chuyện qua chị Tuyền, mà không phải là trực tiếp từ em. 
